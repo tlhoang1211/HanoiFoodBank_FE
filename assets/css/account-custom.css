@@ -1,0 +1,62 @@
+.custom-header-img {
+  padding-top: 100px;
+  min-height: 300px;
+}
+
+.upload-btn {
+  height: auto;
+}
+
+.list-action {
+  padding: 0 0 10px 0;
+}
+
+.custom-i {
+  margin-right: 20px;
+}
+
+.active-action {
+  color: red;
+}
+
+th,
+td {
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+.row {
+  margin-left: 0px !important;
+}
+
+#cancel-button {
+  float: right;
+}
+
+.fa-pencil-square-o:hover,
+.fa-pencil-square-o:focus {
+  color: lightseagreen;
+  cursor: pointer;
+}
+
+.fa-trash-o:hover,
+.fa-trash-o:focus {
+  color: red;
+  cursor: pointer;
+}
+
+.fa-search:hover,
+.fa-search:focus {
+  color: darkturquoise;
+  cursor: pointer;
+}
+
+.swal-text {
+  text-align: center;
+}
+
+.swal-button--cancel {
+  background: crimson;
+  color: white;
+}
+

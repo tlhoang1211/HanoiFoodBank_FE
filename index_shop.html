@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Hanoi Food Bank</title>
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="assets/images/favicons/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="assets/images/favicons/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="assets/images/favicons/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="assets/images/favicons/apple-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="assets/images/favicons/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="assets/images/favicons/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="assets/images/favicons/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="assets/images/favicons/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/images/favicons/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="assets/images/favicons/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/images/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="assets/images/favicons/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/images/favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta
+      name="msapplication-TileImage"
+      content="assets/images/favicons/ms-icon-144x144.png"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <!--  
+    Stylesheets
+    =============================================
+    
+    -->
+    <!-- Default stylesheets-->
+    <link
+      href="assets/lib/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Template specific stylesheets-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Volkhov:400i"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
+      rel="stylesheet"
+    />
+    <link href="assets/lib/animate.css/animate.css" rel="stylesheet" />
+    <link
+      href="assets/lib/components-font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet" />
+    <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet" />
+    <link
+      href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/lib/magnific-popup/dist/magnific-popup.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/lib/simple-text-rotator/simpletextrotator.css"
+      rel="stylesheet"
+    />
+    <!-- Main stylesheet and color file-->
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link
+      id="color-scheme"
+      href="assets/css/colors/default.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./assets/css/repository.css" />
+
+    <!-- paypal -->
+    <script src="https://www.paypal.com/sdk/js?client-id=ARfjvhupmZbesvNCgtE5AJV8zCxdME-gej0ajX-4aBkkIpdstLDqPA1dqw3oZIozjICO5A78qlEIw1OL&components=buttons"></script>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+  </head>
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+      <div class="page-loader">
+        <div class="loader">Loading...</div>
+      </div>
+      <header id="header"></header>
+      <!-- <div style="font-size: 30px; top: 50px; position: fixed; z-index: 9999; box-sizing: border-box; right: 30px;"><i style="color: #fff;" class="fa fa-bell"></i></div> -->
+      <section class="home-section home-fade home-full-height" id="home">
+        <div class="hero-slider">
+          <ul class="slides">
+            <li
+              class="bg-dark-30 bg-dark shop-page-header"
+              style="
+                background-image: url('https://res.cloudinary.com/vernom/image/upload/v1635665219/hanoi_food_bank_project/background_image/home_bg1.jpg');
+              "
+            >
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div class="font-alt mb-30 titan-title-size-1">
+                    This is Hanoi Food Bank
+                  </div>
+                  <div class="font-alt mb-30 titan-title-size-4">
+                    Don't waste food
+                  </div>
+                  <div class="font-alt mb-40 titan-title-size-1">
+                    Don't waste food
+                  </div>
+                  <a
+                    class="section-scroll btn btn-border-w btn-round"
+                    href="#latest"
+                    >Learn More</a
+                  >
+                </div>
+              </div>
+            </li>
+            <li
+              class="bg-dark-30 bg-dark shop-page-header"
+              style="
+                background-image: url('https://res.cloudinary.com/vernom/image/upload/v1635664891/hanoi_food_bank_project/background_image/home_bg2.jpg');
+              "
+            >
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div class="font-alt mb-30 titan-title-size-1">
+                    This is Hanoi Food Bank
+                  </div>
+                  <div class="font-alt mb-40 titan-title-size-4">
+                    Exclusive products
+                  </div>
+                  <a
+                    class="section-scroll btn btn-border-w btn-round"
+                    href="#latest"
+                    >Learn More</a
+                  >
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="main">
+        <section class="module-small">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Latest in food</h2>
+              </div>
+            </div>
+            <div class="row multi-columns-row list-food">
+              <!-- <div class="col-sm-6 col-md-3 col-lg-3">
+                <div class="shop-item">
+                  <div class="shop-item-image"><img src="./assets/images/img/buncha.jpg" class="img-food" alt="Accessories Pack"/>
+                    <div class="shop-item-detail"><a href="shop_single_product.html" class="btn btn-round btn-b"><span class="icon-basket">View Details</span></a></div>
+                  </div>
+                  <h4 class="shop-item-title font-alt"><a href="#">Men’s Casual Pack</a></h4>Time: 000
+                </div>
+              </div> -->
+            </div>
+            <div class="row mt-30">
+              <div class="col-sm-12 align-center">
+                <a class="btn btn-b btn-round" href="./shop_product_col_4.html"
+                  >See all food</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- <section class="module module-video bg-dark-30" data-background="">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt mb-0">Be inspired. Get ahead of trends.</h2>
+              </div>
+            </div>
+          </div>
+          <div class="video-player" data-property="{videoURL:'https://www.youtube.com/watch?v=EMy5krGcoOU', containment:'.module-video', startAt:0, mute:true, autoPlay:true, loop:true, opacity:1, showControls:false, showYTLogo:false, vol:25}"></div>
+        </section>
+        <section class="module">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Exclusive products</h2>
+                <div class="module-subtitle font-serif">The languages only differ in their grammar, their pronunciation and their most common words.</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg" alt="Leather belt"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Derby shoes"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Derby shoes</a></h4>£54.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg" alt="Leather belt"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-4.jpg" alt="Leather belt"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£14.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-5.jpg" alt="Chelsea boots"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Chelsea boots</a></h4>£44.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-6.jpg" alt="Leather belt"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <hr class="divider-w">
+        <section class="module" id="news">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Our News</h2>
+              </div>
+            </div>
+            <div class="row multi-columns-row post-columns wo-border">
+              <div class="col-sm-6 col-md-4 col-lg-4">
+                <div class="post mb-40">
+                  <div class="post-header font-alt">
+                    <h2 class="post-title"><a href="#">Receipt of the new collection</a></h2>
+                  </div>
+                  <div class="post-entry">
+                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+                  </div>
+                  <div class="post-more"><a class="more-link" href="#">Read more</a></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-4">
+                <div class="post mb-40">
+                  <div class="post-header font-alt">
+                    <h2 class="post-title"><a href="#">Sale of summer season</a></h2>
+                  </div>
+                  <div class="post-entry">
+                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+                  </div>
+                  <div class="post-more"><a class="more-link" href="#">Read more</a></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-4">
+                <div class="post mb-40">
+                  <div class="post-header font-alt">
+                    <h2 class="post-title"><a href="#">New lookbook</a></h2>
+                  </div>
+                  <div class="post-entry">
+                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+                  </div>
+                  <div class="post-more"><a class="more-link" href="#">Read more</a></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-4">
+                <div class="post mb-40">
+                  <div class="post-header font-alt">
+                    <h2 class="post-title"><a href="#">Receipt of the new collection</a></h2>
+                  </div>
+                  <div class="post-entry">
+                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+                  </div>
+                  <div class="post-more"><a class="more-link" href="#">Read more</a></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-4">
+                <div class="post mb-40">
+                  <div class="post-header font-alt">
+                    <h2 class="post-title"><a href="#">Sale of summer season</a></h2>
+                  </div>
+                  <div class="post-entry">
+                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+                  </div>
+                  <div class="post-more"><a class="more-link" href="#">Read more</a></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-4">
+                <div class="post mb-40">
+                  <div class="post-header font-alt">
+                    <h2 class="post-title"><a href="#">New lookbook</a></h2>
+                  </div>
+                  <div class="post-entry">
+                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+                  </div>
+                  <div class="post-more"><a class="more-link" href="#">Read more</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <hr class="divider-w">
+        <section class="module-small">
+          <div class="container">
+            <div class="row client">
+              <div class="owl-carousel text-center" data-items="6" data-pagination="false" data-navigation="false">
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="client-logo"><img src="assets/images/client-logo-dark-1.png" alt="Client Logo"/></div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="client-logo"><img src="assets/images/client-logo-dark-2.png" alt="Client Logo"/></div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="client-logo"><img src="assets/images/client-logo-dark-3.png" alt="Client Logo"/></div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="client-logo"><img src="assets/images/client-logo-dark-4.png" alt="Client Logo"/></div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="client-logo"><img src="assets/images/client-logo-dark-5.png" alt="Client Logo"/></div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="client-logo"><img src="assets/images/client-logo-dark-1.png" alt="Client Logo"/></div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="client-logo"><img src="assets/images/client-logo-dark-2.png" alt="Client Logo"/></div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="client-logo"><img src="assets/images/client-logo-dark-3.png" alt="Client Logo"/></div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="client-logo"><img src="assets/images/client-logo-dark-4.png" alt="Client Logo"/></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> -->
+        <div id="footer"></div>
+      </div>
+      <div class="scroll-up">
+        <a href="#totop"><i class="fa fa-angle-double-up"></i></a>
+      </div>
+    </main>
+    <!--  
+    JavaScripts
+    =============================================
+    -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+      integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://upload-widget.cloudinary.com/global/all.js"
+      type="text/javascript"
+    ></script>
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"
+    ></script>
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"
+    ></script>
+    <script src="assets/lib/jquery/dist/jquery.js"></script>
+    <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/lib/wow/dist/wow.js"></script>
+    <script src="assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+    <script src="assets/lib/isotope/dist/isotope.pkgd.js"></script>
+    <script src="assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+    <script src="assets/lib/flexslider/jquery.flexslider.js"></script>
+    <script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script src="assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+    <script src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script
+      src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"
+      type="text/javascript"
+    ></script>
+    <script src="assets/js/user/common.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="./assets/js/notification.js"></script>
+    <!-- <script src="./assets/js/app.js"></script> -->
+    <script>
+      var pairs = document.cookie.split(";");
+      var cookies = {};
+      for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split("=");
+        cookies[(pair[0] + "").trim()] = unescape(pair.slice(1).join("="));
+      }
+      var token = cookies.token;
+
+      var usernameAccount = cookies.username;
+
+      var shopitemAPI =
+        "https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?status=2&limit=8&page=0";
+      var shopItem = document.querySelector(".list-food");
+      function getListItem() {
+        fetch(shopitemAPI, {
+          method: "GET",
+        })
+          .then((response) => response.json())
+          .then((listItems) => {
+            let myPromise = new Promise(function (myResolve) {
+              if (token == "" || token == null || token == undefined) {
+                token =
+                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaHVvbmdsdmQwMDYzMUBmcHQuZWR1LnZuIiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpc3MiOiJodHRwczovL2hmYi10MTA5OGUuaGVyb2t1YXBwLmNvbS9hcGkvdjEvaGZiL2xvZ2luIiwiZXhwIjoxNjM2NTU4MzQyfQ.GWSbBk2gvGqsvgq8s-3c7P-bmO0PeFKgjsLczox5L6M";
+              }
+
+              var htmlsItem = listItems.data.content.map(function (item) {
+                return `
+                <div class="col-sm-6 col-md-3 col-lg-3" style="min-height: 350px;" id="shop-item-${item.id}">
+                  <div class="shop-item">
+                    <div class="shop-item-image">
+                      <img class="img-food" src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${item.avatar}" class="img-food" alt="Cold Garb"/>
+                      <div class="shop-item-detail">
+                        <a class="btn btn-round btn-b" href="./shop_single_product.html?id=${item.id}">
+                          <i class="fa fa-eye"></i> View Details
+                        </a>
+                      </div>
+                    </div>
+                    <h4 class="shop-item-title font-alt"><a href="#">${item.name}</a></h4>
+                    <p>Expiration Date: ${item.expirationDate}</p>
+                  </div>
+                </div>
+                `;
+              });
+              shopItem.innerHTML = htmlsItem.join("");
+              myResolve(); // when successful
+            });
+            myPromise.then(function () {
+              listItems.data.content.map(function (item2) {
+                var tet = getTimeFromString2(item2.expirationDate);
+                run();
+
+                // Tổng số giây
+                var countDown = setInterval(run, 1000);
+                function run() {
+                  var now = new Date().getTime();
+                  var timeRest = tet - now;
+                  if (timeRest <= 0) {
+                    clearInterval(countDown);
+                    document.querySelector(
+                      `#shop-item-${item2.id}`
+                    ).style.display = "none";
+
+                    var urlUpdateStatus = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/status/${item2.id}`;
+                    fetch(urlUpdateStatus, {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                      },
+                      body: JSON.stringify({
+                        status: 0,
+                        updatedBy: 1,
+                      }),
+                    })
+                      .then((response) => response.json())
+                      .then((data) => {
+                        getListItem();
+                      })
+                      .catch((error) => console.log(error));
+                  }
+                }
+              });
+            });
+          })
+          .catch((error) => console.log(error));
+      }
+      getListItem();
+
+      function getTimeFromString2(strDate) {
+        var arrDate = strDate.split("/");
+        var year = parseInt(arrDate[2]);
+        var month = parseInt(arrDate[1]) - 1;
+        var date = parseInt(arrDate[0]);
+        return new Date(year, month, date).getTime();
+      }
+    </script>
+  </body>
+</html>

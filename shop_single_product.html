@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--  
+    Document Title
+    =============================================
+    -->
+    <title>Hanoi Food Bank</title>
+    <!--  
+    Favicons
+    =============================================
+    -->
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="assets/images/favicons/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="assets/images/favicons/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="assets/images/favicons/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="assets/images/favicons/apple-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="assets/images/favicons/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="assets/images/favicons/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="assets/images/favicons/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="assets/images/favicons/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/images/favicons/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="assets/images/favicons/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/images/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="assets/images/favicons/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/images/favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta
+      name="msapplication-TileImage"
+      content="assets/images/favicons/ms-icon-144x144.png"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <!--  
+    Stylesheets
+    =============================================
+    
+    -->
+    <!-- Default stylesheets-->
+    <script
+      src="https://upload-widget.cloudinary.com/global/all.js"
+      type="text/javascript"
+    ></script>
+    <link
+      href="assets/lib/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Template specific stylesheets-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Volkhov:400i"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
+      rel="stylesheet"
+    />
+    <link href="assets/lib/animate.css/animate.css" rel="stylesheet" />
+    <link
+      href="assets/lib/components-font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet" />
+    <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet" />
+    <link
+      href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/lib/magnific-popup/dist/magnific-popup.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/lib/simple-text-rotator/simpletextrotator.css"
+      rel="stylesheet"
+    />
+    <!-- Main stylesheet and color file-->
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link
+      id="color-scheme"
+      href="assets/css/colors/default.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./assets/css/repository.css" />
+    <style>
+      .img-avatar {
+        pointer-events: none;
+        cursor: default;
+      }
+      /* modal */
+      .modal-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(119, 116, 116, 0.5);
+      }
+      .modal-dialog {
+        margin: auto;
+        pointer-events: auto;
+      }
+      .modal-main {
+        width: 100%;
+        background: #fff;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .modal-container {
+        padding: 0 16px;
+      }
+      .modal-heading {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+      }
+    </style>
+    <style>
+      .slider-info-food {
+        display: none;
+      }
+
+      .cursor-img-info-food {
+        cursor: pointer;
+      }
+
+      .column-img-info-food {
+        float: left;
+        width: 16.66%;
+        margin: 10px 10px 0 0;
+        height: 120px;
+      }
+
+      .demo-slides-img-food {
+        height: 100%;
+        opacity: 0.6;
+      }
+
+      .active-info-food,
+      .demo-slides-img-food:hover {
+        opacity: 1;
+      }
+
+      #goToFoodList {
+        background-color: khaki;
+        padding: 15px;
+        border: 1px solid;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      #supplier-name {
+        margin-top: unset !important;
+        font-weight: 700;
+      }
+    </style>
+
+    <!-- paypal -->
+    <script src="https://www.paypal.com/sdk/js?client-id=ARfjvhupmZbesvNCgtE5AJV8zCxdME-gej0ajX-4aBkkIpdstLDqPA1dqw3oZIozjICO5A78qlEIw1OL&components=buttons"></script>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+  </head>
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+      <div class="page-loader">
+        <div class="loader">Loading...</div>
+      </div>
+      <header id="header"></header>
+      <div class="main">
+        <section
+          class="custom-header-img module bg-dark-30 about-page-header"
+          data-background="/assets/images/gallery/bg/bg5.jpg"
+        ></section>
+        <section class="module">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-8 mb-sm-40">
+                <div class="view-image-product">
+                  <!-- <a class="gallery" href="assets/images/shop/product-7.jpg">
+                    <img src="assets/images/shop/product-7.jpg" alt="Single Product Image"/>
+                  </a>
+                  <ul class="product-gallery">
+                    <li><a class="gallery" href="assets/images/shop/product-8.jpg"></a><img src="assets/images/shop/product-8.jpg" alt="Single Product"/></li>
+                    <li><a class="gallery" href="assets/images/shop/product-9.jpg"></a><img src="assets/images/shop/product-9.jpg" alt="Single Product"/></li>
+                    <li><a class="gallery" href="assets/images/shop/product-10.jpg"></a><img src="assets/images/shop/product-10.jpg" alt="Single Product"/></li>
+                  </ul> -->
+                </div>
+              </div>
+              <div
+                class="col-sm-4 view-info-product"
+                style="max-height: 200px"
+              ></div>
+            </div>
+            <div class="row" style="margin-top: 100px">
+              <div class="col-sm-12">
+                <ul class="nav nav-tabs font-alt" role="tablist">
+                  <li class="active">
+                    <a href="#data-sheet" data-toggle="tab"
+                      ><i class="fa fa-id-card-o" aria-hidden="true"></i>
+                      Supplier info</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#description" data-toggle="tab"
+                      ><span class="icon-tools-2"></span>Description</a
+                    >
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div
+                    class="tab-pane active"
+                    style="min-height: 257px"
+                    id="data-sheet"
+                  >
+                    <table
+                      class="table table-striped ds-table table-responsive"
+                    >
+                      <div class="col-sm-12">
+                        <div class="col-sm-3">
+                          <img src="" id="supplier-avatar" />
+                        </div>
+                        <div class="col-sm-9">
+                          <h4 id="supplier-name"></h4>
+                          <h5>Point: <span id="supplier-point"></span></h5>
+                          <ul
+                            class=""
+                            style="list-style: none; margin: 0; padding: 0"
+                          >
+                            <li>
+                              <i
+                                class="fa fa-envelope-o"
+                                aria-hidden="true"
+                              ></i>
+                              Email:
+                              <span id="supplier-email"> </span>
+                            </li>
+                            <li>
+                              <i class="fa fa-phone"></i> Phone:
+                              <span id="supplier-phone"> </span>
+                            </li>
+                            <li>
+                              <i class="fa fa-home"></i> Address:
+                              <span id="supplier-address"> </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </table>
+                  </div>
+                  <div
+                    class="tab-pane"
+                    id="description"
+                    style="min-height: 257px"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <hr class="divider-w" />
+
+        <!-- sản phẩm tương tự -->
+        <section class="module-small">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Related Products</h2>
+              </div>
+            </div>
+            <div class="row multi-columns-row related-products"></div>
+          </div>
+        </section>
+        <hr class="divider-w" />
+        <!-- <section class="module">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Exclusive products</h2>
+                <div class="module-subtitle font-serif">The languages only differ in their grammar, their pronunciation and their most common words.</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg" alt="Leather belt"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg" alt="Derby shoes"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Derby shoes</a></h4>£54.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-4.jpg" alt="Leather belt"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£14.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-5.jpg" alt="Chelsea boots"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Chelsea boots</a></h4>£44.00
+                    </div>
+                  </div>
+                </div>
+                <div class="owl-item">
+                  <div class="col-sm-12">
+                    <div class="ex-product"><a href="#"><img src="assets/images/shop/product-6.jpg" alt="Leather belt"/></a>
+                      <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> -->
+
+        <!-- Modal send request layout -->
+        <section class="modalLayout">
+          <div class="modal modal-single-food">
+            <div class="modal-overlay"></div>
+
+            <div class="modal-dialog">
+              <div class="modal-main">
+                <div class="modal-container">
+                  <div class="modal-header">
+                    <h3 class="modal-heading">Send message</h3>
+                  </div>
+                  <div class="modal-body">
+                    <form id="formMessageRequest" action="" method="POST">
+                      <div>
+                        <div class="form-group">
+                          <label for="messageModal" class="form-label"
+                            >Say something to Food Donor</label
+                          >
+                          <textarea
+                            id="messageModal"
+                            required
+                            name="message"
+                            style="resize: vertical"
+                            rows="10"
+                            placeholder="Enter message"
+                            class="form-control"
+                          ></textarea>
+                          <span class="form-message"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+                    <a
+                      onclick="closeSendMail()"
+                      style="float: left; color: red; cursor: pointer"
+                      >Close</a
+                    >
+                    <button
+                      onclick="sendRequest()"
+                      class="btn btn-b btn-round btnSubmit"
+                      type="button"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div id="footer"></div>
+      </div>
+      <div class="scroll-up">
+        <a href="#totop"><i class="fa fa-angle-double-up"></i></a>
+      </div>
+    </main>
+    <!--  
+    JavaScripts
+    =============================================
+    -->
+    <script
+      src="https://upload-widget.cloudinary.com/global/all.js"
+      type="text/javascript"
+    ></script>
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"
+    ></script>
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"
+    ></script>
+    <script src="assets/lib/jquery/dist/jquery.js"></script>
+    <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/lib/wow/dist/wow.js"></script>
+    <script src="assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+    <script src="assets/lib/isotope/dist/isotope.pkgd.js"></script>
+    <script src="assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+    <script src="assets/lib/flexslider/jquery.flexslider.js"></script>
+    <script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script src="assets/lib/smoothscroll.js"></script>
+    <script src="assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+    <script src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+
+    <script src="assets/js/user/common.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="./assets/js/validator.js"></script>
+
+    <script
+      src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"
+      type="text/javascript"
+    ></script>
+    <script src="./assets/js/notification.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+      integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- <script src="./assets/js/app.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script>
+      function getSupplierInfo(supplierEmail) {
+        if (!isToken) {
+          isToken =
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaHVvbmdsdmQwMDYzMUBmcHQuZWR1LnZuIiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpc3MiOiJodHRwczovL2hmYi10MTA5OGUuaGVyb2t1YXBwLmNvbS9hcGkvdjEvaGZiL2xvZ2luIiwiZXhwIjoxNjM2NTU4MzQyfQ.GWSbBk2gvGqsvgq8s-3c7P-bmO0PeFKgjsLczox5L6M";
+        }
+        fetch(
+          `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users/${supplierEmail}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${isToken}`,
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((account) => {
+            if (account && account.data) {
+              supplierAccount = account.data;
+              if (
+                isToken ==
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaHVvbmdsdmQwMDYzMUBmcHQuZWR1LnZuIiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpc3MiOiJodHRwczovL2hmYi10MTA5OGUuaGVyb2t1YXBwLmNvbS9hcGkvdjEvaGZiL2xvZ2luIiwiZXhwIjoxNjM2NTU4MzQyfQ.GWSbBk2gvGqsvgq8s-3c7P-bmO0PeFKgjsLczox5L6M"
+              ) {
+                token = "";
+              }
+              bindDataAccount(supplierAccount);
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+
+      function bindDataAccount(data) {
+        var avatar_url = `https://res.cloudinary.com/vernom/image/upload/${data.avatar}`;
+        if (!data.avatar & (data.avatar == null)) {
+          document
+            .querySelector("#supplier-avatar")
+            .setAttribute(
+              "src",
+              "https://res.cloudinary.com/vernom/image/upload/v1635678562/hanoi_food_bank_project/users_avatar/null_avatar.jpg"
+            );
+        } else {
+          document
+            .querySelector("#supplier-avatar")
+            .setAttribute("src", avatar_url);
+        }
+
+        document.getElementById("supplier-name").innerHTML = data.name;
+        document.getElementById("supplier-point").innerHTML =
+          data.pointEvaluation;
+        document.getElementById("supplier-email").innerHTML = data.email;
+        document.getElementById("supplier-phone").innerHTML =
+          data.phone.slice(0, 6) + "***";
+        document.getElementById("supplier-address").innerHTML = data.address;
+      }
+    </script>
+    <script>
+      $(document).ready(function () {
+        Notification.config();
+      });
+      // lay id theo url
+      let params = new URL(document.URL).searchParams;
+      var id = params.get("id");
+      if (id == null) {
+        location.replace("../shop_product_col_4.html");
+      }
+
+      var getDetailFood = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/${id}`;
+      var shopItem = document.querySelector(".view-image-product");
+      var viewInfoProduct = document.querySelector(".view-info-product");
+      var listFoodCategory;
+
+      // get token
+      var pairs = document.cookie.split(";");
+      var cookies = {};
+      for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split("=");
+        cookies[(pair[0] + "").trim()] = unescape(pair.slice(1).join("="));
+      }
+      var token = cookies.token;
+      var usernameAccount = cookies.username;
+
+      var itemFoodInfo;
+      // Get InfoFood
+      function getInfoFood() {
+        fetch(getDetailFood, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((listItems) => {
+            getSupplierInfo(listItems.data.supplierEmail);
+
+            let myPromiseInfoFood = new Promise(function (myResolve) {
+              listFoodCategory = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?categoryId=${listItems.data.categoryId}&page=0&limit=4&status=2`;
+              var listItemImages = listItems.data.images;
+              if (listItemImages.slice(-1) == ",") {
+                listItemImages = listItemImages.slice(0, -1);
+              }
+              listItemImages = listItemImages.split(",");
+              var htmlsItem = `
+            <div class="row multi-columns-row" >
+                  <div class="slider-image">`;
+              listItemImages.map(function (image) {
+                htmlsItem += `
+                <div class="slider-info-food">
+                  <img src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${image}" style="width:100%; max-height: 450px">
+                </div>`;
+              });
+
+              htmlsItem += `
+                    <div>`;
+              for (let i = 0; i < listItemImages.length; i++) {
+                htmlsItem += `
+                <div class="column-img-info-food">
+                  <img class="demo-slides-img-food cursor-img-info-food" src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${
+                    listItemImages[i]
+                  }" style="width:100%" onclick="showSlides(${
+                  i + 1
+                })" alt="The Image ${i + 1}">
+                </div>
+              `;
+              }
+              htmlsItem += `
+                </div>
+              </div>
+            </div>
+						`;
+
+              var htmlsInfoProduct = `
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h1 class="product-title font-alt">${listItems.data.name}</h1>
+                  </div>
+                </div>
+                <div class="row mb-20">
+                  <div class="col-sm-12">
+                    <div class="product_meta">Categories:<a href="#"> ${listItems.data.category}</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-20">
+                  <div class="col-sm-12">
+                      <div class="description">
+                        <span style="font-size: 16px; color: #000;">Expiration Date: ${listItems.data.expirationDate}</span>
+                        <p id="expirationdate"><span style="font-size: 14px; color: #000;"></span></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-20">
+                  <div class="col-sm-12">
+                    <div class="description">
+                      <p>Content: ${listItems.data.content}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-20">
+                  <div class="col-sm-12"><button class="btn btn-lg btn-block btn-round btn-b" type="button" id="addToCart" onclick="addToCart()">Ask for food</button></div>
+                </div>`;
+              var htmlsInfoDes = `<p> ${listItems.data.description}</p>`;
+
+              document.querySelector("#description").innerHTML = htmlsInfoDes;
+              shopItem.innerHTML = htmlsItem;
+              viewInfoProduct.innerHTML = htmlsInfoProduct;
+              var expiration = getTimeFromString2(
+                listItems.data.expirationDate
+              );
+              var now1 = new Date().getTime();
+              var timeRest1 = expiration - now1;
+              if (timeRest1 <= 0) {
+                document.querySelector("#addToCart").disabled = true;
+                document.querySelector("#addToCart").innerText = "Expired food";
+              }
+              showSlides(1);
+
+              fetch(`https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/${id}`, {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+                .then((response) => response.json())
+                .then((itemFood) => {
+                  itemFoodInfo = itemFood.data;
+
+                  if (itemFood.data.createdBy == idAccount) {
+                    document.querySelector("#addToCart").disabled = true;
+                    document.querySelector("#addToCart").innerText =
+                      "Your Food";
+
+                    document.querySelector("#expirationdate").innerHTML =
+                      "Expired food";
+                    document.querySelector("#expirationdate").style.color =
+                      "#000";
+                    document.querySelector("#expirationdate").style.fontWeight =
+                      "900";
+                    document.querySelector("#expirationdate").style.fontSize =
+                      "16px";
+                  }
+                })
+                .catch((error) => console.log(error));
+
+              myResolve();
+            });
+
+            myPromiseInfoFood.then(function () {
+              var p = document.querySelector(`#expirationdate`);
+              var tet = getTimeFromString2(listItems.data.expirationDate);
+              var now1 = new Date().getTime();
+              var timeRest1 = tet - now1;
+              if (timeRest1 > 0) {
+                run();
+                var countDown = setInterval(run, 1000);
+                // Tổng số giây
+                function run() {
+                  var now = new Date().getTime();
+                  //Số s đến thời gian hiện tại
+                  var timeRest = tet - now;
+                  //Số s còn lại để đến tết;
+                  var day = Math.floor(timeRest / (1000 * 60 * 60 * 24));
+                  //Số ngày còn lại
+                  var hours = Math.floor(
+                    (timeRest % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                  );
+                  // Số giờ còn lại
+                  var minute = Math.floor(
+                    (timeRest % (1000 * 60 * 60)) / (1000 * 60)
+                  );
+                  // Số phút còn lại
+                  var sec = Math.floor((timeRest % (1000 * 60)) / 1000);
+                  // Số giây còn lại
+                  if (timeRest <= 0) {
+                    clearInterval(countDown);
+                    p.innerHTML = "Expired food";
+                    p.style.color = "#000";
+                    p.style.fontWeight = "900";
+                    p.style.fontSize = "16px";
+                    document.getElementById("addToCart").disabled = true;
+                  }
+                  p.innerHTML =
+                    "TIME REMAINING: " +
+                    day +
+                    " DAY " +
+                    hours +
+                    " : " +
+                    minute +
+                    " : " +
+                    sec +
+                    "  ";
+                }
+
+                listrelatedProducts();
+              } else {
+                p.innerHTML = "Expired food";
+                p.style.color = "#000";
+                p.style.fontWeight = "900";
+                p.style.fontSize = "16px";
+                document.getElementById("addToCart").disabled = true;
+                document.getElementById("addToCart").innerText = "Expired food";
+              }
+            });
+          })
+          .catch((error) => console.log(error));
+      }
+      getInfoFood();
+
+      // tai day
+      function listrelatedProducts() {
+        var relatedProducts = document.querySelector(".related-products");
+        fetch(listFoodCategory)
+          .then((response) => response.json())
+          .then((listFood) => {
+            let myPromise = new Promise(function (myResolve) {
+              // console.log(listFood.data.content);
+              var htmlsItem = listFood.data.content.map(function (item) {
+                return `
+                      <div class="col-sm-6 col-md-3 col-lg-3" style="min-height: 350px" id="shop-item-${item.id}">
+                        <div class="shop-item">
+                          <div class="shop-item-image">
+                            <img class="img-food" src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${item.avatar}" class="img-food" alt="Cold Garb"/>
+                            <div class="shop-item-detail">
+                              <a class="btn btn-round btn-b" href="./shop_single_product.html?id=${item.id}">
+                                <i class="fa fa-eye"></i> View Details
+                              </a>
+                            </div>
+                          </div>
+                          <h4 class="shop-item-title font-alt"><a href="#">${item.name}</a></h4>
+                          <p>Expiration Date: ${item.expirationDate}</p>
+                        </div>
+                      </div>
+                      `;
+              });
+              relatedProducts.innerHTML = htmlsItem.join("");
+              myResolve(); // when successful
+            });
+            myPromise.then(function () {
+              listFood.data.content.map(function (item2) {
+                var tet = getTimeFromString2(item2.expirationDate);
+                run();
+
+                // Tổng số giây
+                var countDown = setInterval(run, 1000);
+                function run() {
+                  var now = new Date().getTime();
+                  var timeRest = tet - now;
+                  if (timeRest <= 0) {
+                    clearInterval(countDown);
+                    document.querySelector(
+                      `#shop-item-${item2.id}`
+                    ).style.display = "none";
+
+                    var urlUpdateStatus = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/status/${item2.id}`;
+                    fetch(urlUpdateStatus, {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                      },
+                      body: JSON.stringify({
+                        status: 0,
+                        updatedBy: 1,
+                      }),
+                    })
+                      .then((response) => response.json())
+                      .then((data) => {
+                        listrelatedProducts();
+                      })
+                      .catch((error) => console.log(error));
+                  }
+                }
+              });
+            });
+          })
+          .catch((error) => console.log(error));
+      }
+
+      // Add To Cart
+      var idUserFood;
+      var modalsinglefood = document.querySelector(".modal-single-food");
+      function addToCart() {
+        var cookie = document.cookie;
+        if (
+          cookie === null ||
+          cookie === undefined ||
+          cookie === NaN ||
+          cookie === "" ||
+          cookie === []
+        ) {
+          location.replace("../login_register.html");
+        } else {
+          idUserFood = itemFoodInfo.createdBy;
+          avatarFood = itemFoodInfo.avatar;
+          var getRequestById = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/${idAccount}/${id}`;
+          fetch(getRequestById, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((itemRequest) => {
+              if (itemRequest.status == 200) {
+                modalsinglefood.style.display = "none";
+                swal(
+                  "Error!",
+                  "You have applied, please wait for the giver to confirm",
+                  "error"
+                );
+              } else {
+                modalsinglefood.style.display = "flex";
+              }
+            })
+            .catch((error) => console.log(error));
+        }
+      }
+
+      // Close Modal Message
+      function closeSendMail() {
+        modalsinglefood.style.display = "none";
+      }
+
+      var avatarFood;
+      // Send Request
+      function sendRequest() {
+        // get Id User
+        var idAccount;
+        var getUserByUsername = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users/${usernameAccount}`;
+        fetch(getUserByUsername, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((account) => {
+            idAccount = account.data.id;
+            postrequest();
+          })
+          .catch((error) => console.log(error));
+      }
+
+      var postrequestAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests`;
+      function postrequest() {
+        var message = document.querySelector("#messageModal").value;
+        if (message == "" || message == null || message == undefined) {
+          swal("Warning!", "Please say something to the giver!", "warning");
+        } else {
+          fetch(postrequestAPI, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              userId: idAccount,
+              foodId: id,
+              message: message,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              var today = new Date();
+              var time =
+                today.getDate() +
+                "-" +
+                (today.getMonth() + 1) +
+                "-" +
+                today.getFullYear() +
+                " " +
+                today.getHours() +
+                ":" +
+                today.getMinutes() +
+                ":" +
+                today.getSeconds();
+              swal("Success!", "Successful request for food!", "success");
+              modalsinglefood.style.display = "none";
+
+              Notification.send(idUserFood, {
+                idNotify: "",
+                usernameaccount: usernameAccount,
+                foodid: id,
+                avatar: avatarFood,
+                title: "Someone is asking you about food",
+                message: "Time request: " + time,
+                category: "request",
+                status: 1,
+              });
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
+      }
+
+      // Chuyen time tu string sang long
+      function getTimeFromString2(strDate) {
+        var arrDate = strDate.split("/");
+        var year = parseInt(arrDate[2]);
+        var month = parseInt(arrDate[1]) - 1;
+        var date = parseInt(arrDate[0]);
+        return new Date(year, month, date).getTime();
+      }
+    </script>
+    <script>
+      // slides image
+      function showSlides(n) {
+        var slides = document.getElementsByClassName("slider-info-food");
+        var dots = document.getElementsByClassName("demo-slides-img-food");
+        if (n > slides.length) {
+          n = 1;
+        }
+        if (n < 1) {
+          n = slides.length;
+        }
+        for (var i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        for (var i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(
+            " active-info-food",
+            ""
+          );
+        }
+        slides[n - 1].style.display = "block";
+        dots[n - 1].className += " active-info-food";
+      }
+    </script>
+  </body>
+</html>

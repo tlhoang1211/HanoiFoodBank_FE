@@ -1,0 +1,99 @@
+.my-navbar {
+  margin-top: 5px;
+}
+
+.donate {
+  margin-left: 10px;
+}
+
+.donate_button {
+  border: 1px solid whitesmoke;
+  border-radius: 10%;
+  font-size: larger;
+  font-weight: bold;
+  padding: 13px !important;
+  background-color: whitesmoke !important;
+  color: lightslategray !important;
+  max-width: 83px;
+}
+
+.new_food_button:hover,
+.new_food_button:focus {
+  text-decoration: none;
+  color: whitesmoke !important;
+  cursor: pointer;
+}
+
+.donate_button:hover,
+.donate_button:focus {
+  background-color: transparent !important;
+  color: whitesmoke !important;
+  cursor: pointer;
+}
+
+.header__cart-icon {
+  padding: 0 15px;
+  font-size: 20px;
+  color: #fff;
+  margin-top: 14px;
+  margin-left: 15px;
+}
+
+.category_col {
+  padding-right: 15px !important;
+  padding-left: 0px !important;
+}
+
+.date_col {
+  padding-left: 15px !important;
+  padding-right: 0px !important;
+}
+
+.nav > li > a {
+  padding: 10px 10px !important;
+}
+
+#user-account {
+  margin-top: -5px;
+}
+
+.navbar-custom .dropdown-toggle:after {
+  top: 40% !important;
+  margin-top: 0px;
+  font-size: 12px;
+}
+
+.navbar-custom {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#dropavatar {
+  margin-top: 15px;
+  margin-left: 10px;
+  background-color: whitesmoke;
+}
+
+#dropavatar > li > a:hover,
+#dropavatar > li > a:focus {
+  color: black !important;
+  cursor: pointer;
+}
+
+.navbar__user {
+  margin-right: 10px;
+}
+
+.navbar-fixed-top.scrolled {
+  background-color: black !important;
+  transition: background-color 200ms linear;
+}
+
+.navbar-custom .nav li > a {
+  font-weight: 600;
+}
+
+#hi-name {
+  pointer-events: none;
+  color: white;
+  background-color: black;
+}

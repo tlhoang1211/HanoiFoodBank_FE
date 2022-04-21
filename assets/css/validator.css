@@ -1,0 +1,27 @@
+
+  .form-message {
+    text-align: left;
+  }
+  
+  .form-control:hover {
+    border-color: #1dbfaf;
+  }
+  
+  .form-group.invalid .form-control {
+    border-color: #f33a58;
+  }
+  
+  .form-group.invalid .form-message {
+    color: #f33a58;
+  }
+  
+  .form-message {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    padding: 4px 0 0;
+  }
+  
+  .spacer {
+    margin-top: 36px;
+  }
+  
