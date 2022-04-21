@@ -1,0 +1,107 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-lg-12 col-xl-12">
+                <form class="float-lg-start">
+                    <div class="row row-cols-lg-auto g-2">
+                        <div class="col-12">
+                            <div class="position-relative divFilterDate">
+                                <span class="position-absolute top-50 product-show translate-middle-y"><i class='bx bx-calendar'></i></span>
+                                <input id="rs-date" type="text" class="form-control ps-5 text-center" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0">Charity Money</p>
+                        <h4 class="my-1 countDonate"></h4>
+                    </div>
+                    <div class="widgets-icons ms-auto"><i class='bx bxs-wallet'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0">Total Food Posted</p>
+                        <h4 class="my-1 countFood"></h4>
+                    </div>
+                    <div class="widgets-icons ms-auto"><i class='bx bxs-group'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0">Total given food</p>
+                        <h4 class="my-1 countRequest"></h4>
+                    </div>
+                    <div class="widgets-icons ms-auto"><i class='bx bxs-binoculars'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 d-flex">
+        <div class="card radius-10 w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-1">Charity money</h5>
+                    </div>
+                    <div class="font-22 ms-auto changeChartDonate" onclick="changTypeChart('.changeChartDonate', 'donate')"><i class='bx bx-bar-chart-alt-2' ></i></div>
+                </div>
+                <div id="chart_donate"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end row-->
+<div class="row row-cols-1 row-cols-xl-2">
+    <div class="col d-flex">
+        <div class="card radius-10 w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-1">Food</h5>
+                    </div>
+                    <div class="font-22 ms-auto changeChartFood" onclick="changTypeChart('.changeChartFood', 'food')"><i class='bx bx-bar-chart-alt-2' ></i></div>
+                </div>
+                <div id="chart_food"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col d-flex">
+        <div class="card radius-10 w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-1">Request</h5>
+                    </div>
+                    <div class="font-22 ms-auto changeChartRequest" onclick="changTypeChart('.changeChartRequest', 'request')"><i class='bx bx-bar-chart-alt-2' ></i></div>
+                </div>
+                <div id="chart_request"></div>
+            </div>
+        </div>
+    </div>
+</div>
+

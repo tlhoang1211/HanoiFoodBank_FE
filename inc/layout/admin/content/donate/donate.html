@@ -1,0 +1,166 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-lg-12 col-xl-12">
+                <form class="float-lg-start">
+                    <div class="row row-cols-lg-auto g-2">
+                        <div class="col-12">
+                            <div class="position-relative">
+                                <input id="searchDonate" type="text" class="form-control ps-5" onkeypress="return searchNameDonate('#searchDonate', this)" placeholder="Search Donate...">
+                                <span class="position-absolute top-50 product-show translate-middle-y" onclick="searchNameDonate('#searchDonate')"><i class="bx bx-search"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="btn-group float-start">
+                                <button class="btn btn-light dropdown-toggle show" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="true">Order by</button>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"
+                                    style="margin: 0px;">
+                                    <a class="dropdown-item active" onclick="onChangeOrderBy(this, 'asc')">From a-z</a>
+                                    <a class="dropdown-item" onclick="onChangeOrderBy(this, 'desc')">From z-a</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card radius-10">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <div>
+                <h5 class="mb-0">Donate list</h5>
+            </div>
+        </div>
+        <hr />
+        <div class="zero-warning d-none">
+            <div class="box-icon-warning d-flex" style="justify-content: center;align-items: center;margin: auto;flex-direction: column;">
+                <div><i class='bx bx-file-find' style="font-size: 50px;"></i></div>
+                <div>No records found</div>
+            </div>
+        </div>
+        <div class="table-responsive" id="table-Donate">
+            <table class="table align-middle mb-0 table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th class="text-end">Amount</th>
+                        <th>Content</th>
+                        <th>Phone</th>
+                        <th>Created At</th>
+                        <th>View Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="axbox-footer mt-2 float-end">
+            <div id="nextpage"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-detail-donate">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header">
+                <h5 class="modal-title">Details Donate</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <img src="https://via.placeholder.com/110x110" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                    <div class="mt-3">
+                                        <h4 class="name_donate">*****</h4>
+                                        <p class="mb-1 email_donate">*******</p>
+                                        <p class="font-size-sm address_donate">*************</p>
+                                        <button class="btn btn-light"><i class='bx bx-phone-call' ></i></button>
+                                        <button class="btn btn-light"><i class='bx bx-message-square-edit'></i></button>
+                                        <button class="btn btn-light"><i class='bx bx-mail-send' ></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-sm-4">
+                                        <h6 class="mb-0">Full Name :</h6>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p id="name_donate"></p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-4">
+                                        <h6 class="mb-0">Email :</h6>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p id="email_donate">*******</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-4">
+                                        <h6 class="mb-0">Phone :</h6>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p id="phone_donate">*******</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-4">
+                                        <h6 class="mb-0">Mobile :</h6>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p id="mobile_donate"></p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-4">
+                                        <h6 class="mb-0">Address :</h6>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p id="address_donate">*******</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-4">
+                                        <h6 class="mb-0">Amount :</h6>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p id="amount_donate"></p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-4">
+                                        <h6 class="mb-0">Content :</h6>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p id="content_donate"></p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-4">
+                                        <h6 class="mb-0">Donation Day :</h6>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <p id="date_donate"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
