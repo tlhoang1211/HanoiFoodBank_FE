@@ -1,0 +1,142 @@
+.notification-box {
+  margin-right: 16px;
+  position: absolute;
+  border: 1px solid #d3d3d3;
+  cursor: default;
+  transform-origin: 90% top;
+  z-index: 1;
+  border-radius: 2px;
+  display: none;
+  width: 400px;
+  max-height: 500px;
+  position: absolute;
+  top: 60px;
+  right: -20px;
+  background-color: #fff;
+  animation: headerNotiGrowth ease-in 0.25s;
+  will-change: opacity, transform;
+}
+.notification-box::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  top: -16px;
+  width: 90px;
+  height: 20px;
+}
+.notification-box::before {
+  content: "";
+  border-width: 20px 26px;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent;
+  position: absolute;
+  right: 4px;
+  top: -32px;
+}
+.navbar__item--has-notify:hover .notification-box {
+  display: block;
+}
+@keyframes headerNotiGrowth {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.header__notify-header {
+  height: 40px;
+}
+
+.header__notify-header h6 {
+  color: rgb(80, 80, 80);
+  margin: 0 0 0 12px;
+  font-weight: 600;
+  line-height: 40px;
+}
+.header__notify-item {
+  display: flex;
+}
+
+.header__notify-item:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.header__notify-item--status-1 {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.header__notify-item--status-0 {
+  background-color: #fff;
+}
+
+.header__notify-list {
+  display: block;
+  padding-left: 0;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+.header__notify-link {
+  display: flex;
+  padding-left: 12px;
+  width: 100%;
+}
+.header__notify-img {
+  width: 48px;
+  height: 38px;
+}
+.header__notify-info {
+  margin-left: 12px;
+  display: block;
+}
+.header__notify-name {
+  display: block;
+  font-size: 12px;
+  color: #000;
+  font-weight: 400;
+}
+.header__notify-des {
+  display: block;
+  font-size: 10px;
+  color: #756f6e;
+  margin-top: 4px;
+}
+.header__notify-footer {
+  display: flex;
+}
+.header__notify-footer-btn {
+  color: #999999;
+  padding: 6px 0;
+  width: 100%;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.header__notify-notice {
+  position: absolute;
+  padding: 0px 4px;
+  top: -3px;
+  text-align: center;
+  right: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  background: whitesmoke;
+  color: #000;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+  /* padding: 1px 15px;
+  margin-left: 15px; */
+
+.header__notify-icon {
+  font-size: 20px;
+  color: whitesmoke;
+  margin-top: 10px;
+  padding: 0 15px;
+}

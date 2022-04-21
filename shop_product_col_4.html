@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--  
+    Document Title
+    =============================================
+    -->
+    <title>Hanoi Food Bank</title>
+    <!--  
+    Favicons
+    =============================================
+    -->
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="assets/images/favicons/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="assets/images/favicons/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="assets/images/favicons/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="assets/images/favicons/apple-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="assets/images/favicons/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="assets/images/favicons/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="assets/images/favicons/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="assets/images/favicons/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/images/favicons/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="assets/images/favicons/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/images/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="assets/images/favicons/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/images/favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta
+      name="msapplication-TileImage"
+      content="assets/images/favicons/ms-icon-144x144.png"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <!--  
+    Stylesheets
+    =============================================
+    
+    -->
+    <!-- Default stylesheets-->
+    <link
+      href="assets/lib/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Template specific stylesheets-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Volkhov:400i"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
+      rel="stylesheet"
+    />
+    <link href="assets/lib/animate.css/animate.css" rel="stylesheet" />
+    <link
+      href="assets/lib/components-font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet" />
+    <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet" />
+    <link
+      href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/lib/magnific-popup/dist/magnific-popup.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/lib/simple-text-rotator/simpletextrotator.css"
+      rel="stylesheet"
+    />
+    <!-- Main stylesheet and color file-->
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link
+      id="color-scheme"
+      href="assets/css/colors/default.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./assets/css/repository.css" />
+
+    <!-- paypal -->
+    <script src="https://www.paypal.com/sdk/js?client-id=ARfjvhupmZbesvNCgtE5AJV8zCxdME-gej0ajX-4aBkkIpdstLDqPA1dqw3oZIozjICO5A78qlEIw1OL&components=buttons"></script>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+  </head>
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+      <div class="page-loader">
+        <div class="loader">Loading...</div>
+      </div>
+      <header id="header"></header>
+      <div class="main">
+        <section
+          class="module bg-dark-60 shop-page-header"
+          data-background="./assets/images/gallery/bg/bg1.jpg"
+        >
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Food List</h2>
+                <div class="module-subtitle font-serif">
+                  Find and ask for the food you lack, you need. Don't be greedy!
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="module-small" style="padding: 40px 0 0;">
+          <div class="container">
+            <form class="row">
+              <div class="col-sm-4">
+                <button style="padding: 10px 0 10px;" class="btn btn-block btn-g" type="button" onclick="searchNameCategory()">
+                  Search Food Name & Category
+                </button>
+              </div>
+              <div class="col-sm-3">
+                <button style="padding: 10px 0 10px;" class="btn btn-block btn-round btn-g" type="button" onclick="searchExpirationDate()">
+                  Search Expiration Date
+                </button>
+              </div>
+              <div class="col-sm-3">
+                <button style="padding: 10px 0 10px;" class="btn btn-block btn-round btn-g" type="button" onclick="sortByExpirationDate()">
+                  Sort By Expiration Date
+                </button>
+              </div>
+              <div class="col-sm-2">
+                <button style="padding: 10px 0 10px;" class="btn btn-block btn-round btn-g" type="button" onclick="sortByName()">
+                  Sort By Name
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+        <section class="module-small" style="padding: 20px 0 40px;">
+          <div class="container">
+            <form class="row" id="searchAndSort">
+              
+            </form>
+          </div>
+        </section>
+        <hr class="divider-w" />
+        </section>
+        <section class="module-small">
+          <div class="container">
+            <div class="row multi-columns-row list-shop-item">
+              
+            </div>
+            <div class="row multi-columns-row" id="data-container"></div>
+            
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="pagination font-alt">
+              </div>
+            </div>
+          </div>
+        </section>
+        <div id="footer"></div>
+      </div>
+      <div class="scroll-up">
+        <a href="#totop"><i class="fa fa-angle-double-up"></i></a>
+      </div>
+    </main>
+    <!--  
+    JavaScripts
+    =============================================
+    -->
+    <script
+      src="https://upload-widget.cloudinary.com/global/all.js"
+      type="text/javascript"
+    ></script>
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"
+    ></script>
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"
+    ></script>
+    <script src="assets/lib/jquery/dist/jquery.js"></script>
+    <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/lib/wow/dist/wow.js"></script>
+    <script src="assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+    <script src="assets/lib/isotope/dist/isotope.pkgd.js"></script>
+    <script src="assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+    <script src="assets/lib/flexslider/jquery.flexslider.js"></script>
+    <script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script src="assets/lib/smoothscroll.js"></script>
+    <script src="assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+    <script src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/user/common.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="./assets/js/notification.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <script src="./assets/js/pagination.js"></script>
+    <script>
+      var search = document.querySelector('#searchAndSort');
+
+      function searchNameCategory(){
+        var searchFoodNameCategory = `
+        <div class="col-sm-5">
+        </div>
+        <div class="col-sm-3">
+          <input class="form-control" id="nameSearchNameCategory" type="text" placeholder="Search Food Name">
+        </div>
+        <div class="col-sm-2">
+          <select name="category" id="categorySearchNameCategory" class="form-control required">
+            <option selected disabled>Category</option>
+            <option value="1">Drinks</option>
+            <option value="2">Noodle</option>
+            <option value="3">Bread</option>
+            <option value="4">Rice</option>
+            <option value="5">Meat</option>
+            <option value="6">Seafood</option>
+            <option value="7">Vegetables</option>
+            <option value="8">Vegetarian Food</option>
+            <option value="9">Fruit</option>
+            <option value="10">Fast Food</option>
+            <option value="11">Snacks</option>
+            <option value="12">Others</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <button onclick="searchNameCategory1()" class="btn btn-block btn-round btn-b" type="button">
+            Search
+          </button>
+        </div>
+        `;
+        search.innerHTML = searchFoodNameCategory;
+      }
+      function searchExpirationDate(){
+        var searchFoodExpirationDate = `
+          <div class="col-sm-8">
+          </div>
+          <div class="col-sm-2">
+            <input type="date" id="expirationDateSearchExpirationDate" class="form-control">
+          </div>
+          <div class="col-sm-2">
+            <button onclick="searchExpirationDate1()" class="btn btn-block btn-round btn-b" type="button">
+              Search
+            </button>
+          </div>
+        `;
+        search.innerHTML = searchFoodExpirationDate;
+      }
+      function sortByExpirationDate(){
+        var sortByFoodExpirationDate = `
+          <div class="col-sm-4">
+          </div>
+          <div class="col-sm-4">
+            <button onclick="sortByExpirationDate1()" class="btn btn-block btn-round btn-b" type="button">
+              Sort by longest expiration date
+            </button>
+          </div>
+          <div class="col-sm-4">
+            <button onclick="sortByExpirationDate2()" class="btn btn-block btn-round btn-b" type="button">
+              Sort by shortest expiration date
+            </button>
+          </div>
+        `;
+        search.innerHTML = sortByFoodExpirationDate;
+      }
+      function sortByName(){
+        var sortByFoodName = `
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-3">
+            <button onclick="sortByName1()" class="btn btn-block btn-round btn-b" type="button">
+              Sort By Name a->z
+            </button>
+          </div>
+          <div class="col-sm-3">
+            <button onclick="sortByName2()" class="btn btn-block btn-round btn-b" type="button">
+              Sort By Name z->a
+            </button>
+          </div>
+        `;
+        search.innerHTML = sortByFoodName;
+      }
+
+      var shopitemAPI = 'https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?status=2';
+			var shopItem = document.querySelector('.list-shop-item');
+      function getListItem(){
+				fetch(shopitemAPI,{
+          method: 'GET'
+        })
+				.then(response => response.json())
+				.then(listItems => {
+            paginationFood(listItems.data.content);
+          
+				})
+				.catch(error => console.log(error));
+      }
+			getListItem();
+
+      
+      function searchNameCategory1(){
+        var nameSearchNameCategory = document.querySelector('#nameSearchNameCategory');
+        var categorySearchNameCategory = document.querySelector('#categorySearchNameCategory');
+        var searchNameCategoryUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?name=${nameSearchNameCategory.value}&categoryId=${categorySearchNameCategory.value}&status=2`
+				fetch(searchNameCategoryUrl,{
+          method: 'GET'
+        })
+				.then(response => response.json())
+				.then(listItems => {
+            paginationFood(listItems.data.content);
+          
+				})
+				.catch(error => console.log(error));
+      }
+
+      function searchExpirationDate1(){
+        var expirationDateSearchExpirationDate = document.querySelector('#expirationDateSearchExpirationDate');
+        var searchExpirationDateUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?expirationDate=${expirationDateSearchExpirationDate.value}&status=2`
+				fetch(searchExpirationDateUrl,{
+          method: 'GET'
+        })
+				.then(response => response.json())
+				.then(listItems => {
+            paginationFood(listItems.data.content);
+          
+				})
+				.catch(error => console.log(error));
+      }
+
+      function sortByExpirationDate1(){
+        var sortByExpirationDateUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?order=dsc&sortBy=expirationDate&status=2`
+				fetch(sortByExpirationDateUrl,{
+          method: 'GET'
+        })
+				.then(response => response.json())
+				.then(listItems => {
+            paginationFood(listItems.data.content);
+          
+				})
+				.catch(error => console.log(error));
+      }
+
+      function sortByExpirationDate2(){
+        var sortByExpirationDateUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?order=asc&sortBy=expirationDate&status=2`
+				fetch(sortByExpirationDateUrl,{
+          method: 'GET'
+        })
+				.then(response => response.json())
+				.then(listItems => {
+            paginationFood(listItems.data.content);
+          
+				})
+				.catch(error => console.log(error));
+      }
+
+      function sortByName1(){
+        var sortByNameUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?order=asc&sortBy=name&status=2`
+				fetch(sortByNameUrl,{
+          method: 'GET'
+        })
+				.then(response => response.json())
+				.then(listItems => {
+            paginationFood(listItems.data.content);
+          
+				})
+				.catch(error => console.log(error));
+      }
+
+      function sortByName2(){
+        var sortByNameUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?order=dsc&sortBy=name&status=2`
+				fetch(sortByNameUrl,{
+          method: 'GET'
+        })
+				.then(response => response.json())
+				.then(listItems => {
+            paginationFood(listItems.data.content);
+          
+				})
+				.catch(error => console.log(error));
+      }
+    </script>
+  </body>
+</html>
