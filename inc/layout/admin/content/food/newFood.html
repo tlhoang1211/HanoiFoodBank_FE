@@ -1,0 +1,73 @@
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a onclick="goBack('food', 'food')">List Food</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add New Food</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body p-4">
+        <h5 class="card-title">Add New Food</h5>
+        <hr />
+        <div class="form-body mt-4">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="border border-3 p-4 rounded">
+                        <div class="mb-3">
+                            <label for="nameFood" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="nameFood" placeholder="Enter name" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" rows="3" placeholder="Enter description" autocomplete="off"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputProductDescription" class="form-label">Food images</label>
+                            <div class="imageuploadify well">
+                                <div class="imageuploadify-overlay">
+                                    <i class="fa fa-picture-o"></i>
+                                </div>
+                                <div class="imageuploadify-images-list text-center">
+                                    <i class="bx bxs-cloud-upload"></i>
+                                    <button type="button" class="btn btn-default" id="btn-upload" onclick="upLoadFile()" style="background: rgb(58, 160, 255); color: white;">Select file to upload</button>
+                                </div>
+                            </div>
+                            <div class="thumbnails">
+                                <ul class="cloudinary-thumbnails">
+                                  <li class="cloudinary-thumbnail" data-cloudinary="">
+                                    <img src="" style="width: 300px; height: 300px"/>
+                                    <a href="#" class="cloudinary-delete-edit">x</a>
+                                  </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="border border-3 p-4 rounded">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="category" class="form-label">Category</label>
+                                <select class="form-select" id="category_newFood">
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="expirationDate" class="form-label">Expiration Date</label>
+                                <input type="date" class="form-control" id="expirationDate" placeholder="dd/MM/yyyy" autocomplete="off">
+                            </div>
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-light" onclick="saveFood()">Save Food</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+        </div>
+    </div>
+</div>

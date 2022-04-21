@@ -1,0 +1,150 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-lg-12 col-xl-12">
+                <form class="float-lg-start">
+                    <div class="row row-cols-lg-auto g-2">
+                        <div class="col-12">
+                            <div class="position-relative">
+                                <input id="searchRequest" type="text" class="form-control ps-5" placeholder="Search Request...">
+                                <span class="position-absolute top-50 product-show translate-middle-y" onclick="searchNameRequest('#searchRequest')"><i class="bx bx-search"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="btn-group float-start">
+                                <button class="btn btn-light dropdown-toggle show" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="true">Order by</button>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"
+                                    style="margin: 0px;">
+                                    <a class="dropdown-item active" onclick="onChangeOrderByRequest(this, 'asc')">From a-z</a>
+                                    <a class="dropdown-item" onclick="onChangeOrderByRequest(this, 'desc')">From z-a</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light dropdown-toggle show" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="true">Status</button>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                                    <a class="dropdown-item active" onclick="filterStatusRequest(this)">All</a>
+                                    <a class="dropdown-item" onclick="filterStatusRequest(this, '0')">Deactive</a>
+                                    <a class="dropdown-item" onclick="filterStatusRequest(this, '1')">Pending</a>
+                                    <a class="dropdown-item" onclick="filterStatusRequest(this, '2')">Confirmed</a>
+                                    <a class="dropdown-item" onclick="filterStatusRequest(this, '3')">Done</a>
+                                    <a class="dropdown-item" onclick="filterStatusRequest(this, '4')">Expired</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card radius-10">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <div>
+                <h5 class="mb-0">Request list</h5>
+            </div>
+            <!-- <div class="ms-auto">
+                <a type="button" class="btn btn-light mb-3 mb-lg-0 float-end" onclick="formAddRequest()"><i class="bx bxs-plus-square"></i>New Request</a>
+            </div> -->
+        </div>
+        <hr />
+        <div class="table-responsive" id="table-Request">
+            <table class="table align-middle mb-0 table-striped">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" class="check-all form-check-input"></th>
+                        <th>#</th>
+                        <th>Food Name</th>
+                        <th>Message</th>
+                        <th>Supplier Name</th>
+                        <th>Recipient Name</th>
+                        <th>Recipient Phone</th>
+                        <th>Recipient Address</th>
+                        <th>Status</th>
+                        <th>Created at</th>
+                        <th>Action</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="axbox-footer mt-2 float-end">
+            <div id="nextpage"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteRequest" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header" style="border-bottom: none;">
+                <h5 class="modal-title">Delete Request</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to delete this dish?</p>
+            </div>
+            <div class="modal-footer" style="border-top: none;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="onDeleteRequest()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="approvalRequest" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header" style="border-bottom: none;">
+                <h5 class="modal-title">Browse</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to browse this dish?</p>
+            </div>
+            <div class="modal-footer" style="border-top: none;">
+                <button type="button" class="btn btn-danger" onclick="onBrowseRequest('4')">Do not browse</button>
+                <button type="button" class="btn btn-success" onclick="onBrowseRequest('3')">Browse</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="updateRequest" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header" style="border-bottom: none;">
+                <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="form addform" role="form">
+                    <div class="form-group pt-1">
+                        <label for="name" class="form-label">Name</label>
+                        <textarea id="message" class="form-control" type="text" placeholder="Enter Message" ></textarea>
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group pt-1">
+                        <label for="statusRequest" class="form-label">Status</label>
+                        <select id="statusRequest" class="form-select mb-3">
+                            <option value="0">Deactive</option>
+                            <option value="1">Pending</option>
+                            <option value="2">Confirmed</option>
+                            <option value="3">Done</option>
+                            <option value="4">Expired</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="border-top: none;">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="updateRequest()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>

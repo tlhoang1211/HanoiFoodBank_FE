@@ -1,0 +1,74 @@
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a onclick="goBack('food', 'food')">List Food</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Details Food</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="row g-0">
+        <div class="col-md-4 border-end">
+            <img id="avatar_food" class="img-fluid" alt="..." width="600" height="600">
+            <div class="row mb-3 row-cols-auto g-2 justify-content-center mt-3 list-image-food">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h4 class="card-title titleFood"></h4>
+                <div class="d-flex gap-3 py-3">
+                    <div class="cursor-pointer">
+                        <i class='bx bxs-star text-warning'></i>
+                        <i class='bx bxs-star text-warning'></i>
+                        <i class='bx bxs-star text-warning'></i>
+                        <i class='bx bxs-star text-warning'></i>
+                        <i class='bx bxs-star'></i>
+                    </div>
+                    <div class="text-white"><i class='bx bxs-cart-alt align-middle'></i> 134 request</div>
+                </div>
+                <p class="card-text fs-6 contentFood"></p>
+                <dl class="row">
+                    <dt class="col-sm-3">Category</dt>
+                    <dd class="col-sm-9 nameCategory"></dd>
+
+                    <dt class="col-sm-3">Supplier Name</dt>
+                    <dd class="col-sm-9 supplierName"></dd>
+
+                    <dt class="col-sm-3">Supplier Email</dt>
+                    <dd class="col-sm-9 supplierEmail"></dd>
+
+                    <dt class="col-sm-3">Expiration Date</dt>
+                    <dd class="col-sm-9 expiration_Date"></dd>
+                </dl>
+                <hr>
+                <div class="row row-cols-auto row-cols-1 row-cols-md-3 align-items-center">
+                </div>
+                <div class="d-flex gap-3 mt-3">
+                    <a class="btn btn-white" id="btn-show-edit-food">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <ul class="nav nav-tabs mb-0" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
+                    <div class="d-flex align-items-center">
+                        <div class="tab-icon"><i class='bx bx-comment-detail font-18 me-1'></i>
+                        </div>
+                        <div class="tab-title"> Food Description </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content pt-3">
+            <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
+                <p class="descriptionFood"></p>
+            </div>
+        </div>
+    </div>
+
+</div>

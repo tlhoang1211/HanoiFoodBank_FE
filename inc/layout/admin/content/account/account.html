@@ -1,0 +1,120 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-lg-12 col-xl-12">
+                <form class="float-lg-start">
+                    <div class="row row-cols-lg-auto g-2">
+                        <div class="col-12">
+                            <div class="position-relative">
+                                <input id="searchAccount" type="text" class="form-control ps-5" placeholder="Search Account...">
+                                <span class="position-absolute top-50 product-show translate-middle-y" onclick="searchNameAccount('#searchAccount')"><i class="bx bx-search"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="btn-group float-start">
+                                <button class="btn btn-light dropdown-toggle show" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="true">Order by</button>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"
+                                    style="margin: 0px;">
+                                    <a class="dropdown-item active" onclick="onChangeOrderBy(this, 'asc')">From a-z</a>
+                                    <a class="dropdown-item" onclick="onChangeOrderBy(this, 'desc')">From z-a</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-light dropdown-toggle show" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="true">Status</button>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                                    <a class="dropdown-item active" onclick="filterStatus(this)">All</a>
+                                    <a class="dropdown-item" onclick="filterStatus(this, '0')">Deactive</a>
+                                    <a class="dropdown-item" onclick="filterStatus(this, '1')">Active</a>
+                                    <!-- <a class="dropdown-item" onclick="filterStatus(this, '2')">Active</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card radius-10">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <div>
+                <h5 class="mb-0">Account list</h5>
+            </div>
+            <div class="ms-auto">
+                <a type="button" class="btn btn-light mb-3 mb-lg-0 float-end" onclick="formNewAccount()"><i class="bx bxs-plus-square"></i>New Account</a>
+            </div>
+        </div>
+        <hr />
+        <div class="table-responsive" id="table-Account">
+            <table class="table align-middle mb-0 table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Created at</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="axbox-footer mt-2 float-end">
+            <div id="nextpage"></div>
+        </div>
+    </div>
+</div>
+<!-- modal delete account -->
+<div class="modal fade" id="deleteAccount" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header" style="border-bottom: none;">
+                <h5 class="modal-title">Delete Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to delete this account?</p>
+            </div>
+            <div class="modal-footer" style="border-top: none;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="onDeleteAccount()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal delete account -->
+<div class="modal fade" id="modal-changeRole" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header" style="border-bottom: none;">
+                <h5 class="modal-title">Change role</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="roleAdmin">
+                    <label class="form-check-label" for="flexRadioDefault">Role Admin</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="roleUser">
+                    <label class="form-check-label" for="flexRadioDefault">Role User</label>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: none;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="onChangeRole()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
