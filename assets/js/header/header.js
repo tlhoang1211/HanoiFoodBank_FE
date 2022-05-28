@@ -39,7 +39,7 @@ if (document.cookie != null && document.cookie != "") {
   token = cookies.token;
   usernameAccount = cookies.username;
 }
-var getDetailAccount = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users/${usernameAccount}`;
+var getDetailAccount = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${usernameAccount}`;
 if (token === null || token === undefined || token === NaN || token === "") {
   loginregister.style.display = "block";
   useraccount.style.display = "none";
@@ -123,26 +123,23 @@ if (token === null || token === undefined || token === NaN || token === "") {
     .catch((error) => console.log(error));
 }
 
-$(document).on("click", "#deleteNotify", function(){
+$(document).on("click", "#deleteNotify", function () {
   var listnotification;
   let notificationPromise = new Promise(function (myResolve) {
     Notification.show(objAccount.id, function (listNotify) {
       listnotification = listNotify;
-    })
+    });
     myResolve();
-  })
-  notificationPromise.then(
-    function(){
-      listnotification.forEach(function (child) {
-        if(child.val().status == 0){
-          Notification.delete(objAccount.id, child.val().idNotify, {
-            
-          })
-          swal("Success!", "Delete notify successfully!", "success");
-        }
-      })
-  })
-})
+  });
+  notificationPromise.then(function () {
+    listnotification.forEach(function (child) {
+      if (child.val().status == 0) {
+        Notification.delete(objAccount.id, child.val().idNotify, {});
+        swal("Success!", "Delete notify successfully!", "success");
+      }
+    });
+  });
+});
 
 // status 0-deactive 1-active
 $(document).on("click", ".header__notify-item", function () {
@@ -165,7 +162,7 @@ $(document).on("click", ".header__notify-item", function () {
           foodIdNoti = child.val().foodid;
           usernameAccount = child.val().usernameaccount;
           title = child.val().title;
-          messageNoti = child.val().message
+          messageNoti = child.val().message;
         }
       });
     });
@@ -184,7 +181,7 @@ $(document).on("click", ".header__notify-item", function () {
     if (categoryNoti == "food") {
       // console.log("start notification food");
       fetch(
-        `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users/roles?username=${usernameAccount}`,
+        `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/roles?username=${usernameAccount}`,
         {
           method: "GET",
           headers: {
@@ -207,7 +204,7 @@ $(document).on("click", ".header__notify-item", function () {
               if (role.name == "ROLE_ADMIN") {
                 // console.log("start notification food role ADMIN");
                 fetch(
-                  `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users?role=ROLE_ADMIN`,
+                  `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users?role=ROLE_ADMIN`,
                   {
                     method: "GET",
                     headers: {
@@ -219,7 +216,9 @@ $(document).on("click", ".header__notify-item", function () {
                   .then((listAdmin) => {
                     var listAdmins;
                     // console.log("start notification food role ADMIN 222");
-                    let notificationPromise3 = new Promise(function (myResolve) {
+                    let notificationPromise3 = new Promise(function (
+                      myResolve
+                    ) {
                       listAdmins = listAdmin.data;
                       myResolve();
                     });
@@ -229,12 +228,16 @@ $(document).on("click", ".header__notify-item", function () {
                       listAdmins.map(function (admin) {
                         Notification.show(admin.id, function (listNotifyAdmin) {
                           listNotifyAdmin.forEach(function (child) {
-                            if (child.val().foodid == foodIdNoti && child.val().title == title && child.val().message == messageNoti){
+                            if (
+                              child.val().foodid == foodIdNoti &&
+                              child.val().title == title &&
+                              child.val().message == messageNoti
+                            ) {
                               var idNotiAdmin = child.val().idNotify;
                               Notification.update(admin.id, idNotiAdmin, {
-                                  "status": 0
+                                status: 0,
                               });
-                              location.replace(`../inc/layout/admin/`)
+                              location.replace(`../inc/layout/admin/`);
                             }
                           });
                         });
@@ -244,12 +247,14 @@ $(document).on("click", ".header__notify-item", function () {
                   .catch(function (error) {
                     console.log(error);
                   });
-              } else{
-                  Notification.update(idAccount, idNoti, {
-                    status: 0,
-                  });
-                  location.replace(`../shop_single_product.html?id=${foodIdNoti}`);
-                }
+              } else {
+                Notification.update(idAccount, idNoti, {
+                  status: 0,
+                });
+                location.replace(
+                  `../shop_single_product.html?id=${foodIdNoti}`
+                );
+              }
             });
           });
         })
@@ -320,8 +325,7 @@ function newFoodModal() {
       swal("Warning!", "You need more image!", "warning");
     } else if (listImageFood.length > 3) {
       swal("Warning!", "You should only add a maximum of 3 images!", "warning");
-    }
-     else {
+    } else {
       var dataPost = {
         name: nameFood || "",
         avatar: listImageFood[0],
@@ -332,7 +336,7 @@ function newFoodModal() {
         description: description,
         content: content,
       };
-      fetch("https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods", {
+      fetch("https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -344,7 +348,7 @@ function newFoodModal() {
         .then(function (data1) {
           console.log(data1.data);
           fetch(
-            `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users?role=ROLE_ADMIN`,
+            `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users?role=ROLE_ADMIN`,
             {
               method: "GET",
               headers: {
@@ -380,14 +384,14 @@ function newFoodModal() {
               notifyFoodPromise.then(function () {
                 listAdmin2.map(function (admin) {
                   Notification.send(admin.id, {
-                    "idNotify": "",
-                    "usernameaccount": admin.username,
-                    "foodid": idFood,
-                    "avatar": avatarFood,
-                    "title": "User " + objAccount.name + " add new food",
-                    "message": "Time request: " + time,
-                    "category": "food",
-                    "status": 1,
+                    idNotify: "",
+                    usernameaccount: admin.username,
+                    foodid: idFood,
+                    avatar: avatarFood,
+                    title: "User " + objAccount.name + " add new food",
+                    message: "Time request: " + time,
+                    category: "food",
+                    status: 1,
                   });
                 });
               });
@@ -399,7 +403,6 @@ function newFoodModal() {
           frm.reset();
           // var image1 = document.getElementsByClassName("cloudinary-thumbnails");
           // image1.parentNode.removeChild(image1);
-          
         })
         .catch((error) => console.log(error));
     }
@@ -509,7 +512,6 @@ function formatCategory(id) {
   return text;
 }
 
-
 // hoangtl2 - 29/10/2021
 // start
 
@@ -591,7 +593,7 @@ paypal.Button.render(
       // 2. Make a request to your server
       return actions.request
         .post(
-          `https://hfb-t1098e.herokuapp.com/api/v1/hfb/pay?name=${donatorName.value}&phone=${donatorPhoneNumber.value}&amount=${amount.value}&content=${contentDonate.value}`
+          `https://hanoifoodbank.herokuapp.com/api/v1/hfb/pay?name=${donatorName.value}&phone=${donatorPhoneNumber.value}&amount=${amount.value}&content=${contentDonate.value}`
         )
         .then(function (res) {
           // 3. Return res.id from the response
@@ -612,7 +614,7 @@ paypal.Button.render(
       // 2. Make a request to your server
       return actions.request
         .get(
-          `https://hfb-t1098e.herokuapp.com/api/v1/hfb/pay/success?paymentId=${data.paymentID}&PayerID=${data.payerID}`
+          `https://hanoifoodbank.herokuapp.com/api/v1/hfb/pay/success?paymentId=${data.paymentID}&PayerID=${data.payerID}`
         )
         .then(function (res) {
           // 3. Show the buyer a confirmation message.
