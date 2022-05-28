@@ -502,7 +502,7 @@
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaHVvbmdsdmQwMDYzMUBmcHQuZWR1LnZuIiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpc3MiOiJodHRwczovL2hmYi10MTA5OGUuaGVyb2t1YXBwLmNvbS9hcGkvdjEvaGZiL2xvZ2luIiwiZXhwIjoxNjM2NTU4MzQyfQ.GWSbBk2gvGqsvgq8s-3c7P-bmO0PeFKgjsLczox5L6M";
         }
         fetch(
-          `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users/${supplierEmail}`,
+          `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${supplierEmail}`,
           {
             method: "GET",
             headers: {
@@ -561,7 +561,7 @@
         location.replace("../shop_product_col_4.html");
       }
 
-      var getDetailFood = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/${id}`;
+      var getDetailFood = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/${id}`;
       var shopItem = document.querySelector(".view-image-product");
       var viewInfoProduct = document.querySelector(".view-info-product");
       var listFoodCategory;
@@ -590,7 +590,7 @@
             getSupplierInfo(listItems.data.supplierEmail);
 
             let myPromiseInfoFood = new Promise(function (myResolve) {
-              listFoodCategory = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?categoryId=${listItems.data.categoryId}&page=0&limit=4&status=2`;
+              listFoodCategory = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?categoryId=${listItems.data.categoryId}&page=0&limit=4&status=2`;
               var listItemImages = listItems.data.images;
               if (listItemImages.slice(-1) == ",") {
                 listItemImages = listItemImages.slice(0, -1);
@@ -671,12 +671,15 @@
               }
               showSlides(1);
 
-              fetch(`https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/${id}`, {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              })
+              fetch(
+                `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/${id}`,
+                {
+                  method: "GET",
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              )
                 .then((response) => response.json())
                 .then((itemFood) => {
                   itemFoodInfo = itemFood.data;
@@ -807,7 +810,7 @@
                       `#shop-item-${item2.id}`
                     ).style.display = "none";
 
-                    var urlUpdateStatus = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/status/${item2.id}`;
+                    var urlUpdateStatus = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/status/${item2.id}`;
                     fetch(urlUpdateStatus, {
                       method: "POST",
                       headers: {
@@ -848,7 +851,7 @@
         } else {
           idUserFood = itemFoodInfo.createdBy;
           avatarFood = itemFoodInfo.avatar;
-          var getRequestById = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/${idAccount}/${id}`;
+          var getRequestById = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${idAccount}/${id}`;
           fetch(getRequestById, {
             method: "GET",
             headers: {
@@ -882,7 +885,7 @@
       function sendRequest() {
         // get Id User
         var idAccount;
-        var getUserByUsername = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users/${usernameAccount}`;
+        var getUserByUsername = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${usernameAccount}`;
         fetch(getUserByUsername, {
           method: "GET",
           headers: {
@@ -897,7 +900,7 @@
           .catch((error) => console.log(error));
       }
 
-      var postrequestAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests`;
+      var postrequestAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests`;
       function postrequest() {
         var message = document.querySelector("#messageModal").value;
         if (message == "" || message == null || message == undefined) {

@@ -486,7 +486,7 @@
       var usernameAccount = cookies.username;
 
       var shopitemAPI =
-        "https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?status=2&limit=8&page=0";
+        "https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?status=2&limit=8&page=0";
       var shopItem = document.querySelector(".list-food");
       function getListItem() {
         fetch(shopitemAPI, {
@@ -537,7 +537,7 @@
                       `#shop-item-${item2.id}`
                     ).style.display = "none";
 
-                    var urlUpdateStatus = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/status/${item2.id}`;
+                    var urlUpdateStatus = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/status/${item2.id}`;
                     fetch(urlUpdateStatus, {
                       method: "POST",
                       headers: {
