@@ -28,7 +28,7 @@ var listImageFood = [];
 //       categoryId: parseInt(category),
 //       description: description,
 //     };
-//     fetch("https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods", {
+//     fetch("https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods", {
 //       method: "POST",
 //       headers: {
 //         "Content-Type": "application/json",

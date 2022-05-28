@@ -26,7 +26,7 @@ function initPageAccount() {
 initPageAccount();
 
 function getAccount() {
-  fetch(`https://hfb-t1098e.herokuapp.com/api/v1/hfb/users/${currentName}`, {
+  fetch(`https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${currentName}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${isToken}`,
@@ -73,7 +73,7 @@ function bindDataAccount(data) {
 }
 
 function expirationDateRequest() {
-  fetch(`https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests`, {
+  fetch(`https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${isToken}`,
@@ -110,7 +110,7 @@ function expirationDateRequest() {
 
 function updateStatusRequest(request) {
   fetch(
-    `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/status/${request.recipientId}/${request.foodId}`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${request.recipientId}/${request.foodId}`,
     {
       method: "POST",
       headers: {
@@ -172,7 +172,7 @@ function updateAccount() {
       imgAvatar = objAccount.avatar;
     }
     fetch(
-      `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users/${objAccount.id}`,
+      `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${objAccount.id}`,
       {
         method: "POST",
         headers: {
@@ -235,7 +235,7 @@ document.getElementById("upload_avatar").addEventListener(
 function changepassword() {
   var newPassword = document.querySelector("#newPassword").value;
   var confirmNewPassword = document.querySelector("#confirmNewPassword").value;
-  var changepasswordAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users/change-password/${objAccount.id}`;
+  var changepasswordAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/change-password/${objAccount.id}`;
   if (newPassword) {
     if (newPassword != confirmNewPassword) {
       swal("Warning!", "Password re-entered is incorrect!", "warning");
@@ -281,7 +281,7 @@ function listFoodExpired() {
 }
 
 function getListFoodAll() {
-  var foodListAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?&createdBy=${objAccount.id}`;
+  var foodListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?&createdBy=${objAccount.id}`;
   fetch(foodListAPI, {
     method: "GET",
   })
@@ -302,7 +302,7 @@ function getListFoodAll() {
           if (timeRest1 <= 0) {
             const index = listAllFood.indexOf(food);
             listAllFood.splice(index, 1);
-            var urlUpdateStatus = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/status/${food.id}`;
+            var urlUpdateStatus = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/status/${food.id}`;
             fetch(urlUpdateStatus, {
               method: "POST",
               headers: {
@@ -330,7 +330,7 @@ function getListFoodAll() {
 }
 
 function getListFoodActive() {
-  var foodListAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?status=2&createdBy=${objAccount.id}`;
+  var foodListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?status=2&createdBy=${objAccount.id}`;
   fetch(foodListAPI, {
     method: "GET",
   })
@@ -343,7 +343,7 @@ function getListFoodActive() {
 }
 
 function getListFoodPending() {
-  var foodListAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?status=1&createdBy=${objAccount.id}`;
+  var foodListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?status=1&createdBy=${objAccount.id}`;
   fetch(foodListAPI, {
     method: "GET",
   })
@@ -356,7 +356,7 @@ function getListFoodPending() {
 }
 
 function getListFoodExpired() {
-  var foodListAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?status=0&createdBy=${objAccount.id}`;
+  var foodListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?status=0&createdBy=${objAccount.id}`;
   fetch(foodListAPI, {
     method: "GET",
   })
@@ -443,7 +443,7 @@ function formUpdateFood(id) {
   listFoodPagination.style.display = "none";
   listFoodExpired1.style.display = "none";
 
-  var getDetailFood = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/${id}`;
+  var getDetailFood = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/${id}`;
   fetch(getDetailFood, {
     method: "GET",
     headers: {
@@ -639,7 +639,7 @@ function newFoodEdit() {
       }
       if (!dataPost == false) {
         fetch(
-          `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/${infoFoodDetail.id}`,
+          `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/${infoFoodDetail.id}`,
           {
             method: "POST",
             headers: {
@@ -652,7 +652,7 @@ function newFoodEdit() {
           .then((response) => response.json())
           .then(function (data1) {
             fetch(
-              `https://hfb-t1098e.herokuapp.com/api/v1/hfb/users?role=ROLE_ADMIN`,
+              `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users?role=ROLE_ADMIN`,
               {
                 method: "GET",
                 headers: {
@@ -885,7 +885,7 @@ function deleteFood(id) {
   var dataPost = {
     status: 0,
   };
-  fetch(`https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/status/${id}`, {
+  fetch(`https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/status/${id}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -910,7 +910,7 @@ function deleteFood(id) {
 // start
 function getListRequest(userID) {
   // console.log(userID);
-  var requestListAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests?userId=${userID}&order=desc&sortBy=createdAt`;
+  var requestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${userID}&order=desc&sortBy=createdAt`;
   // console.log(requestListAPI);
   fetch(requestListAPI, {
     method: "GET",
@@ -1001,7 +1001,7 @@ function deleteRequest(foodId) {
     updatedBy: objAccount.id,
   };
   fetch(
-    `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/
       ${foodId}`,
     {
       method: "POST",
@@ -1051,7 +1051,7 @@ function formConfirmRequest(id) {
 
 function finishRequest() {
   fetch(
-    `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/status/${objAccount.id}/${finishId}`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${objAccount.id}/${finishId}`,
     {
       method: "POST",
       headers: {
@@ -1095,7 +1095,7 @@ function feedbackRequest() {
     } else {
       let notifyFeedbackPromise = new Promise(function (myResolve) {
         fetch(
-          `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${feedbackId}`,
+          `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${feedbackId}`,
           {
             method: "GET",
             headers: {
@@ -1126,7 +1126,7 @@ function feedbackRequest() {
           type: 1,
           userId: idSupplierUser,
         };
-        fetch("https://hfb-t1098e.herokuapp.com/api/v1/hfb/feedbacks", {
+        fetch("https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -1237,7 +1237,7 @@ $("body").on("click", ".cloudinary-delete", function () {
 // detail request
 function formDetailRequest(id) {
   fetch(
-    `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${id}`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${id}`,
     {
       method: "GET",
       headers: {
@@ -1302,7 +1302,7 @@ function updateRequestMessage(foodID, supplierID) {
         status: 1,
       };
       fetch(
-        `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${foodID}`,
+        `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${foodID}`,
         {
           method: "POST",
           headers: {
@@ -1417,7 +1417,7 @@ function clickListActiveFood() {
 }
 
 function getFoodActive() {
-  var foodListAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?status=2&createdBy=${objAccount.id}`;
+  var foodListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?status=2&createdBy=${objAccount.id}`;
   fetch(foodListAPI, {
     method: "GET",
   })
@@ -1468,7 +1468,7 @@ function renderListActiveFood(listFood) {
 
 function viewUsersRequestFood(foodID) {
   fetch(
-    `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests?foodId=${foodID}`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?foodId=${foodID}`,
     {
       method: "GET",
       headers: {
@@ -1663,7 +1663,7 @@ function acceptRequest(foodId) {
   };
   listCheckedValue.forEach((checkedValue) => {
     fetch(
-      `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/status/${checkedValue}/
+      `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${checkedValue}/
         ${foodId}`,
       {
         method: "POST",
@@ -1721,7 +1721,7 @@ function denyRequest(foodId) {
   };
   listUncheckedValue.forEach((uncheckedValue) => {
     fetch(
-      `https://hfb-t1098e.herokuapp.com/api/v1/hfb/requests/status/${uncheckedValue}/
+      `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${uncheckedValue}/
         ${foodId}`,
       {
         method: "POST",
@@ -1792,7 +1792,7 @@ function getTimeFromString2(strDate) {
 // start
 var feedbackCount = 0;
 function getSentFeedbackList() {
-  var sentFeedbankListAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/feedbacks/search?createdBy=${objAccount.id}&status=1`;
+  var sentFeedbankListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks/search?createdBy=${objAccount.id}&status=1`;
   fetch(sentFeedbankListAPI, {
     method: "GET",
     headers: {
@@ -1808,7 +1808,7 @@ function getSentFeedbackList() {
 }
 
 function getReceivedFeedbackList() {
-  var receivedFeedbankListAPI = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/feedbacks/search?userId=${objAccount.id}&status=1`;
+  var receivedFeedbankListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks/search?userId=${objAccount.id}&status=1`;
   fetch(receivedFeedbankListAPI, {
     method: "GET",
     headers: {

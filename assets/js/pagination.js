@@ -53,16 +53,16 @@ function paginationFood(listFood) {
                 `#pg-shop-item-${item2.id}`
               ).style.display = "none";
 
-              var urlUpdateStatus = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/status/${item2.id}`;
+              var urlUpdateStatus = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/status/${item2.id}`;
               fetch(urlUpdateStatus, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
-                  "Authorization": `Bearer ${token}`,
+                  Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                  "status": 0,
-                  "updatedBy": 1
+                  status: 0,
+                  updatedBy: 1,
                 }),
               })
                 .then((response) => response.json())
