@@ -347,7 +347,7 @@
         search.innerHTML = sortByFoodName;
       }
 
-      var shopitemAPI = 'https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?status=2';
+      var shopitemAPI = 'https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?status=2';
 			var shopItem = document.querySelector('.list-shop-item');
       function getListItem(){
 				fetch(shopitemAPI,{
@@ -366,7 +366,7 @@
       function searchNameCategory1(){
         var nameSearchNameCategory = document.querySelector('#nameSearchNameCategory');
         var categorySearchNameCategory = document.querySelector('#categorySearchNameCategory');
-        var searchNameCategoryUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?name=${nameSearchNameCategory.value}&categoryId=${categorySearchNameCategory.value}&status=2`
+        var searchNameCategoryUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?name=${nameSearchNameCategory.value}&categoryId=${categorySearchNameCategory.value}&status=2`
 				fetch(searchNameCategoryUrl,{
           method: 'GET'
         })
@@ -380,7 +380,7 @@
 
       function searchExpirationDate1(){
         var expirationDateSearchExpirationDate = document.querySelector('#expirationDateSearchExpirationDate');
-        var searchExpirationDateUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?expirationDate=${expirationDateSearchExpirationDate.value}&status=2`
+        var searchExpirationDateUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?expirationDate=${expirationDateSearchExpirationDate.value}&status=2`
 				fetch(searchExpirationDateUrl,{
           method: 'GET'
         })
@@ -393,7 +393,7 @@
       }
 
       function sortByExpirationDate1(){
-        var sortByExpirationDateUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?order=dsc&sortBy=expirationDate&status=2`
+        var sortByExpirationDateUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?order=dsc&sortBy=expirationDate&status=2`
 				fetch(sortByExpirationDateUrl,{
           method: 'GET'
         })
@@ -406,7 +406,7 @@
       }
 
       function sortByExpirationDate2(){
-        var sortByExpirationDateUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?order=asc&sortBy=expirationDate&status=2`
+        var sortByExpirationDateUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?order=asc&sortBy=expirationDate&status=2`
 				fetch(sortByExpirationDateUrl,{
           method: 'GET'
         })
@@ -419,7 +419,7 @@
       }
 
       function sortByName1(){
-        var sortByNameUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?order=asc&sortBy=name&status=2`
+        var sortByNameUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?order=asc&sortBy=name&status=2`
 				fetch(sortByNameUrl,{
           method: 'GET'
         })
@@ -432,7 +432,7 @@
       }
 
       function sortByName2(){
-        var sortByNameUrl = `https://hfb-t1098e.herokuapp.com/api/v1/hfb/foods/search?order=dsc&sortBy=name&status=2`
+        var sortByNameUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?order=dsc&sortBy=name&status=2`
 				fetch(sortByNameUrl,{
           method: 'GET'
         })
