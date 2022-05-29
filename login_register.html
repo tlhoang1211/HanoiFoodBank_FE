@@ -204,7 +204,7 @@
                       <button
                         class="btn btn-round btn-b"
                         type="button"
-                        onclick="btnLogin()"
+                        id="btnLogin"
                       >
                         Login
                       </button>
@@ -437,13 +437,52 @@
             console.log(error);
           });
       }
-      function btnLogin() {
+
+      document
+        .getElementById("password-login")
+        .addEventListener("keyup", function (e) {
+          if (e.keyCode === 13) {
+            document.getElementById("btnLogin").click();
+            var username = document.querySelector(
+              'input[name="username-login"]'
+            ).value;
+            var password = document.querySelector(
+              'input[name="password-login"]'
+            ).value;
+            login(username, password);
+          }
+        });
+
+      document
+        .getElementById("username-login")
+        .addEventListener("keyup", function (e) {
+          if (e.keyCode === 13) {
+            document.getElementById("username-login").click();
+            var username = document.querySelector(
+              'input[name="username-login"]'
+            ).value;
+            var password = document.querySelector(
+              'input[name="password-login"]'
+            ).value;
+            login(username, password);
+          }
+        });
+
+      document.getElementById("password-login").onclick = function () {
         var username = document.querySelector('input[name="username-login"]')
           .value;
         var password = document.querySelector('input[name="password-login"]')
           .value;
         login(username, password);
-      }
+      };
+
+      //function btnLogin() {
+      //  var username = document.querySelector('input[name="username-login"]')
+      //    .value;
+      //  var password = document.querySelector('input[name="password-login"]')
+      //    .value;
+      //  login(username, password);
+      //}
 
       // Register
       var registerAPI = "https://hanoifoodbank.herokuapp.com/api/v1/hfb/users";
