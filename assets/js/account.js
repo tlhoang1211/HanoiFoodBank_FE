@@ -94,7 +94,7 @@ function showTabPanel(e) {
       document.getElementsByClassName("profile")[0].classList.remove("d-none");
 
       document
-        .getElementsByClassName("changepassword")[0]
+        .getElementsByClassName("changePassword")[0]
         .classList.remove("d-none");
       getAccount();
       break;
