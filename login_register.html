@@ -430,7 +430,7 @@
               window.history.back();
               // location.replace('../index_shop.html');
             } else {
-              swal("Error!", "Incorrect account or password!", "error");
+              swal("Error!", "Incorrect username or password!", "error");
             }
           })
           .catch(function (error) {
@@ -468,7 +468,7 @@
           }
         });
 
-      document.getElementById("password-login").onclick = function () {
+      document.getElementById("btnLogin").onclick = function () {
         var username = document.querySelector('input[name="username-login"]')
           .value;
         var password = document.querySelector('input[name="password-login"]')

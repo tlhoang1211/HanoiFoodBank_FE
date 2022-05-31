@@ -232,15 +232,15 @@ document.getElementById("upload_avatar").addEventListener(
 );
 
 // change password
-function changepassword() {
+function changePassword() {
   var newPassword = document.querySelector("#newPassword").value;
   var confirmNewPassword = document.querySelector("#confirmNewPassword").value;
-  var changepasswordAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/change-password/${objAccount.id}`;
+  var changePasswordAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/change-password/${objAccount.id}`;
   if (newPassword) {
     if (newPassword != confirmNewPassword) {
       swal("Warning!", "Password re-entered is incorrect!", "warning");
     } else {
-      fetch(changepasswordAPI, {
+      fetch(changePasswordAPI, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
