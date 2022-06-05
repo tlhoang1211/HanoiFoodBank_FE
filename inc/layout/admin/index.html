@@ -96,25 +96,6 @@
     <script src="../../../assets/admin/plugins/daterangepicker/daterangepicker.js"></script>
     <script src="../../../assets/js/notification.js"></script>
     <script src="../../../assets/js/admin/common.js"></script>
-
-    <script>
-      var x = document.getElementById("location");
-      function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-          x.innerHTML = "Geolocation is not supported by this browser.";
-        }
-      }
-      function showPosition(position) {
-        x.innerHTML =
-          "Latitude: " +
-          position.coords.latitude +
-          "<br>Longitude: " +
-          position.coords.longitude;
-      }
-      getLocation();
-    </script>
     <!-- <script src="../../../assets/admin/js/index.js"></script> -->
     <!--app JS-->
     <!-- <script src="../../../assets/admin/js/app.js"></script> -->

@@ -25,6 +25,23 @@ function initPageAccount() {
 }
 initPageAccount();
 
+var x = document.getElementById("location");
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+function showPosition(position) {
+  x.innerHTML =
+    "Latitude: " +
+    position.coords.latitude +
+    "<br>Longitude: " +
+    position.coords.longitude;
+}
+getLocation();
+
 function getAccount() {
   fetch(`https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${currentName}`, {
     method: "GET",
