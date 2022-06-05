@@ -25,7 +25,8 @@ function initPageAccount() {
 }
 initPageAccount();
 
-var x = document.getElementById("location");
+var longitude = document.querySelector('input[name="longitude"]');
+var latitude = document.querySelector('input[name="latitude"]');
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -34,11 +35,8 @@ function getLocation() {
   }
 }
 function showPosition(position) {
-  x.innerHTML =
-    "Latitude: " +
-    position.coords.latitude +
-    "<br>Longitude: " +
-    position.coords.longitude;
+  longitude.value = position.coords.longitude;
+  latitude.value = position.coords.latitude;
 }
 getLocation();
 
