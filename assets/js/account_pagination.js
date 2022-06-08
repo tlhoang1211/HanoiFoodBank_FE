@@ -25,8 +25,8 @@ function initPageAccount() {
 }
 initPageAccount();
 
-var longitude = document.querySelector('input[name="longitude"]');
-var latitude = document.querySelector('input[name="latitude"]');
+var longitude = document.forms["profile-form"]["longitude"];
+var latitude = document.forms["profile-form"]["latitude"];
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
