@@ -494,7 +494,9 @@
 
       async function fetchDistricts(provinceCode, app) {
         const rdata = await ky
-          .get(`/api/p/${provinceCode}`, { searchParams: { depth: 2 } })
+          .get(`https://provinces.open-api.vn/api/p/${provinceCode}`, {
+            searchParams: { depth: 2 },
+          })
           .json();
         const province = mask(rdata, Province);
         app.filteredDistricts = province.districts;
@@ -502,7 +504,9 @@
 
       async function fetchWards(districtCode, app) {
         const rdata = await ky
-          .get(`/api/d/${districtCode}`, { searchParams: { depth: 2 } })
+          .get(`https://provinces.open-api.vn/api/d/${districtCode}`, {
+            searchParams: { depth: 2 },
+          })
           .json();
         const district = mask(rdata, District);
         app.filteredWards = district.wards;
@@ -513,7 +517,7 @@
           return;
         }
         const rdata = await ky
-          .get("/api/p/search/", {
+          .get("https://provinces.open-api.vn/api/p/search/", {
             searchParams: { q: markRequireAll(term) },
           })
           .json();
@@ -537,7 +541,7 @@
           return;
         }
         const rdata = await ky
-          .get("/api/w/search/", {
+          .get("https://provinces.open-api.vn/api/w/search/", {
             searchParams: { q: markRequireAll(term), d: districtCode },
           })
           .json();
