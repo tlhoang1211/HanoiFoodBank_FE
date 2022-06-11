@@ -297,7 +297,7 @@
                         @focus="startSearchingProvince"
                         autocomplete="off"
                       />
-
+                      <span class="form-message"></span>
                       <div
                         class="z-10 max-h-48 w-full bg-gray-100 overflow-y-auto shadow"
                         x-show="provinceListShown && filteredProvinces.length"
@@ -330,7 +330,7 @@
                         @input.debounce="searchDistrictOnTyping"
                         autocomplete="off"
                       />
-
+                      <span class="form-message"></span>
                       <div
                         class="z-10 max-h-48 w-full bg-gray-100 overflow-y-auto shadow"
                         x-show="districtListShown && filteredDistricts.length"
@@ -362,7 +362,7 @@
                         @focus="startSearchingWard"
                         autocomplete="off"
                       />
-
+                      <span class="form-message"></span>
                       <div
                         class="z-10 max-h-48 w-full bg-gray-100 overflow-y-auto shadow"
                         x-show="wardListShown && filteredWards.length"
@@ -388,7 +388,7 @@
                       id="address-register"
                       type="text"
                       name="address-register"
-                      placeholder="Address"
+                      placeholder="Address (Apt, building, street, etc)"
                     />
                     <span class="form-message"></span>
                   </div>
@@ -407,6 +407,7 @@
                       type="text"
                       value=""
                     />
+                    <span class="form-message"></span>
                   </div>
                   <div class="form-group">
                     <input
@@ -722,10 +723,7 @@
             "#address-register",
             "This field cannot be left blank"
           ),
-          Validator.isPhone(
-            "#phone-register",
-            "Please enter correct phone number format"
-          ),
+          Validator.isPhone("#phone-register", "Please enter correct format"),
           Validator.isRequired(
             "#address-register",
             "This field cannot be left blank"
