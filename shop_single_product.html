@@ -558,7 +558,7 @@
       let params = new URL(document.URL).searchParams;
       var id = params.get("id");
       if (id == null) {
-        location.replace("../shop_product_col_4.html");
+        location.replace("../food");
       }
 
       var getDetailFood = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/${id}`;
