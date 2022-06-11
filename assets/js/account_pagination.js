@@ -25,21 +25,6 @@ function initPageAccount() {
 }
 initPageAccount();
 
-var longitude = document.forms["profile-form"]["longitude"];
-var latitude = document.forms["profile-form"]["latitude"];
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
-function showPosition(position) {
-  longitude.value = position.coords.longitude;
-  latitude.value = position.coords.latitude;
-}
-getLocation();
-
 function getAccount() {
   fetch(`https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${currentName}`, {
     method: "GET",
