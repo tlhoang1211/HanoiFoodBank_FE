@@ -869,7 +869,7 @@
               if (data.status == 200) {
                 swal("Success!", `Register success!`, "success");
                 setTimeout(function () {
-                  login(usernameregister, passwordregister);
+                  login(username_register, password_register);
                 }, 3000);
               } else if (data.status == 501) {
                 swal("Error!", `${data.message}!`, "error");
