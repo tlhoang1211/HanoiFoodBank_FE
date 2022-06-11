@@ -2,8 +2,8 @@ import ky from "https://unpkg.com/ky/distribution/index.js";
 import Alpine from "https://unpkg.com/alpinejs@3.2.2/dist/module.esm.js";
 import "https://unpkg.com/superstruct/umd/superstruct.min.js";
 
-var longitude = document.forms["profile-form"]["longitude"];
-var latitude = document.forms["profile-form"]["latitude"];
+var longitude = document.forms["form-register"]["longitude"];
+var latitude = document.forms["form-register"]["latitude"];
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
