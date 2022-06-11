@@ -615,6 +615,8 @@
         var province = document.getElementById("province").value;
         var full_address =
           address_detail + ", " + ward + ", " + district + ", " + province;
+        var longitude = document.getElementById("longitude").value;
+        var latitude = document.getElementById("latitude").value;
         var password_register = document.getElementById("password-register")
           .value;
         if (
@@ -631,14 +633,16 @@
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
+              name: fullname_register,
+              email: email_register,
               username: email_register,
+              password: password_register,
               phone: phone_register,
               address: full_address,
+              longitude: longitude,
+              latitude: latitude,
               avatar:
                 "v1635678562/hanoi_food_bank_project/users_avatar/null_avatar.jpg",
-              email: email_register,
-              name: fullname_register,
-              password: password_register,
             }),
           })
             .then((response) => response.json())
