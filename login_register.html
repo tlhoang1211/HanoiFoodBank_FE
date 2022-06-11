@@ -529,7 +529,7 @@
           return;
         }
         const rdata = await ky
-          .get("/api/d/search/", {
+          .get("https://provinces.open-api.vn/api/d/search/", {
             searchParams: { q: markRequireAll(term), p: provinceCode },
           })
           .json();
