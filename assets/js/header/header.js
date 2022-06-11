@@ -20,7 +20,7 @@ function logoutAccount() {
   usernameAccount = null;
 
   if (location.href == "http://127.0.0.1:5500/tabs_and_accordions.html") {
-    location.replace("../home");
+    location.replace("../");
   } else {
     location.reload();
   }
