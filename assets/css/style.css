@@ -2977,3 +2977,82 @@ Google map
 .d-none {
   display: none !important;
 }
+
+/* address hoangtl */
+list-none {
+  list-style-type: none;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+fieldset,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.list-none {
+  list-style-type: none;
+}
+
+.shadow {
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.bg-gray-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(244, 244, 245, var(--tw-bg-opacity));
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-h-48 {
+  max-height: 30rem;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.py-1 {
+  padding-bottom: 0.4rem;
+  padding-top: 0.4rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hover\:bg-gray-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(211, 211, 211, var(--tw-bg-opacity));
+  color: black;
+}
+
+.seperate_line {
+  border-bottom: 1px solid lightgrey;
+  font-size: 14px;
+}

@@ -283,99 +283,108 @@
                     />
                     <span class="form-message"></span>
                   </div>
-                  <div x-data="formApp" class="mt-4">
-                    <div
+                  <div x-data="formApp">
+                    <!-- <div
                       class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4"
+                    > -->
+                    <div
+                      class="form-group"
+                      @click.outside="provinceListShown = false"
                     >
-                      <div
-                        class="relative"
-                        @click.outside="provinceListShown = false"
-                      >
-                        <input
-                          class="p-1 px-2 appearance-none outline-none text-gray-800 border"
-                          x-model.trim="provinceSearch"
-                          placeholder="Tỉnh..."
-                          @focus="startSearchingProvince"
-                        />
+                      <input
+                        class="form-control"
+                        x-model.trim="provinceSearch"
+                        id="province"
+                        name="province"
+                        placeholder="Province"
+                        @focus="startSearchingProvince"
+                        autocomplete="off"
+                      />
 
-                        <div
-                          class="absolute z-10 max-h-48 w-full bg-gray-100 overflow-y-auto shadow"
-                          x-show="provinceListShown && filteredProvinces.length"
-                        >
-                          <ul class="list-none">
-                            <template
-                              x-for="(item, idx) of filteredProvinces"
-                              :key="idx"
-                            >
-                              <li
-                                x-html="highlightName(item)"
-                                class="px-2 py-1 cursor-pointer bg-white hover:bg-blue-100"
-                                @click="selectProvince(item)"
-                              ></li>
-                            </template>
-                          </ul>
-                        </div>
-                      </div>
                       <div
-                        class="relative"
-                        @click.outside="districtListShown = false"
+                        class="z-10 max-h-48 w-full bg-gray-100 overflow-y-auto shadow"
+                        x-show="provinceListShown && filteredProvinces.length"
                       >
-                        <input
-                          class="p-1 px-2 appearance-none outline-none text-gray-800 border"
-                          x-model.trim="districtSearch"
-                          placeholder="Huyện..."
-                          @focus="startSearchingDistrict"
-                          @input.debounce="searchDistrictOnTyping"
-                        />
-
-                        <div
-                          class="absolute z-10 max-h-48 w-full bg-gray-100 overflow-y-auto shadow"
-                          x-show="districtListShown && filteredDistricts.length"
-                        >
-                          <ul class="list-none">
-                            <template
-                              x-for="(item, idx) of filteredDistricts"
-                              :key="idx"
-                            >
-                              <li
-                                x-html="highlightName(item)"
-                                class="px-2 py-1 cursor-pointer bg-white hover:bg-blue-100"
-                                @click="selectDistrict(item)"
-                              ></li>
-                            </template>
-                          </ul>
-                        </div>
-                      </div>
-                      <div
-                        class="relative"
-                        @click.outside="wardListShown = false"
-                      >
-                        <input
-                          class="p-1 px-2 appearance-none outline-none text-gray-800 border"
-                          x-model.trim="wardSearch"
-                          placeholder="Xã..."
-                          @focus="startSearchingWard"
-                        />
-
-                        <div
-                          class="absolute z-10 max-h-48 w-full bg-gray-100 overflow-y-auto shadow"
-                          x-show="wardListShown && filteredWards.length"
-                        >
-                          <ul class="list-none">
-                            <template
-                              x-for="(item, idx) of filteredWards"
-                              :key="idx"
-                            >
-                              <li
-                                x-html="highlightName(item)"
-                                class="px-2 py-1 cursor-pointer bg-white hover:bg-blue-100"
-                                @click="selectWard(item)"
-                              ></li>
-                            </template>
-                          </ul>
-                        </div>
+                        <ul class="list-none">
+                          <template
+                            x-for="(item, idx) of filteredProvinces"
+                            :key="idx"
+                          >
+                            <li
+                              x-html="highlightName(item)"
+                              class="px-2 py-1 cursor-pointer bg-white hover:bg-gray-100 seperate_line"
+                              @click="selectProvince(item)"
+                            ></li>
+                          </template>
+                        </ul>
                       </div>
                     </div>
+                    <div
+                      class="form-group"
+                      @click.outside="districtListShown = false"
+                    >
+                      <input
+                        class="form-control"
+                        x-model.trim="districtSearch"
+                        id="district"
+                        name="district"
+                        placeholder="District"
+                        @focus="startSearchingDistrict"
+                        @input.debounce="searchDistrictOnTyping"
+                        autocomplete="off"
+                      />
+
+                      <div
+                        class="z-10 max-h-48 w-full bg-gray-100 overflow-y-auto shadow"
+                        x-show="districtListShown && filteredDistricts.length"
+                      >
+                        <ul class="list-none">
+                          <template
+                            x-for="(item, idx) of filteredDistricts"
+                            :key="idx"
+                          >
+                            <li
+                              x-html="highlightName(item)"
+                              class="px-2 py-1 cursor-pointer bg-white hover:bg-gray-100 seperate_line"
+                              @click="selectDistrict(item)"
+                            ></li>
+                          </template>
+                        </ul>
+                      </div>
+                    </div>
+                    <div
+                      class="form-group"
+                      @click.outside="wardListShown = false"
+                    >
+                      <input
+                        class="form-control"
+                        x-model.trim="wardSearch"
+                        id="ward"
+                        name="ward"
+                        placeholder="Ward"
+                        @focus="startSearchingWard"
+                        autocomplete="off"
+                      />
+
+                      <div
+                        class="z-10 max-h-48 w-full bg-gray-100 overflow-y-auto shadow"
+                        x-show="wardListShown && filteredWards.length"
+                      >
+                        <ul class="list-none">
+                          <template
+                            x-for="(item, idx) of filteredWards"
+                            :key="idx"
+                          >
+                            <li
+                              x-html="highlightName(item)"
+                              class="px-2 py-1 cursor-pointer bg-white hover:bg-gray-100 seperate_line"
+                              @click="selectWard(item)"
+                            ></li>
+                          </template>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- </div> -->
                   </div>
                   <div class="form-group">
                     <input
