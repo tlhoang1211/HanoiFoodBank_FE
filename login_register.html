@@ -827,19 +827,25 @@
       var registerAPI = "https://hanoifoodbank.herokuapp.com/api/v1/hfb/users";
 
       function btnRegister() {
-        var fullnameregister = document.getElementById("fullname-register")
+        var fullname_register = document.getElementById("fullname-register")
           .value;
-        var emailregister = document.getElementById("E-mail-register").value;
-        var phoneregister = document.getElementById("phone-register").value;
-        var addressregister = document.getElementById("address-register").value;
-        var passwordregister = document.getElementById("password-register")
+        var email_register = document.getElementById("E-mail-register").value;
+        var phone_register = document.getElementById("phone-register").value;
+        var address_detail = document.getElementById("address-register").value;
+        var ward = document.getElementById("ward").value;
+        var district = document.getElementById("district").value;
+        var province = document.getElementById("province").value;
+        var full_address =
+          address_detail + ", " + ward + ", " + district + ", " + province;
+        var password_register = document.getElementById("password-register")
           .value;
         if (
-          !fullnameregister == false &&
-          !emailregister == false &&
-          !phoneregister == false &&
-          !addressregister == false &&
-          !passwordregister == false
+          !fullname_register == false &&
+          !email_register == false &&
+          !phone_register == false &&
+          !address_register == false &&
+          !password_register == false &&
+          !full_address == false
         ) {
           fetch(registerAPI, {
             method: "POST",
@@ -847,14 +853,14 @@
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              username: emailregister,
-              phone: phoneregister,
-              address: addressregister,
+              username: email_register,
+              phone: phone_register,
+              address: full_address,
               avatar:
                 "v1635678562/hanoi_food_bank_project/users_avatar/null_avatar.jpg",
-              email: emailregister,
-              name: fullnameregister,
-              password: passwordregister,
+              email: email_register,
+              name: fullname_register,
+              password: password_register,
             }),
           })
             .then((response) => response.json())
@@ -930,6 +936,13 @@
           ),
           Validator.isRequired(
             "#phone-register",
+            "This field cannot be left blank"
+          ),
+          Validator.isRequired("#province", "This field cannot be left blank"),
+          Validator.isRequired("#district", "This field cannot be left blank"),
+          Validator.isRequired("#ward", "This field cannot be left blank"),
+          Validator.isRequired(
+            "#address-register",
             "This field cannot be left blank"
           ),
           Validator.isPhone(
