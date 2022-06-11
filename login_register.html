@@ -488,7 +488,9 @@
       }
 
       async function fetchProvinces(app) {
-        const rdata = await ky.get("/api/p/").json();
+        const rdata = await ky
+          .get("https://provinces.open-api.vn/api/p/")
+          .json();
         app.filteredProvinces = mask(rdata, array(Province));
       }
 
