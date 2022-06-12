@@ -197,7 +197,6 @@ function updateAccount() {
           swal("Success!", "Update account success!", "success");
           objAccount = account.data;
           currentName = objAccount.username;
-          console.log(currentName);
           bindDataAccount(objAccount);
         }
       })
