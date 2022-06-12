@@ -391,7 +391,7 @@
                     />
                     <span class="form-message"></span>
                   </div>
-                  <div class="form-group" style="display: none">
+                  <div class="form-group" hidden>
                     <input
                       id="longitude"
                       name="longitude"
@@ -553,7 +553,6 @@
               ).value;
               document.cookie = `token=${data.data.access_token}`;
               document.cookie = `username=${usernamecookie}`;
-              console.log(usernamecookie);
               window.history.back();
             } else {
               swal("Error!", "Incorrect username or password!", "error");
@@ -648,8 +647,8 @@
               password: password_register,
               phone: phone_register,
               address: full_address,
-              longitude: longitude,
-              latitude: latitude,
+              positionLongitude: longitude,
+              positionLatitude: latitude,
               avatar:
                 "v1635678562/hanoi_food_bank_project/users_avatar/null_avatar.jpg",
             }),
