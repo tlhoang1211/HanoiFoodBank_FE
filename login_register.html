@@ -176,10 +176,6 @@
                   <h4 class="font-alt">Login</h4>
                   <hr class="divider-w mb-10" />
                   <form class="form" id="form-login">
-                    <!-- <div class="form-group">
-                      <input class="form-control" id="phone-login" type="tel" name="phone" placeholder="Phone Number"/>
-                      <span class="form-message"></span>
-                    </div> -->
                     <div class="form-group">
                       <input
                         class="form-control"
@@ -311,6 +307,7 @@
                               x-html="highlightName(item)"
                               class="px-2 py-1 cursor-pointer bg-white hover:bg-gray-100 seperate_line"
                               @click="selectProvince(item)"
+                              onmouseover="setProvinceValue(this)"
                             ></li>
                           </template>
                         </ul>
@@ -344,6 +341,7 @@
                               x-html="highlightName(item)"
                               class="px-2 py-1 cursor-pointer bg-white hover:bg-gray-100 seperate_line"
                               @click="selectDistrict(item)"
+                              onmouseover="setDistrictValue(this)"
                             ></li>
                           </template>
                         </ul>
@@ -376,6 +374,7 @@
                               x-html="highlightName(item)"
                               class="px-2 py-1 cursor-pointer bg-white hover:bg-gray-100 seperate_line"
                               @click="selectWard(item)"
+                              onmouseover="setWardValue(this)"
                             ></li>
                           </template>
                         </ul>
@@ -434,6 +433,7 @@
                       onclick="btnRegister()"
                       type="button"
                       class="btn btn-block btn-round btn-b"
+                      id="btnRegister"
                     >
                       Register
                     </button>
@@ -497,6 +497,18 @@
     <script src="./assets/js/validator.js"></script>
 
     <script>
+      function setProvinceValue(x) {
+        document.getElementById("province").value = x.innerHTML;
+      }
+
+      function setDistrictValue(x) {
+        document.getElementById("district").value = x.innerHTML;
+      }
+
+      function setWardValue(x) {
+        document.getElementById("ward").value = x.innerHTML;
+      }
+
       if (document.cookie) {
         swal(
           "Warning!",
@@ -504,7 +516,7 @@
           "warning"
         );
         setTimeout(function () {
-          location.replace("../tabs_and_accordions.html");
+          location.replace("../profile");
         }, 3000);
       }
 
@@ -647,9 +659,9 @@
             .then(function (data) {
               if (data.status == 200) {
                 swal("Success!", `Register success!`, "success");
-                //setTimeout(function () {
-                //  login(email_register, password_register);
-                //}, 3000);
+                setTimeout(function () {
+                  login(email_register, password_register);
+                }, 3000);
               } else if (data.status == 501) {
                 swal("Error!", `${data.message}!`, "error");
               } else {

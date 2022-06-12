@@ -248,7 +248,7 @@ function formUpdateAccount(e, id, username) {
   }
   localStorage.setItem("page", "updateAccount");
   loadHtml(
-    "../../../inc/layout/admin/content/account/profile.html",
+    "../../../inc/layout/admin/content/account/profile",
     ".page-wrapper",
     "div",
     "page-content",

@@ -39,6 +39,7 @@ function getAccount() {
         getListFoodAll();
         getListRequest(objAccount.id);
         // console.log(objAccount.id);
+        console.log(account.data);
         bindDataAccount(account.data);
       }
     })
@@ -384,7 +385,7 @@ function renderListFood(listFood) {
         dataHtml += `<tr id="food-row-${e.id}">
           <td>${foodCount}</td>`;
         if (e.status == 2 || e.status == 0) {
-          dataHtml += `<td><a href="./shop_single_product.html?id=${
+          dataHtml += `<td><a href="./food_detail?id=${
             e.id
           }" style="color: blue;">${e.name || ""}</a></td>`;
         } else {
