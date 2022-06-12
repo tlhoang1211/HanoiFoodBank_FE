@@ -266,7 +266,7 @@
                   <div class="form-group">
                     <input
                       class="form-control"
-                      id="E-mail-register"
+                      id="email-register"
                       type="text"
                       name="email-register"
                       placeholder="Email"
@@ -607,7 +607,7 @@
       function btnRegister() {
         var fullname_register = document.getElementById("fullname-register")
           .value;
-        var email_register = document.getElementById("E-mail-register").value;
+        var email_register = document.getElementById("email-register").value;
         var phone_register = document.getElementById("phone-register").value;
         var address_detail = document.getElementById("address-register").value;
         var ward = document.getElementById("ward").value;
@@ -651,7 +651,7 @@
               if (data.status == 200) {
                 swal("Success!", `Register success!`, "success");
                 setTimeout(function () {
-                  login(username_register, password_register);
+                  login(email_register, password_register);
                 }, 3000);
               } else if (data.status == 501) {
                 swal("Error!", `${data.message}!`, "error");
@@ -709,11 +709,11 @@
             "This field cannot be left blank"
           ),
           Validator.isRequired(
-            "#E-mail-register",
+            "#email-register",
             "This field cannot be left blank"
           ),
           Validator.isEmail(
-            "#E-mail-register",
+            "#email-register",
             "Please enter correct email format"
           ),
           Validator.isRequired(
