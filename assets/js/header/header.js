@@ -19,7 +19,7 @@ function logoutAccount() {
   token = null;
   usernameAccount = null;
 
-  if (location.href == "http://127.0.0.1:5500/tabs_and_accordions.html") {
+  if (location.href == "http://127.0.0.1:5500/profile") {
     location.replace("../");
   } else {
     location.reload();
@@ -170,16 +170,13 @@ $(document).on("click", ".header__notify-item", function () {
   });
 
   notificationPromise.then(function () {
-    // console.log("start notification");
     if (categoryNoti == "request") {
-      // console.log("start notification request");
       Notification.update(idAccount, idNoti, {
         status: 0,
       });
-      location.replace(`../shop_single_product.html?id=${foodIdNoti}`);
+      location.replace(`../food_detail?id=${foodIdNoti}`);
     }
     if (categoryNoti == "food") {
-      // console.log("start notification food");
       fetch(
         `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/roles?username=${usernameAccount}`,
         {
@@ -251,9 +248,7 @@ $(document).on("click", ".header__notify-item", function () {
                 Notification.update(idAccount, idNoti, {
                   status: 0,
                 });
-                location.replace(
-                  `../shop_single_product.html?id=${foodIdNoti}`
-                );
+                location.replace(`../food_detail?id=${foodIdNoti}`);
               }
             });
           });
