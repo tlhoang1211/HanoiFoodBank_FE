@@ -38,8 +38,6 @@ function getAccount() {
         objAccount = account.data;
         getListFoodAll();
         getListRequest(objAccount.id);
-        // console.log(objAccount.id);
-        console.log(account.data);
         bindDataAccount(account.data);
       }
     })
