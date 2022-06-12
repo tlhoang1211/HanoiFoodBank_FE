@@ -66,10 +66,10 @@ function bindDataAccount(data) {
     );
   document.querySelector("#avatar_account").src =
     data.avatar ||
-    "https://thumbs.dreamstime.com/b/user-icon-trendy-flat-style-isolated-grey-background-user-symbol-user-icon-trendy-flat-style-isolated-grey-background-123663211.jpg";
+    "https://res.cloudinary.com/vernom/image/upload/v1635678562/hanoi_food_bank_project/users_avatar/null_avatar.jpg";
   document.querySelector("#avatar_account").parentElement.href =
     data.avatar ||
-    "https://thumbs.dreamstime.com/b/user-icon-trendy-flat-style-isolated-grey-background-user-symbol-user-icon-trendy-flat-style-isolated-grey-background-123663211.jpg";
+    "https://res.cloudinary.com/vernom/image/upload/v1635678562/hanoi_food_bank_project/users_avatar/null_avatar.jpg";
 }
 
 function expirationDateRequest() {
