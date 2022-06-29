@@ -79,9 +79,11 @@ function paginationFood(listFood) {
 }
 
 function getTimeFromString3(strDate) {
-  var arrDate = strDate.split("/");
-  var year = parseInt(arrDate[2]);
-  var month = parseInt(arrDate[1]) - 1;
-  var date = parseInt(arrDate[0]);
-  return new Date(year, month, date).getTime();
+  if (undefined != strDate) {
+    var arrDate = strDate.split("/");
+    var year = parseInt(arrDate[2]);
+    var month = parseInt(arrDate[1]) - 1;
+    var date = parseInt(arrDate[0]);
+    return new Date(year, month, date).getTime();
+  }
 }
