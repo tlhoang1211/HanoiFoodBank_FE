@@ -228,6 +228,7 @@
             <div class="row">
               <div class="col-sm-12" style="text-align: center;">
                 <div class="pagination font-alt">
+                </div>
               </div>
             </div>
           </div>
@@ -289,9 +290,9 @@
       var search = document.querySelector('#search');
       var sort = document.querySelector('#sort');
 
-      function initGeolocation()
+     window.onload = function initGeolocation()
      {
-        if( navigator.geolocation )
+        if(navigator.geolocation)
         {
            // Call getCurrentPosition with success and failure callbacks
            navigator.geolocation.getCurrentPosition( success, fail );
@@ -315,7 +316,7 @@
         swal("", "For some reason, we couldn't find your exact coordinates. Please refresh the web page. Sorry for the inconvenience!", "warning")
      }
 
-      function searchNameCategory(){
+     function searchNameCategory() {
         var searchFoodNameCategory = `
         <div class="col-sm-5">
         </div>
@@ -367,7 +368,7 @@
         <div class="col-sm-8">
         </div>
         <div class="col-sm-2">
-          <input type="search" id="distance" class="form-control">
+          <input type="search" id="distance" class="form-control" placeholder="kilometers">
         </div>
         <div class="col-sm-2">
           <button onclick="searchByMiniumDist()" class="btn btn-block btn-round btn-b" type="button">
@@ -451,7 +452,6 @@
 				.then(response => response.json())
 				.then(listItems => {
             paginationFood(listItems.data.content);
-          
 				})
 				.catch(error => console.log(error));
       }
@@ -459,15 +459,15 @@
       function searchByMiniumDist() {
         var positionLongitude = long;
         var positionLatitude = lat;
-        var distance = document.querySelector('#distance');
+        var distance = document.querySelector('#distance').value;
         var searchUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/get-nearest-location?postionLongitude=${positionLongitude}&postionLatitude=${positionLatitude}&distance=${distance}`
+        console.log(searchUrl)
 				fetch(searchUrl,{
           method: 'GET'
         })
 				.then(response => response.json())
 				.then(listItems => {
             paginationFood(listItems.data.content);
-          
 				})
 				.catch(error => console.log(error));
       }
