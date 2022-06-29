@@ -207,3 +207,8 @@
 .paginationjs-next {
   font-family: "Roboto Condensed", sans-serif;
 }
+
+#sort,
+#search {
+  padding-top: 10px;
+}

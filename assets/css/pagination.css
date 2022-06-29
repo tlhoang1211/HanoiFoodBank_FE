@@ -119,10 +119,6 @@
   height: 30px;
   line-height: 30px;
 }
-.paginationjs .paginationjs-go-button,
-.paginationjs .paginationjs-go-input {
-  margin-left: 5px;
-}
 .paginationjs.paginationjs-small {
   font-size: 12px;
 }
