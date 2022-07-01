@@ -467,7 +467,6 @@
         })
 				.then(response => response.json())
 				.then(listItems => {
-          console.log(listItems);
           paginationFood(listItems.data);
 				})
 				.catch(error => console.log(error));

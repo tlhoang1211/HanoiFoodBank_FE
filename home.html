@@ -207,19 +207,17 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Food near you</h2>
+                <h5 class="sub-title">(< 1km)</h5>
+              </div>
+            </div>
+            <div class="row multi-columns-row list-near-food"></div>
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
                 <h2 class="module-title font-alt">Latest in food</h2>
               </div>
             </div>
-            <div class="row multi-columns-row list-food">
-              <!-- <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="shop-item">
-                  <div class="shop-item-image"><img src="./assets/images/img/buncha.jpg" class="img-food" alt="Accessories Pack"/>
-                    <div class="shop-item-detail"><a href="food_detail" class="btn btn-round btn-b"><span class="icon-basket">View Details</span></a></div>
-                  </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">Men’s Casual Pack</a></h4>Time: 000
-                </div>
-              </div> -->
-            </div>
+            <div class="row multi-columns-row list-food"></div>
             <div class="row mt-30">
               <div class="col-sm-12 align-center">
                 <a class="btn btn-b btn-round" href="./food">See all food</a>
@@ -436,12 +434,6 @@
     =============================================
     -->
     <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
-      integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
       src="https://upload-widget.cloudinary.com/global/all.js"
       type="text/javascript"
     ></script>
@@ -471,6 +463,14 @@
     <script src="assets/js/user/common.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="./assets/js/notification.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+      integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
     <!-- <script src="./assets/js/app.js"></script> -->
     <script>
       var pairs = document.cookie.split(";");
@@ -482,6 +482,123 @@
       var token = cookies.token;
 
       var usernameAccount = cookies.username;
+
+      var long, lat;
+
+      function initGeolocation() {
+        if (navigator.geolocation) {
+          // Call getCurrentPosition with success and failure callbacks
+          navigator.geolocation.getCurrentPosition(success, fail);
+        } else {
+          document.getElementById("search-by-distance-button").disabled = true;
+          swal(
+            "Sorry!",
+            "Your browser does not support geolocation services.",
+            "error"
+          );
+        }
+      }
+      window.onload = initGeolocation;
+
+      function success(position) {
+        long = position.coords.longitude;
+        lat = position.coords.latitude;
+        getNearFood();
+      }
+
+      function fail() {
+        swal(
+          "",
+          "For some reason, we couldn't find your exact coordinates. Please refresh the web page. Sorry for the inconvenience!",
+          "warning"
+        );
+      }
+
+      var foodData = document.querySelector(".list-near-food");
+
+      function getNearFood() {
+        var searchUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/get-nearest-location?postionLongitude=${long}&postionLatitude=${lat}&distance=1&limit=8`;
+        console.log(searchUrl);
+        fetch(searchUrl, {
+          method: "GET",
+        })
+          .then((response) => response.json())
+          .then((listItems) => {
+            let myPromise = new Promise(function (myResolve) {
+              if (token == "" || token == null || token == undefined) {
+                token =
+                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaHVvbmdsdmQwMDYzMUBmcHQuZWR1LnZuIiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpc3MiOiJodHRwczovL2hmYi10MTA5OGUuaGVyb2t1YXBwLmNvbS9hcGkvdjEvaGZiL2xvZ2luIiwiZXhwIjoxNjM2NTU4MzQyfQ.GWSbBk2gvGqsvgq8s-3c7P-bmO0PeFKgjsLczox5L6M";
+              }
+
+              var htmlsItem = listItems.data.map(function (item) {
+                datetime = new Date(item.expiration_date);
+                var date =
+                  ("0" + datetime.getDate()).slice(-2) +
+                  "/" +
+                  ("0" + (datetime.getMonth() + 1)).slice(-2) +
+                  "/" +
+                  datetime.getFullYear();
+
+                return `
+              <div class="col-sm-6 col-md-3 col-lg-3" style="min-height: 350px;" id="shop-item-${item.id}">
+                <div class="shop-item">
+                  <div class="shop-item-image">
+                    <img class="img-food" src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${item.avatar}" class="img-food" alt=""/>
+                    <div class="shop-item-detail">
+                      <a class="btn btn-round btn-b" href="./food_detail?id=${item.id}">
+                        <i class="fa fa-eye"></i> View Details
+                      </a>
+                    </div>
+                  </div>
+                  <h4 class="shop-item-title font-alt"><a href="#">${item.name}</a></h4>
+                  <p>Expiration Date: ${date}</p>
+                </div>
+              </div>
+              `;
+              });
+              foodData.innerHTML = htmlsItem.join("");
+              myResolve(); // when successful
+            });
+            myPromise.then(function () {
+              listItems.data.map(function (item2) {
+                var tet = getTimeFromString(item2.expiration_date);
+                run();
+
+                // Tổng số giây
+                var countDown = setInterval(run, 1000);
+                function run() {
+                  var now = new Date().getTime();
+                  var timeRest = tet - now;
+                  if (timeRest <= 0) {
+                    clearInterval(countDown);
+                    document.querySelector(
+                      `#shop-item-${item2.id}`
+                    ).style.display = "none";
+
+                    var urlUpdateStatus = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/status/${item2.id}`;
+                    fetch(urlUpdateStatus, {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                      },
+                      body: JSON.stringify({
+                        status: 0,
+                        updatedBy: 1,
+                      }),
+                    })
+                      .then((response) => response.json())
+                      .then((data) => {
+                        getListItem();
+                      })
+                      .catch((error) => console.log(error));
+                  }
+                }
+              });
+            });
+          })
+          .catch((error) => console.log(error));
+      }
 
       var shopitemAPI =
         "https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?status=2&limit=8&page=0";
@@ -503,7 +620,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3" style="min-height: 350px;" id="shop-item-${item.id}">
                   <div class="shop-item">
                     <div class="shop-item-image">
-                      <img class="img-food" src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${item.avatar}" class="img-food" alt="Cold Garb"/>
+                      <img class="img-food" src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${item.avatar}" class="img-food" alt=""/>
                       <div class="shop-item-detail">
                         <a class="btn btn-round btn-b" href="./food_detail?id=${item.id}">
                           <i class="fa fa-eye"></i> View Details
@@ -559,14 +676,27 @@
           })
           .catch((error) => console.log(error));
       }
+
       getListItem();
 
       function getTimeFromString2(strDate) {
-        var arrDate = strDate.split("/");
-        var year = parseInt(arrDate[2]);
-        var month = parseInt(arrDate[1]) - 1;
-        var date = parseInt(arrDate[0]);
-        return new Date(year, month, date).getTime();
+        if (undefined != strDate) {
+          var arrDate = strDate.split("/");
+          var year = parseInt(arrDate[2]);
+          var month = parseInt(arrDate[1]) - 1;
+          var date = parseInt(arrDate[0]);
+          return new Date(year, month, date).getTime();
+        }
+      }
+
+      function getTimeFromString(strDate) {
+        if (undefined != strDate) {
+          var arrDate = strDate.toString().split("/");
+          var year = parseInt(arrDate[2]);
+          var month = parseInt(arrDate[1]) - 1;
+          var date = parseInt(arrDate[0]);
+          return new Date(year, month, date).getTime();
+        }
       }
     </script>
   </body>
