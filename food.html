@@ -431,7 +431,7 @@
       function searchNameCategory1(){
         var nameSearchNameCategory = document.querySelector('#nameSearchNameCategory');
         var categorySearchNameCategory = document.querySelector('#categorySearchNameCategory');
-        var searchNameCategoryUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?name=${nameSearchNameCategory.value}&categoryId=${categorySearchNameCategory.value}&status=2`
+        var searchNameCategoryUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?name=${nameSearchNameCategory.value}&categoryId=${categorySearchNameCategory.value != 'Category' ? categorySearchNameCategory.value : ''}&status=2`
 				fetch(searchNameCategoryUrl,{
           method: 'GET'
         })
@@ -467,7 +467,8 @@
         })
 				.then(response => response.json())
 				.then(listItems => {
-            paginationFood(listItems.data.content);
+          console.log(listItems);
+          paginationFood(listItems.data);
 				})
 				.catch(error => console.log(error));
       }

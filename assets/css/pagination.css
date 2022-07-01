@@ -334,3 +334,19 @@
   height: 36px;
   line-height: 36px;
 }
+
+.ellipsis {
+  display: block;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  word-break: break-all;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* .ellipsis:hover,
+.ellipsis:focus {
+  overflow: visible;
+  white-space: normal;
+  height: auto;
+} */
