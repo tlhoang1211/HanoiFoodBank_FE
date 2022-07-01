@@ -17,17 +17,34 @@ function paginationFood(listFood) {
         var dataHtml = "<div>";
 
         $.each(data, function (index, item) {
-          dataHtml += `<div class="col-sm-6 col-md-3 col-lg-3" style="min-height: 350px;" id="pg-shop-item-${item.id}">
+          datetime = new Date(item.expiration_date);
+          var date =
+            ("0" + datetime.getDate()).slice(-2) +
+            "/" +
+            ("0" + (datetime.getMonth() + 1)).slice(-2) +
+            "/" +
+            datetime.getFullYear();
+          dataHtml += `<div class="col-sm-6 col-md-3 col-lg-3" style="min-height: 350px;" id="pg-shop-item-${
+            item.id
+          }">
               <div class="shop-item">
                   <div class="shop-item-image">
-                    <img class="img-food" src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${item.avatar}" class="img-food" alt="Cold Garb"/>
+                    <img class="img-food" src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${
+                      item.avatar
+                    }" class="img-food" alt="Cold Garb"/>
                     <div class="shop-item-detail">
-                      <a class="btn btn-round btn-b" href="./food_detail?id=${item.id}">
+                      <a class="btn btn-round btn-b" href="./food_detail?id=${
+                        item.id
+                      }">
                       <i class="fa fa-eye"></i> View Details</a>
                     </div>
                   </div>
-                  <h4 class="shop-item-title font-alt"><a href="#">${item.name}</a></h4>
-                  <p>Expiration Date: ${item.expirationDate}</p>
+                  <h4 class="shop-item-title font-alt"><a href="#" class="ellipsis">${
+                    item.name
+                  }</a></h4>
+                  <p>Expiration Date: ${
+                    item.expirationDate != null ? item.expirationDate : date
+                  }</p>
               </div>
           </div>`;
         });
