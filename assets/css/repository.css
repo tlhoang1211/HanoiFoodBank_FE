@@ -212,3 +212,12 @@
 #search {
   padding-top: 10px;
 }
+
+.sub-title {
+  text-align: center;
+  letter-spacing: 4px;
+  font-weight: 400;
+  font-size: 20px;
+  margin-top: -70px;
+  margin-bottom: 70px;
+}
