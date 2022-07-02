@@ -16,8 +16,8 @@ var Notification = {
       projectId: "hanoifoodbank",
       storageBucket: "hanoifoodbank.appspot.com",
       messagingSenderId: "306648236869",
-      appId: "1:306648236869:web:465c86ac6aa7ffed1df42c",
-      measurementId: "G-EKDV68NTRE",
+      appId: "1:306648236869:web:40435617729e66b21df42c",
+      measurementId: "G-RJMVSXMYET",
     };
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
@@ -35,18 +35,18 @@ var Notification = {
       callback(snapshot);
     });
   },
-  update: function (userId, idNotify, notify) {
+  update: function (userId, notifyID, notify) {
     firebase
       .database()
       .ref()
-      .child(`notification/${userId}/${idNotify}`)
+      .child(`notification/${userId}/${notifyID}`)
       .update(notify);
   },
-  delete: function (userId, idNotify, notify) {
+  delete: function (userId, notifyID, notify) {
     firebase
       .database()
       .ref()
-      .child(`notification/${userId}/${idNotify}`)
+      .child(`notification/${userId}/${notifyID}`)
       .remove();
   },
 };
