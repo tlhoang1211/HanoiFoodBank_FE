@@ -941,31 +941,34 @@ function renderListRequest(listRequest) {
     callback: function (data, pagination) {
       var dataHtml1 = "<div>";
       $.each(data, function (index, e) {
-        // do sdt cua nguoi dang do
-        // var supplierPhone = e.supplier
         requestCount++;
-        dataHtml1 += `<tr id="request-row-${
-          e.recipientId
+        dataHtml1 += `<tr id="request-row-${e.recipientId}" data-value="${
+          e.foodId
         }"><td>${requestCount}</td><td>${e.foodName}
           </td><td id="supplier-name">${e.supplierName}</td><td>${
           e.supplierPhone
         }</td><td>${convertRequestStatus(e.status)}</td>`;
         if (e.status == 2) {
-          dataHtml1 += `<td>
-              <button onclick="formConfirmRequest(${e.foodId})" type="button" class="btn btn-round" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;">Finish</button>
-            </td>`;
+          dataHtml1 +=
+            `<td>
+              <button onclick="formConfirmRequest(${e.foodId})" type="button" class="btn btn-round" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;" id="confirmBtn${e.foodId}">Finish</button>
+            </td><td onclick=confirmDeleteRequest(` +
+            e.foodId +
+            `) class="delete_td"><i class="fa fa-trash-o"></i></td></tr>`;
         } else if (e.status == 3) {
+          document
+            .getElementsByClassName("request_tab")[0]
+            .children[0].lastElementChild.remove();
+          // document.getElementsByClassName("delete_td")[0].remove();
           dataHtml1 += `<td>
-            <button onclick="formFeedbackRequest(${e.foodId})" type="button" class="btn btn-round" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;padding: 8px 26px;">Feedback</button>
-            </td>`;
+            <button onclick="formFeedbackRequest(${e.foodId})" type="button" class="btn btn-round" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;padding: 8px 26px;" id="feedbackBtn${e.foodId}">Feedback</button>
+            </td></tr>`;
         } else {
-          dataHtml1 += `<td onclick="formDetailRequest(${e.foodId})"><i class="fa fa-pencil-square-o"></i></td>`;
+          dataHtml1 +=
+            `<td onclick="formDetailRequest(${e.foodId})"><i class="fa fa-pencil-square-o"></i></td><td onclick=confirmDeleteRequest(` +
+            e.foodId +
+            `) class="delete_td"><i class="fa fa-trash-o"></i></td></tr>`;
         }
-
-        dataHtml1 +=
-          `<td onclick=confirmDeleteRequest(` +
-          e.foodId +
-          `)><i class="fa fa-trash-o"></i></td></tr>`;
       });
       dataHtml1 += "</div>";
 
@@ -1065,9 +1068,19 @@ function finishRequest() {
     .then((response) => response.json())
     .then(function (request) {
       if (request.status == 200) {
-        console.log("ok");
         modalfinish.style.display = "none";
-        swal("Success!", "You haven't changed the message field!", "success");
+        var confirm_btn = document.getElementById(`confirmBtn${finishId}`);
+        confirm_btn.innerText = "Feedback";
+        confirm_btn.setAttribute("onClick", `formFeedbackRequest(${finishId})`);
+        confirm_btn.setAttribute("id", `feedbackBtn${finishId}`);
+        document
+          .getElementsByClassName("request_tab")[0]
+          .children[0].lastElementChild.remove();
+        document.getElementsByClassName(
+          "request_tab"
+        )[0].children[0].lastElementChild.innerHTML = "Feedback";
+        document.getElementsByClassName("delete_td")[0].remove();
+        swal("Success!", "Now you can leave feedback", "success");
       }
     })
     .catch((error) => console.log(error));
@@ -1082,10 +1095,10 @@ function formFeedbackRequest(id) {
 var listImageFeedback = [];
 var idSupplierUser;
 function feedbackRequest() {
-  var rateFeedback = document.getElementById("rateFeedback").value;
-  var contentFeedback = document.getElementById("contentFeedback").value;
+  var rate = $("input[type='radio'][name='rating']:checked").val();
+  var content = document.getElementById("contentFeedback").value;
 
-  if (!rateFeedback == false && !contentFeedback == false) {
+  if (!(rate == undefined) && !(content == null)) {
     if (listImageFeedback.length == 0) {
       swal("Warning!", "You need more image!", "warning");
     } else if (listImageFeedback.length > 3) {
@@ -1103,72 +1116,65 @@ function feedbackRequest() {
         )
           .then((response) => response.json())
           .then((request) => {
-            idSupplierUser = request.data.supplierId;
-            console.log(request.data);
+            fetch("https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${isToken}`,
+              },
+              body: JSON.stringify({
+                image: listImageFeedback.join(","),
+                content: content,
+                createdBy: objAccount.id,
+                rate: rate,
+                type: 1,
+                userId: request.data.supplierId,
+              }),
+            })
+              .then((response) => response.json())
+              .then((request) => {
+                console.log(request);
+                var today = new Date();
+                time =
+                  today.getDate() +
+                  "-" +
+                  (today.getMonth() + 1) +
+                  "-" +
+                  today.getFullYear() +
+                  " " +
+                  today.getHours() +
+                  ":" +
+                  today.getMinutes() +
+                  ":" +
+                  today.getSeconds();
+                Notification.send(request.data.userId, {
+                  idNotify: "",
+                  usernameaccount: request.data.username,
+                  foodid: feedbackId,
+                  avatar: request.data.avatar,
+                  title: "User " + objAccount.name + " send feedback for you",
+                  message: "Time request: " + time,
+                  category: "food",
+                  status: 1,
+                });
+              })
+              .catch((error) => console.log(error));
+            modalfeedback.style.display = "none";
+            swal("Success!", "Send Feedback success!", "success");
+            listImageFeedback = [];
           })
           .catch((error) => console.log(error));
-        if (rateFeedback < 1) {
-          rateFeedback = 1;
-        }
-        if (rateFeedback > 10) {
-          rateFeedback = 10;
-        }
         myResolve();
       });
-      notifyFeedbackPromise.then(function () {
-        var dataPost = {
-          image: listImageFeedback.join(","),
-          content: contentFeedback,
-          createdBy: objAccount.id,
-          rate: rateFeedback,
-          type: 1,
-          userId: idSupplierUser,
-        };
-        fetch("https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${isToken}`,
-          },
-          body: JSON.stringify(dataPost),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            var today = new Date();
-            time =
-              today.getDate() +
-              "-" +
-              (today.getMonth() + 1) +
-              "-" +
-              today.getFullYear() +
-              " " +
-              today.getHours() +
-              ":" +
-              today.getMinutes() +
-              ":" +
-              today.getSeconds();
-            Notification.send(data.data.userId, {
-              idNotify: "",
-              usernameaccount: data.data.username,
-              foodid: feedbackId,
-              avatar: data.data.avatar,
-              title: "User " + objAccount.name + " send feedback for you",
-              message: "Time request: " + time,
-              category: "food",
-              status: 1,
-            });
-          })
-          .catch((error) => console.log(error));
-        modalfeedback.style.display = "none";
-        swal("Success!", "Send Feedback success!", "success");
-        listImageFeedback = [];
-        var frm = document.getElementsByName("upload_new_food_form")[0];
-        frm.reset();
-      });
+      // notifyFeedbackPromise.then(function () {
+      //   console.log(idSupplierUser);
+      //   console.log(supplierId);
+      // var frm = document.getElementsByName("upload_new_food_form")[0];
+      // frm.reset();
+      // });
     }
   } else {
-    swal("Warning!", "Please describe something!", "warning");
+    swal("Warning!", "Please rate and leave a comment!", "warning");
   }
 }
 
@@ -1864,4 +1870,5 @@ function renderFeedback(listFeedback) {
     document.getElementById("no-food-noti").style.display = "none";
   }
 }
+
 // end

@@ -139,15 +139,14 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="assets/css/account-custom.css" />
+    <link rel="stylesheet" href="assets/css/account_custom.css" />
 
     <link rel="stylesheet" href="./assets/css/repository.css" />
-    <link rel="stylesheet" href="./assets/css/validator.css">
+    <link rel="stylesheet" href="./assets/css/validator.css" />
 
     <!-- paypal -->
     <script src="https://www.paypal.com/sdk/js?client-id=ARfjvhupmZbesvNCgtE5AJV8zCxdME-gej0ajX-4aBkkIpdstLDqPA1dqw3oZIozjICO5A78qlEIw1OL&components=buttons"></script>
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-
   </head>
 
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
@@ -179,11 +178,13 @@
                 <div class="col-sm-2 col-md-2">
                   <div class="gallery-item">
                     <div class="gallery-image gallery-avatar">
-                      <a id="avatarGallery"
-                        class="gallery"
-                        title="Avatar"
-                      >
-                        <img id="avatarImg"  alt="" class="abc" style="min-height: 163px" />
+                      <a id="avatarGallery" class="gallery" title="Avatar">
+                        <img
+                          id="avatarImg"
+                          alt=""
+                          class="abc"
+                          style="min-height: 163px"
+                        />
                         <div class="gallery-caption">
                           <div class="gallery-icon">
                             <span class="icon-magnifying-glass"></span>
@@ -198,20 +199,44 @@
                   <h4 class="name-account">Name</h4>
                   <ul class="list-option">
                     <li class="list-action active">
-                      <a class="myAccountInfo" onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myaccount')" >
-                        <i class="custom-i fa fa-user"></i> My account</a>
+                      <a
+                        class="myAccountInfo"
+                        onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myaccount')"
+                      >
+                        <i class="custom-i fa fa-user"></i> My account</a
+                      >
                     </li>
                     <li class="list-action">
-                      <a class="myFoodInfo" onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myfood')">
-                        <i class="custom-i fa fa-cutlery"></i> My food</a>
+                      <a
+                        class="myFoodInfo"
+                        onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myfood')"
+                      >
+                        <i class="custom-i fa fa-cutlery"></i> My food</a
+                      >
                     </li>
                     <li class="list-action">
-                      <a class="myRequestInfo" onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myrequest')">
-                        <i class="custom-i fa fa-file-text" aria-hidden="true"></i> My requests</a>
+                      <a
+                        class="myRequestInfo"
+                        onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myrequest')"
+                      >
+                        <i
+                          class="custom-i fa fa-file-text"
+                          aria-hidden="true"
+                        ></i>
+                        My requests</a
+                      >
                     </li>
                     <li class="list-action">
-                      <a class="myFeedbackInfo" onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myfeedback')">
-                        <i class="custom-i fa fa-comments" aria-hidden="true" ></i> My feedback</a>
+                      <a
+                        class="myFeedbackInfo"
+                        onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myfeedback')"
+                      >
+                        <i
+                          class="custom-i fa fa-comments"
+                          aria-hidden="true"
+                        ></i>
+                        My feedback</a
+                      >
                     </li>
                   </ul>
                   <!-- end -->
@@ -243,7 +268,9 @@
                       >
                     </li>
                     <li class="tab-account listFoodExpired d-none">
-                      <a onclick="listFoodExpired()"  data-toggle="tab"> List expired food</a>
+                      <a onclick="listFoodExpired()" data-toggle="tab">
+                        List expired food</a
+                      >
                     </li>
 
                     <li class="tab-account listRequest d-none">
@@ -275,35 +302,79 @@
                       >
                     </li>
                     <li class="tab-account listSentFeedback d-none">
-                      <a href="#listSentFeedback" onclick="getSentFeedbackList()" data-toggle="tab"> List sent feedback</a>
+                      <a
+                        href="#listSentFeedback"
+                        onclick="getSentFeedbackList()"
+                        data-toggle="tab"
+                      >
+                        List sent feedback</a
+                      >
                     </li>
                     <li class="tab-account listReceiveFeedback d-none">
-                      <a href="#listReceivedFeedback" onclick="getReceivedFeedbackList()" data-toggle="tab"> List received feedback</a>
+                      <a
+                        href="#listReceivedFeedback"
+                        onclick="getReceivedFeedbackList()"
+                        data-toggle="tab"
+                      >
+                        List received feedback</a
+                      >
                     </li>
                   </ul>
 
                   <div class="tab-content">
                     <!-- profile -->
                     <div class="tab-pane active" id="profile">
-                      <form class="form registerform" id="update-account-form" onsubmit="return false" role="form" name="profile-form"
+                      <form
+                        class="form registerform"
+                        id="update-account-form"
+                        onsubmit="return false"
+                        role="form"
+                        name="profile-form"
                       >
                         <div class="form-group">
-                          <input id="account_id" class="form-control" type="text" style="display: none" />
+                          <input
+                            id="account_id"
+                            class="form-control"
+                            type="text"
+                            style="display: none"
+                          />
                         </div>
                         <div class="form-group">
                           <label class="form-label">Name</label>
-                          <input id="account_name" name="account_name" class="form-control" type="text" placeholder="Enter name" autocomplete="off" />
+                          <input
+                            id="account_name"
+                            name="account_name"
+                            class="form-control"
+                            type="text"
+                            placeholder="Enter name"
+                            autocomplete="off"
+                          />
                           <span class="form-message"></span>
                         </div>
                         <div class="form-group">
-                          <label for="account_email" class="form-label">User Name - Email</label>
-                          <input id="account_email" name="account_email" class="form-control" type="text" placeholder="Enter email" autocomplete="off" />
+                          <label for="account_email" class="form-label"
+                            >User Name - Email</label
+                          >
+                          <input
+                            id="account_email"
+                            name="account_email"
+                            class="form-control"
+                            type="text"
+                            placeholder="Enter email"
+                            autocomplete="off"
+                          />
                           <span class="form-message"></span>
                         </div>
                         <div class="form-group">
                           <label class="form-label">Phone</label>
                           <input
-                            id="account_phone" name="account_phone" class="form-control" type="text" placeholder="Enter phone" autocomplete="off" />
+                            id="account_phone"
+                            name="account_phone"
+                            class="form-control"
+                            type="text"
+                            placeholder="Enter phone"
+                            autocomplete="off"
+                          />
                           <span class="form-message"></span>
                         </div>
                         <div class="form-group">
@@ -311,7 +382,13 @@
                             Address</label
                           >
                           <input
-                            id="account_address" name="account_address" class="form-control" type="text" placeholder="Enter address" autocomplete="off" />
+                            id="account_address"
+                            name="account_address"
+                            class="form-control"
+                            type="text"
+                            placeholder="Enter address"
+                            autocomplete="off"
+                          />
                           <span class="form-message"></span>
                         </div>
                         <!-- hoangtl2 _ 23/10/2021 _ cloudinary button  -->
@@ -319,7 +396,11 @@
                         <div class="form-group">
                           <label for="name" class="form-label">Avatar</label>
                           <br />
-                          <button type="button" id="upload_avatar" class="upload-btn btn btn-round">
+                          <button
+                            type="button"
+                            id="upload_avatar"
+                            class="upload-btn btn btn-round"
+                          >
                             <i class="fa fa-download"></i>
                             Upload image
                           </button>
@@ -327,15 +408,28 @@
                           <input type="hidden" id="avatar_account" />
                           <span class="form-message"></span>
                         </div>
-                        <button type="submit" onclick="updateAccount()"  class="btn btn-b btn-round btnSubmitProfile pull-right">
+                        <button
+                          type="submit"
+                          onclick="updateAccount()"
+                          class="btn btn-b btn-round btnSubmitProfile pull-right"
+                        >
                           <i class="fa fa-edit"></i>
                           Update
                         </button>
                       </form>
                     </div>
                     <!-- changePassword -->
-                    <div class="tab-pane" id="changePassword" onsubmit="return false">
-                      <form class="form registerform" id="changePassword-form" onsubmit="return false" role="form">
+                    <div
+                      class="tab-pane"
+                      id="changePassword"
+                      onsubmit="return false"
+                    >
+                      <form
+                        class="form registerform"
+                        id="changePassword-form"
+                        onsubmit="return false"
+                        role="form"
+                      >
                         <div class="form-group">
                           <label for="account_email" class="form-label"
                             >New Password</label
@@ -350,11 +444,23 @@
                           <span class="form-message"></span>
                         </div>
                         <div class="form-group">
-                          <label for="account_email" class="form-label">Confirm New Password</label>
-                          <input id="confirmNewPassword" class="form-control" type="password" placeholder="Confirm new password" autocomplete="off" />
+                          <label for="account_email" class="form-label"
+                            >Confirm New Password</label
+                          >
+                          <input
+                            id="confirmNewPassword"
+                            class="form-control"
+                            type="password"
+                            placeholder="Confirm new password"
+                            autocomplete="off"
+                          />
                           <span class="form-message"></span>
                         </div>
-                        <button type="submit" onclick="changePassword()"  class="btn btn-b btn-round btnSubmitProfile pull-right">
+                        <button
+                          type="submit"
+                          onclick="changePassword()"
+                          class="btn btn-b btn-round btnSubmitProfile pull-right"
+                        >
                           <i class="fa fa-save"></i>
                           Save
                         </button>
@@ -380,7 +486,7 @@
                                   <th>Uploaded Date</th>
                                   <th>Status</th>
                                   <th>Edit</th>
-                                  <th>Delete</th>
+                                  <th>Cancel</th>
                                 </tr>
                               </thead>
                               <tbody
@@ -592,7 +698,7 @@
                             <table
                               class="table align-middle mb-0 table-striped table-bordered"
                             >
-                              <thead class="table-light">
+                              <thead class="table-light request_tab">
                                 <tr>
                                   <th>#</th>
                                   <th>Food Name</th>
@@ -600,7 +706,7 @@
                                   <th>Supplier Phone</th>
                                   <th>Status</th>
                                   <th>Detail</th>
-                                  <th>Delete</th>
+                                  <th>Cancel</th>
                                 </tr>
                               </thead>
                               <tbody
@@ -758,37 +864,40 @@
                     </div>
                     <!-- feedback -->
                     <div class="tab-pane" id="listFeedback">
-                        <div class="card radius-10">
-                          <div class="card-body" id="center-feedback-noti">
-                            <span id="no-feedback-noti" style="display: none"
-                              >No data yet!</span
+                      <div class="card radius-10">
+                        <div class="card-body" id="center-feedback-noti">
+                          <span id="no-feedback-noti" style="display: none"
+                            >No data yet!</span
+                          >
+                          <div
+                            class="table-responsive"
+                            id="feedback-data-table"
+                          >
+                            <table
+                              class="table align-middle mb-0 table-striped table-bordered"
                             >
-                            <div class="table-responsive" id="feedback-data-table">
-                              <table
-                                class="table align-middle mb-0 table-striped table-bordered"
-                              >
-                                <thead class="table-light">
-                                  <tr>
-                                    <th>#</th>
-                                    <th>Food Image</th>
-                                    <th id="changeFinal">Feedback To</th>
-                                    <th>Content</th>
-                                    <th>Point Rated</th>
-                                    <th>Created Date</th>
-                                  </tr>
-                                </thead>
-                                <tbody
-                                  class="row multi-columns-row"
-                                  id="list-feedback"
-                                ></tbody>
-                              </table>
-                              <div class="row" id="pagination-button">
-                                <div class="col-sm-12">
-                                  <div class="paginationFeedback font-alt"></div>
-                                </div>
+                              <thead class="table-light">
+                                <tr>
+                                  <th>#</th>
+                                  <th>Food Image</th>
+                                  <th id="changeFinal">Feedback To</th>
+                                  <th>Content</th>
+                                  <th>Point Rated</th>
+                                  <th>Created Date</th>
+                                </tr>
+                              </thead>
+                              <tbody
+                                class="row multi-columns-row"
+                                id="list-feedback"
+                              ></tbody>
+                            </table>
+                            <div class="row" id="pagination-button">
+                              <div class="col-sm-12">
+                                <div class="paginationFeedback font-alt"></div>
                               </div>
                             </div>
                           </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -848,7 +957,6 @@
             <div class="modal-main">
               <div class="modal-container">
                 <div class="modal-body">
-                  <!-- Confirm Delete -->
                   <div class="tab-pane">
                     <h4 class="text-center">
                       Have you received this food yet?
@@ -860,13 +968,13 @@
                       class="btn btn-round btn-danger"
                       value=""
                     >
-                      I'm sure
+                      Yes
                     </button>
                     <button
                       type="button"
                       class="btn btn-round"
                       onclick="cancelModal()"
-                      style="float: right;"
+                      style="float: right"
                     >
                       Cancel
                     </button>
@@ -897,7 +1005,9 @@
                       role="form"
                     >
                       <div class="form-group">
-                        <label for="contentFeedback" class="form-label">Content</label>
+                        <label for="contentFeedback" class="form-label"
+                          >Content</label
+                        >
                         <textarea
                           id="contentFeedback"
                           name="contentFeedback"
@@ -909,8 +1019,10 @@
                         <span class="form-message"></span>
                       </div>
                       <div class="form-group">
-                        <label for="rateFeedback" class="form-label">Rate</label>
-                        <input
+                        <label for="rateFeedback" class="form-label"
+                          >Rate</label
+                        >
+                        <!-- <input
                           id="rateFeedback"
                           name="rateFeedback"
                           class="form-control"
@@ -918,7 +1030,15 @@
                           type="number"
                           min="1"
                           max="10"
-                        ></textarea>
+                        ></textarea> -->
+                        <br />
+                        <span class="star-rating">
+                          <input type="radio" name="rating" value="1" /><i></i>
+                          <input type="radio" name="rating" value="2" /><i></i>
+                          <input type="radio" name="rating" value="3" /><i></i>
+                          <input type="radio" name="rating" value="4" /><i></i>
+                          <input type="radio" name="rating" value="5" /><i></i>
+                        </span>
                         <span class="form-message"></span>
                       </div>
                       <div class="form-group">
@@ -947,13 +1067,13 @@
                           type="button"
                           class="btn btn-round"
                           onclick="cancelModal()"
-                          style="float: right;"
+                          style="float: right"
                         >
                           Cancel
                         </button>
                         <button
                           type="button"
-                          id="accept-finish-button"
+                          id="send-feedback-button"
                           onclick="feedbackRequest()"
                           class="btn btn-round btn-danger"
                           value=""
@@ -969,7 +1089,6 @@
           </div>
         </div>
       </section>
-
     </main>
 
     <!-- // dat lai vi tri script -->
