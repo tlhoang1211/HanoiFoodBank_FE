@@ -24,7 +24,6 @@ var Notification = {
     } else {
       firebase.app(); // if already initialized, use that one
     }
-    // firebase.initializeApp(firebaseConfig);
   },
   send: function (userId, notify) {
     firebase.database().ref(`notification/${userId}`).push().set(notify);
@@ -42,7 +41,7 @@ var Notification = {
       .child(`notification/${userId}/${notifyID}`)
       .update(notify);
   },
-  delete: function (userId, notifyID, notify) {
+  delete: function (userId, notifyID) {
     firebase
       .database()
       .ref()

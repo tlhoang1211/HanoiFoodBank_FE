@@ -553,7 +553,11 @@
               ).value;
               document.cookie = `token=${data.data.access_token}`;
               document.cookie = `username=${usernamecookie}`;
-              window.history.back();
+              if (document.referrer == "") {
+                document.location.href = "/";
+              } else {
+                window.history.back();
+              }
             } else {
               swal("Error!", "Incorrect username or password!", "error");
             }
