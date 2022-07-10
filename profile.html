@@ -195,7 +195,6 @@
                   </div>
                   <!-- hoangtl2 _ 23/10/2021 _ edit view -->
                   <!-- // start -->
-                  <!-- hiennv 24/10 update -->
                   <h4 class="name-account">Name</h4>
                   <ul class="list-option">
                     <li class="list-action active">
@@ -1084,6 +1083,78 @@
                     </form>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modal Confirm Feedback Nguoi nhan-->
+      <section>
+        <div
+          class="modal fade"
+          id="foodInfoModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="foodInfoModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="food-modal-header">
+                <h5
+                  class="modal-title"
+                  id="foodInfoModalLabel"
+                  style="font-weight: bolder"
+                >
+                  FOOD INFO
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="slideshow-container"></div>
+                <br />
+
+                <!-- The dots/circles -->
+                <div style="text-align: center" class="image-page"></div>
+                <div class="col-md-6 ml-auto">
+                  <label class="col-form-label">Food:</label>
+                  <p class="food-name"></p>
+                  <label class="col-form-label">Category:</label>
+                  <p class="food-category"></p>
+                  <label class="col-form-label">Uploaded date:</label>
+                  <p class="food-uploaded-date"></p>
+                  <label class="col-form-label">Quantity:</label>
+                  <p class="food-quantity"></p>
+                </div>
+                <div class="col-md-6 ml-auto">
+                  <label class="col-form-label">Supplier:</label>
+                  <p class="supplier-name"></p>
+                  <label class="col-form-label">Email:</label>
+                  <p class="supplier-email"></p>
+                  <label class="col-form-label">Expiration date:</label>
+                  <p class="food-exp-date"></p>
+                </div>
+                <div class="col-md-12 ml-auto">
+                  <label class="col-form-label">Description:</label>
+                  <p class="food-description"></p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
