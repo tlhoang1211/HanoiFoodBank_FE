@@ -944,7 +944,10 @@ function renderListRequest(listRequest) {
         requestCount++;
         dataHtml1 += `<tr id="request-row-${e.recipientId}" data-value="${
           e.foodId
-        }"><td>${requestCount}</td><td>${e.foodName}
+        }"><td>${requestCount}</td>
+        <td><button type="button" id="showFoodInfo" class="btn btn-primary" data-toggle="modal" data-target="#foodInfoModal" data-value="${
+          e.foodId
+        }">${e.foodName}</button>
           </td><td id="supplier-name">${e.supplierName}</td><td>${
           e.supplierPhone
         }</td><td>${convertRequestStatus(e.status)}</td>`;
@@ -1104,7 +1107,7 @@ function feedbackRequest() {
     } else if (listImageFeedback.length > 3) {
       swal("Warning!", "You should only add a maximum of 3 images!", "warning");
     } else {
-      let notifyFeedbackPromise = new Promise(function (myResolve) {
+      new Promise(function (myResolve) {
         fetch(
           `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${feedbackId}`,
           {
@@ -1166,12 +1169,6 @@ function feedbackRequest() {
           .catch((error) => console.log(error));
         myResolve();
       });
-      // notifyFeedbackPromise.then(function () {
-      //   console.log(idSupplierUser);
-      //   console.log(supplierId);
-      // var frm = document.getElementsByName("upload_new_food_form")[0];
-      // frm.reset();
-      // });
     }
   } else {
     swal("Warning!", "Please rate and leave a comment!", "warning");
@@ -1869,6 +1866,105 @@ function renderFeedback(listFeedback) {
     foodDataTable.style.display = "block";
     document.getElementById("no-food-noti").style.display = "none";
   }
+}
+
+$("#foodInfoModal").on("show.bs.modal", function (event) {
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  var foodId = button.data("value");
+  getFoodDetail(foodId);
+});
+
+function getFoodDetail(foodId) {
+  var getDetailFood = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/${foodId}`;
+  fetch(getDetailFood, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${isToken}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((foodInfo) => {
+      foodDetail = foodInfo.data;
+      console.log(foodDetail);
+      renderFoodInfo(foodDetail);
+    })
+    .catch((error) => console.log(error));
+}
+
+function renderFoodInfo(data) {
+  // console.log(data);
+  var baseUrl = "https://res.cloudinary.com/vernom/image/upload/";
+  let imagesList = data.images;
+  const images = imagesList.split(",");
+  if (images[images.length - 1] == "") {
+    images.pop();
+  }
+  let numberOfImage = images.length;
+  var addImage = "";
+  for (let i = 1; i < images.length; i++) {
+    if (images[i] != "") {
+      addImage += `
+      <div class="mySlides food-fade">
+        <div class="numbertext">${i + 1} / ${numberOfImage}</div>
+        <img
+          src="${baseUrl + images[i]}"
+          style="width: 100%"
+        />
+      </div>
+      `;
+    }
+  }
+
+  $(".slideshow-container").html(
+    `<!-- Full-width images with number and caption text -->
+      <div class="mySlides food-fade" style="display: block">
+        <div class="numbertext">1 / ${numberOfImage}</div>
+        <img
+          src="${baseUrl + data.avatar}"
+          style="width: 100%"
+        />
+      </div>` +
+      addImage +
+      `
+      <!-- Next and previous buttons -->
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>`
+  );
+
+  $(".food-name").html(data.name);
+  $(".food-category").html(data.category);
+  $(".food-uploaded-date").html(data.createdAt);
+  $(".food-exp-date").html(data.expirationDate);
+  $(".food-description").html(data.description);
+  $(".food-quantity").html(data.quantity);
+  $(".supplier-name").html(data.supplierName);
+  $(".supplier-email").html(data.supplierEmail);
+}
+
+let slideIndex = 1;
+const showSlides = (n) => {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  if (n > slides.length) {
+    slideIndex = 1;
+  }
+  if (n < 1) {
+    slideIndex = slides.length;
+  }
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slides[slideIndex - 1].style.display = "block";
+};
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides((slideIndex += n));
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides((slideIndex = n));
 }
 
 // end
