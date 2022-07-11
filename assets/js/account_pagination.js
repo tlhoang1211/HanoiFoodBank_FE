@@ -909,7 +909,6 @@ function deleteFood(id) {
 function getListRequest(userID) {
   // console.log(userID);
   var requestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${userID}&order=desc&sortBy=createdAt`;
-  // console.log(requestListAPI);
   fetch(requestListAPI, {
     method: "GET",
     headers: {
@@ -1120,7 +1119,7 @@ function feedbackRequest() {
           .then((response) => response.json())
           .then((request) => {
             fetch("https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks", {
-              method: "POST",
+              method: "GET",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${isToken}`,
@@ -1885,7 +1884,6 @@ function getFoodDetail(foodId) {
     .then((response) => response.json())
     .then((foodInfo) => {
       foodDetail = foodInfo.data;
-      console.log(foodDetail);
       renderFoodInfo(foodDetail);
     })
     .catch((error) => console.log(error));

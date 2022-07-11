@@ -57,7 +57,7 @@
   height: 100%;
   background: rgba(119, 116, 116, 0.5);
 }
-.modal-dialog {
+.food-modal-dialog {
   position: relative;
   width: auto;
   margin: auto;
@@ -231,7 +231,7 @@
 }
 
 @media (min-width: 576px) {
-  .modal-dialog {
+  .food-modal-dialog {
     max-width: 500px;
     margin: 1.75rem auto;
   }
