@@ -1094,7 +1094,59 @@ function formFeedbackRequest(id) {
   feedbackId = id;
 }
 
+function sentFeedback(img, ct, cb, r, t, ui) {
+  fetch(`https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${isToken}`,
+    },
+    body: JSON.stringify({
+      image: img,
+      content: ct,
+      createdBy: cb,
+      rate: r,
+      type: t,
+      userId: ui,
+    }),
+  })
+    .then((response) => response.json())
+    .then(function (dataReturn) {
+      let notifyFeedbackPromise = new Promise(function (myResolve) {
+        var today = new Date();
+        console.log(dataReturn);
+        time =
+          today.getDate() +
+          "-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getFullYear() +
+          " " +
+          today.getHours() +
+          ":" +
+          today.getMinutes() +
+          ":" +
+          today.getSeconds();
+        myResolve();
+      });
+      notifyFeedbackPromise.then(function () {
+        Notification.send(dataReturn.data.userId, {
+          idNotify: "",
+          usernameaccount: dataReturn.data.username,
+          foodid: feedbackId,
+          avatar: dataReturn.data.avatar,
+          title: "User " + objAccount.name + " send feedback for you",
+          message: "Time request: " + time,
+          category: "food",
+          status: 1,
+        });
+      });
+    })
+    .catch((error) => console.log(error));
+}
+
 var listImageFeedback = [];
+
 var idSupplierUser;
 function feedbackRequest() {
   var rate = $("input[type='radio'][name='rating']:checked").val();
@@ -1118,52 +1170,24 @@ function feedbackRequest() {
         )
           .then((response) => response.json())
           .then((request) => {
-            fetch("https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${isToken}`,
-              },
-              body: JSON.stringify({
-                image: listImageFeedback.join(","),
-                content: content,
-                createdBy: objAccount.id,
-                rate: rate,
-                type: 1,
-                userId: request.data.supplierId,
-              }),
-            })
-              .then((response) => response.json())
-              .then((request) => {
-                console.log(request);
-                var today = new Date();
-                time =
-                  today.getDate() +
-                  "-" +
-                  (today.getMonth() + 1) +
-                  "-" +
-                  today.getFullYear() +
-                  " " +
-                  today.getHours() +
-                  ":" +
-                  today.getMinutes() +
-                  ":" +
-                  today.getSeconds();
-                Notification.send(request.data.userId, {
-                  idNotify: "",
-                  usernameaccount: request.data.username,
-                  foodid: feedbackId,
-                  avatar: request.data.avatar,
-                  title: "User " + objAccount.name + " send feedback for you",
-                  message: "Time request: " + time,
-                  category: "food",
-                  status: 1,
-                });
-              })
-              .catch((error) => console.log(error));
-            modalfeedback.style.display = "none";
-            swal("Success!", "Send Feedback success!", "success");
-            listImageFeedback = [];
+            jQuery.each(
+              $(".thumbnailsFoodFeedback .cloudinary-thumbnails")
+                .children("li")
+                .map(function () {
+                  return $(this).attr("data-cloudinary");
+                })
+                .get(),
+              function (i, val) {
+                listImageFeedback.push(JSON.parse(val).path);
+              }
+            );
+            let img = listImageFeedback.join(",");
+            let ct = content;
+            let cb = objAccount.id;
+            let r = rate;
+            let t = 1;
+            let ui = request.data.supplierId;
+            sentFeedback(img, ct, cb, r, t, ui);
           })
           .catch((error) => console.log(error));
         myResolve();
@@ -1181,7 +1205,7 @@ var myWidgetFoodFeedback = cloudinary.createUploadWidget(
     cloudName: "vernom",
     uploadPreset: "fn5rpymu",
     form: "#addformFeedback",
-    folder: "hanoi_food_bank_project/uploaded_food",
+    folder: "hanoi_food_bank_project/feedbacks",
     fieldName: "thumbnailsFoodFeedback[]",
     thumbnails: ".thumbnailsFoodFeedback",
   },
