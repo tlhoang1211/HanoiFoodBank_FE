@@ -98,6 +98,13 @@
   .list-option {
     top: 10px;
     text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .gallery-avatar {
+    height: 100px;
+    width: 100px;
+    margin: auto;
   }
 }
 
@@ -183,22 +190,26 @@
   }
 }
 
-.pagination1,
-.pagination2,
-.pagination3,
-.pagination4,
-.paginationFeedback {
+.food-list-pagination,
+.list-active-food-pagination,
+.user-request-list-pagination,
+.pending-requests-pagination,
+.canceled-requests-pagination,
+.denied-requests-pagination,
+.feedback-pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top: 20px;
 }
 
-.pagination1 a,
-.pagination2 a,
-.pagination3 a,
-.pagination4 a,
-.paginationFeedback a {
+.food-list-pagination a,
+.list-active-food-pagination a,
+.user-request-list-pagination a,
+.pending-requests-pagination a,
+.canceled-requests-pagination a,
+.denied-requests-pagination a,
+.feedback-pagination a {
   padding: 0 !important;
 }
 

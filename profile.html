@@ -179,12 +179,7 @@
                   <div class="gallery-item">
                     <div class="gallery-image gallery-avatar">
                       <a id="avatarGallery" class="gallery" title="Avatar">
-                        <img
-                          id="avatarImg"
-                          alt=""
-                          class="abc"
-                          style="min-height: 163px"
-                        />
+                        <img id="avatarImg" alt="" />
                         <div class="gallery-caption">
                           <div class="gallery-icon">
                             <span class="icon-magnifying-glass"></span>
@@ -272,18 +267,36 @@
                       >
                     </li>
 
-                    <li class="tab-account listRequest d-none">
+                    <li class="tab-account listPendingRequest d-none">
                       <a
-                        href="#listRequest"
-                        onclick="clickListRequest()"
+                        href="#listPendingRequest"
+                        onclick="clickListPendingRequest()"
                         data-toggle="tab"
                       >
-                        List of requests</a
+                        Pending requests</a
                       >
                     </li>
                     <li class="tab-account detailRequest d-none">
                       <a href="#detailRequest" data-toggle="tab">
                         Details request</a
+                      >
+                    </li>
+                    <li class="tab-account listCanceledRequest d-none">
+                      <a
+                        href="#listCanceledRequest"
+                        onclick="clickListCanceledRequest()"
+                        data-toggle="tab"
+                      >
+                        Canceled requests</a
+                      >
+                    </li>
+                    <li class="tab-account listDeniedRequest d-none">
+                      <a
+                        href="#listDeniedRequest"
+                        onclick="clickListDeniedRequest()"
+                        data-toggle="tab"
+                      >
+                        Denied requests</a
                       >
                     </li>
                     <li class="tab-account listActiveFood d-none">
@@ -292,12 +305,12 @@
                         onclick="clickListActiveFood()"
                         data-toggle="tab"
                       >
-                        List of foods that someone requests for</a
+                        Requested foods</a
                       >
                     </li>
                     <li class="tab-account listUsersRequest d-none">
                       <a href="#listUsersRequest" data-toggle="tab">
-                        List of your users request food</a
+                        List users</a
                       >
                     </li>
                     <li class="tab-account listSentFeedback d-none">
@@ -495,7 +508,9 @@
                             </table>
                             <div class="row" id="pagination-button">
                               <div class="col-sm-12">
-                                <div class="pagination1 font-alt"></div>
+                                <div
+                                  class="food-list-pagination font-alt"
+                                ></div>
                               </div>
                             </div>
                           </div>
@@ -687,13 +702,18 @@
                       </div>
                     </div>
                     <!-- list of requests -->
-                    <div class="tab-pane" id="listRequest">
+                    <div class="tab-pane" id="listPendingRequest">
                       <div class="card radius-10">
-                        <div class="card-body" id="center-request-noti">
-                          <span id="no-request-noti" style="display: none"
-                            >You haven't received any request yet!</span
+                        <div class="card-body" id="center-pending-request-noti">
+                          <span
+                            id="no-pending-request-noti"
+                            style="display: none"
+                            >You have no requests yet!</span
                           >
-                          <div class="table-responsive" id="request-data-table">
+                          <div
+                            class="table-responsive"
+                            id="pending-request-data-table"
+                          >
                             <table
                               class="table align-middle mb-0 table-striped table-bordered"
                             >
@@ -705,17 +725,19 @@
                                   <th>Supplier Phone</th>
                                   <th>Status</th>
                                   <th>Detail</th>
-                                  <th>Cancel</th>
+                                  <th>Action</th>
                                 </tr>
                               </thead>
                               <tbody
                                 class="row multi-columns-row"
-                                id="list-request"
+                                id="list-pending-request"
                               ></tbody>
                             </table>
                             <div class="row" id="pagination-button">
                               <div class="col-sm-12">
-                                <div class="pagination2 font-alt"></div>
+                                <div
+                                  class="pending-requests-pagination font-alt"
+                                ></div>
                               </div>
                             </div>
                           </div>
@@ -797,7 +819,7 @@
                                   <th>Food Name</th>
                                   <th>Expiration Date</th>
                                   <th>Uploaded Date</th>
-                                  <th>Status</th>
+                                  <th>Request Status</th>
                                   <th>Requests On Food</th>
                                 </tr>
                               </thead>
@@ -808,7 +830,98 @@
                             </table>
                             <div class="row" id="pagination-button">
                               <div class="col-sm-12">
-                                <div class="pagination3 font-alt"></div>
+                                <div
+                                  class="list-active-food-pagination font-alt"
+                                ></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- list of canceled food -->
+                    <div class="tab-pane" id="listCanceledRequest">
+                      <div class="card radius-10 listCanceledRequestPagination">
+                        <div
+                          class="card-body"
+                          id="center-canceled-request-noti"
+                        >
+                          <span
+                            id="no-canceled-request-noti"
+                            style="display: none"
+                          >
+                            No requests have been canceled yet!
+                          </span>
+                          <div
+                            class="table-responsive"
+                            id="canceled-request-data-table"
+                          >
+                            <table
+                              class="table align-middle mb-0 table-striped table-bordered"
+                            >
+                              <thead class="table-light">
+                                <tr>
+                                  <th>#</th>
+                                  <th>Food Name</th>
+                                  <th>Supplier Name</th>
+                                  <th>Supplier Phone</th>
+                                  <th>Request Status</th>
+                                  <th>Requests Details</th>
+                                </tr>
+                              </thead>
+                              <tbody
+                                class="row multi-columns-row"
+                                id="list-canceled-request"
+                              ></tbody>
+                            </table>
+                            <div class="row" id="pagination-button">
+                              <div class="col-sm-12">
+                                <div
+                                  class="canceled-requests-pagination font-alt"
+                                ></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- list of denied food -->
+                    <div class="tab-pane" id="listDeniedRequest">
+                      <div class="card radius-10 listDeniedRequestPagination">
+                        <div class="card-body" id="center-denied-request-noti">
+                          <span
+                            id="no-denied-request-noti"
+                            style="display: none"
+                          >
+                            No requests have been denied yet!
+                          </span>
+                          <div
+                            class="table-responsive"
+                            id="denied-request-data-table"
+                          >
+                            <table
+                              class="table align-middle mb-0 table-striped table-bordered"
+                            >
+                              <thead class="table-light">
+                                <tr>
+                                  <th>#</th>
+                                  <th>Food Name</th>
+                                  <th>Supplier Name</th>
+                                  <th>Supplier Phone</th>
+                                  <th>Request Status</th>
+                                  <th>Requests Details</th>
+                                </tr>
+                              </thead>
+                              <tbody
+                                class="row multi-columns-row"
+                                id="list-denied-request"
+                              ></tbody>
+                            </table>
+                            <div class="row" id="pagination-button">
+                              <div class="col-sm-12">
+                                <div
+                                  class="denied-requests-pagination font-alt"
+                                ></div>
                               </div>
                             </div>
                           </div>
@@ -855,7 +968,9 @@
                           ></div>
                           <div class="row" id="pagination-button">
                             <div class="col-sm-12">
-                              <div class="pagination4 font-alt"></div>
+                              <div
+                                class="user-request-list-pagination font-alt"
+                              ></div>
                             </div>
                           </div>
                         </div>
@@ -892,7 +1007,7 @@
                             </table>
                             <div class="row" id="pagination-button">
                               <div class="col-sm-12">
-                                <div class="paginationFeedback font-alt"></div>
+                                <div class="feedback-pagination font-alt"></div>
                               </div>
                             </div>
                           </div>
@@ -938,7 +1053,7 @@
                       class="btn btn-round"
                       onclick="cancelModal()"
                     >
-                      Cancel
+                      No
                     </button>
                   </div>
                 </div>
@@ -1226,6 +1341,15 @@
       if (!tokenaccount) {
         location.replace("../login_register.html");
       }
+    </script>
+
+    <script>
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
     </script>
   </body>
 </html>
