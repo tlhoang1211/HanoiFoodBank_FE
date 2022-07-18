@@ -4,17 +4,30 @@ var detailRequestID = document.getElementById("detailRequest");
 var detailRequestCN = document.getElementsByClassName("detailRequest")[0];
 var listUsersRequestID = document.getElementById("listUsersRequest");
 var listUsersRequestCN = document.getElementsByClassName("listUsersRequest")[0];
-var listRequestID = document.getElementById("listRequest");
-var listRequestCN = document.getElementsByClassName("listRequest")[0];
+var listPendingRequestID = document.getElementById("listPendingRequest");
+var listPendingRequestCN = document.getElementsByClassName(
+  "listPendingRequest"
+)[0];
 var detailRequestID = document.getElementById("detailRequest");
 var detailRequestCN = document.getElementsByClassName("detailRequest")[0];
 var listActiveFoodID = document.getElementById("listActiveFood");
 var listActiveFoodCN = document.getElementsByClassName("listActiveFood")[0];
+var listCanceledRequestID = document.getElementById("listCanceledRequest");
+var listCanceledRequestCN = document.getElementsByClassName(
+  "listCanceledRequest"
+)[0];
+var listDeniedRequestID = document.getElementById("listDeniedRequest");
+var listDeniedRequestCN = document.getElementsByClassName(
+  "listDeniedRequest"
+)[0];
 
 var foodCount = 0;
-var requestCount = 0;
+var pendingRequestsCount = 0;
+var canceledRequestsCount = 0;
+var deniedRequestsCount = 0;
 
 var objAccount = null;
+var accountID = null;
 
 var cloudinary_url =
   "https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/";
@@ -36,8 +49,8 @@ function getAccount() {
     .then((account) => {
       if (account && account.data) {
         objAccount = account.data;
+        accountID = objAccount.id;
         getListFoodAll();
-        getListRequest(objAccount.id);
         bindDataAccount(account.data);
       }
     })
@@ -368,7 +381,7 @@ function getListFoodExpired() {
 
 function renderListFood(listFood) {
   foodCount = 0;
-  let container = $(".pagination1");
+  let container = $(".food-list-pagination");
   container.pagination({
     dataSource: listFood,
     pageSize: 5,
@@ -868,11 +881,11 @@ function formatCategoryStringToInt(category) {
 }
 
 // display donate modal on click delete button
-var modal3 = document.querySelector(".modal-account-confirm-delete");
-var modalfinish = document.querySelector(".modal-account-confirm-finish");
-var modalfeedback = document.querySelector(".modal-account-confirm-feedback");
+var modalCancel = document.querySelector(".modal-account-confirm-delete");
+var modalFinish = document.querySelector(".modal-account-confirm-finish");
+var modalFeedback = document.querySelector(".modal-account-confirm-feedback");
 function confirmDeleteFood(id) {
-  modal3.style.display = "flex";
+  modalCancel.style.display = "flex";
   var buttonValue = document.getElementById("accept-button");
   // console.log(id);
   buttonValue.setAttribute("onclick", "deleteFood(" + id + ")");
@@ -895,7 +908,7 @@ function deleteFood(id) {
     .then((food) => {
       if (food) {
         document.getElementById("food-row-" + id).style.display = "none";
-        modal3.style.display = "none";
+        modalCancel.style.display = "none";
         swal("Success!", "Delete success!", "success");
         getListFood(objAccount.id);
       }
@@ -904,12 +917,12 @@ function deleteFood(id) {
 }
 // end
 
-// hoangtl2 - 01/11/2021 - request list pagination on account page
+// pending request list pagination on account page
 // start
-function getListRequest(userID) {
+function getListPendingRequest() {
   // console.log(userID);
-  var requestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${userID}&order=desc&sortBy=createdAt`;
-  fetch(requestListAPI, {
+  var pendingRequestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${accountID}&order=desc&sortBy=createdAt`;
+  fetch(pendingRequestListAPI, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${isToken}`,
@@ -923,14 +936,26 @@ function getListRequest(userID) {
         requestsList.data.content &&
         requestsList.data.content.length > 0
       ) {
-        renderListRequest(requestsList.data.content);
+        renderListPendingRequest(requestsList.data.content);
+      } else {
+        var pendingRequestDataTable = document.getElementById(
+          "pending-request-data-table"
+        );
+        pendingRequestDataTable.style.display = "none";
+        document
+          .getElementById("no-pending-request-noti")
+          .removeAttribute("style");
+        document
+          .getElementById("center-pending-request-noti")
+          .setAttribute("style", "text-align: center;");
       }
     })
     .catch((error) => console.log(error));
 }
 
-function renderListRequest(listRequest) {
-  let requestContainer = $(".pagination2");
+function renderListPendingRequest(listRequest) {
+  pendingRequestsCount = 0;
+  let requestContainer = $(".pending-requests-pagination");
   requestContainer.pagination({
     dataSource: listRequest,
     pageSize: 5,
@@ -938,67 +963,202 @@ function renderListRequest(listRequest) {
     showGoButton: true,
     formatGoInput: "go to <%= input %>",
     callback: function (data, pagination) {
-      var dataHtml1 = "<div>";
+      var pendingRequestDataHtml = "<div>";
       $.each(data, function (index, e) {
-        requestCount++;
-        dataHtml1 += `<tr id="request-row-${e.recipientId}" data-value="${
+        if (e.status == 1 || e.status == 2 || e.status == 3) {
+          pendingRequestsCount++;
+          pendingRequestDataHtml += `<tr id="request-row-${
+            e.recipientId
+          }" data-value="${e.foodId}"><td>${pendingRequestsCount}</td>
+        <td data-toggle="tooltip" title="Show food data"><button type="button" id="showFoodInfo" class="btn btn-primary" data-toggle="modal" data-target="#foodInfoModal" data-value="${
           e.foodId
-        }"><td>${requestCount}</td>
-        <td><button type="button" id="showFoodInfo" class="btn btn-primary" data-toggle="modal" data-target="#foodInfoModal" data-value="${
+        }">${e.foodName}</button>
+          </td><td id="supplier-name">${e.supplierName}</td><td>${
+            e.supplierPhone
+          }</td><td>${convertRequestStatus(e.status)}</td>
+        <td onclick="formDetailRequest(${e.foodId}, 1)">
+          <i class="fa fa-pencil-square-o"></i>
+        </td>`;
+          switch (e.status) {
+            case 1:
+              pendingRequestDataHtml +=
+                `<td onclick=confirmDeleteRequest(` +
+                e.foodId +
+                `) class="delete_td"><i class="fa fa-trash-o"></i></td></tr>`;
+              break;
+            case 2:
+              pendingRequestDataHtml += `
+            <td>
+              <button onclick="formConfirmRequest(${e.foodId})" type="button" class="btn btn-round" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;" id="confirmBtn${e.foodId}">Finish</button>
+            </td>
+            </tr>`;
+              break;
+            case 3:
+              pendingRequestDataHtml += `<td>
+            <button onclick="formFeedbackRequest(${e.foodId})" type="button" class="btn btn-round feedback-button" id="feedbackBtn${e.foodId}">Feedback</button>
+            </td></tr>`;
+              break;
+          }
+        }
+      });
+      pendingRequestDataHtml += "</div>";
+
+      $("#list-pending-request").html(pendingRequestDataHtml);
+    },
+  });
+}
+
+// end
+
+// canceled request list pagination on account page
+// start
+function getListCanceledRequest() {
+  var canceledRequestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?status=4&userId=${accountID}&order=desc&sortBy=createdAt`;
+  fetch(canceledRequestListAPI, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${isToken}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((requestsList) => {
+      if (
+        requestsList &&
+        requestsList.data &&
+        requestsList.data.content &&
+        requestsList.data.content.length > 0
+      ) {
+        renderListCanceledRequest(requestsList.data.content);
+      } else {
+        var canceledRequestDataTable = document.getElementById(
+          "canceled-request-data-table"
+        );
+        canceledRequestDataTable.style.display = "none";
+        document
+          .getElementById("no-canceled-request-noti")
+          .removeAttribute("style");
+        document
+          .getElementById("center-canceled-request-noti")
+          .setAttribute("style", "text-align: center;");
+      }
+    })
+    .catch((error) => console.log(error));
+}
+
+function renderListCanceledRequest(listRequest) {
+  canceledRequestsCount = 0;
+  let requestContainer = $(".canceled-requests-pagination");
+  requestContainer.pagination({
+    dataSource: listRequest,
+    pageSize: 5,
+    showGoInput: true,
+    showGoButton: true,
+    formatGoInput: "go to <%= input %>",
+    callback: function (data, pagination) {
+      var canceledRequestDataHtml = "<div>";
+      $.each(data, function (index, e) {
+        canceledRequestsCount++;
+        canceledRequestDataHtml += `<tr id="request-row-${
+          e.recipientId
+        }" data-value="${e.foodId}"><td>${canceledRequestsCount}</td>
+        <td data-toggle="tooltip" title="Show food data"><button type="button" id="showFoodInfo" class="btn btn-primary" data-toggle="modal" data-target="#foodInfoModal" data-value="${
           e.foodId
         }">${e.foodName}</button>
           </td><td id="supplier-name">${e.supplierName}</td><td>${
           e.supplierPhone
-        }</td><td>${convertRequestStatus(e.status)}</td>`;
-        if (e.status == 2) {
-          dataHtml1 +=
-            `<td>
-              <button onclick="formConfirmRequest(${e.foodId})" type="button" class="btn btn-round" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;" id="confirmBtn${e.foodId}">Finish</button>
-            </td><td onclick=confirmDeleteRequest(` +
-            e.foodId +
-            `) class="delete_td"><i class="fa fa-trash-o"></i></td></tr>`;
-        } else if (e.status == 3) {
-          document
-            .getElementsByClassName("request_tab")[0]
-            .children[0].lastElementChild.remove();
-          // document.getElementsByClassName("delete_td")[0].remove();
-          dataHtml1 += `<td>
-            <button onclick="formFeedbackRequest(${e.foodId})" type="button" class="btn btn-round" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;padding: 8px 26px;" id="feedbackBtn${e.foodId}">Feedback</button>
-            </td></tr>`;
-        } else {
-          dataHtml1 +=
-            `<td onclick="formDetailRequest(${e.foodId})"><i class="fa fa-pencil-square-o"></i></td><td onclick=confirmDeleteRequest(` +
-            e.foodId +
-            `) class="delete_td"><i class="fa fa-trash-o"></i></td></tr>`;
-        }
+        }</td><td>${convertRequestStatus(e.status)}</td>
+        <td onclick="formDetailRequest(${e.foodId}, 4)">
+          <i class="fa fa-pencil-square-o"></i>
+        </td>`;
       });
-      dataHtml1 += "</div>";
+      canceledRequestDataHtml += "</div>";
 
-      $("#list-request").html(dataHtml1);
+      $("#list-canceled-request").html(canceledRequestDataHtml);
     },
   });
-
-  var requestDataTable = document.getElementById("request-data-table");
-
-  if (requestCount == 0) {
-    requestDataTable.style.display = "none";
-    document.getElementById("no-request-noti").removeAttribute("style");
-    document
-      .getElementById("center-request-noti")
-      .setAttribute("style", "text-align: center;");
-  }
 }
+// end
+
+// denied request list pagination on account page
+// start
+function getListDeniedRequest() {
+  var deniedRequestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?status=5&userId=${accountID}&order=desc&sortBy=createdAt`;
+  fetch(deniedRequestListAPI, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${isToken}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((requestsList) => {
+      if (
+        requestsList &&
+        requestsList.data &&
+        requestsList.data.content &&
+        requestsList.data.content.length > 0
+      ) {
+        renderListDeniedRequest(requestsList.data.content);
+      } else {
+        var deniedRequestDataTable = document.getElementById(
+          "denied-request-data-table"
+        );
+        deniedRequestDataTable.style.display = "none";
+        document
+          .getElementById("no-denied-request-noti")
+          .removeAttribute("style");
+        document
+          .getElementById("center-denied-request-noti")
+          .setAttribute("style", "text-align: center;");
+      }
+    })
+    .catch((error) => console.log(error));
+}
+
+function renderListDeniedRequest(listRequest) {
+  deniedRequestsCount = 0;
+  let requestContainer = $(".denied-requests-pagination");
+  requestContainer.pagination({
+    dataSource: listRequest,
+    pageSize: 5,
+    showGoInput: true,
+    showGoButton: true,
+    formatGoInput: "go to <%= input %>",
+    callback: function (data, pagination) {
+      var deniedRequestDataHtml = "<div>";
+      $.each(data, function (index, e) {
+        deniedRequestsCount++;
+        deniedRequestDataHtml += `<tr id="request-row-${
+          e.recipientId
+        }" data-value="${e.foodId}"><td>${deniedRequestsCount}</td>
+        <td data-toggle="tooltip" title="Show food data"><button type="button" id="showFoodInfo" class="btn btn-primary" data-toggle="modal" data-target="#foodInfoModal" data-value="${
+          e.foodId
+        }">${e.foodName}</button>
+          </td><td id="supplier-name">${e.supplierName}</td><td>${
+          e.supplierPhone
+        }</td><td>${convertRequestStatus(e.status)}</td>
+        <td onclick="formDetailRequest(${e.foodId}, 5)">
+          <i class="fa fa-pencil-square-o"></i>
+        </td>`;
+      });
+      deniedRequestDataHtml += "</div>";
+
+      $("#list-denied-request").html(deniedRequestDataHtml);
+    },
+  });
+}
+
+// end
 
 // display delete modal on click delete button
 function confirmDeleteRequest(foodId) {
-  modal3.style.display = "flex";
+  modalCancel.style.display = "flex";
   var buttonValue = document.getElementById("accept-button");
   // console.log(id);
-  buttonValue.setAttribute("onclick", `deleteRequest(` + foodId + `)`);
+  buttonValue.setAttribute("onclick", `cancelRequest(` + foodId + `)`);
 }
 
 // delete food
-function deleteRequest(foodId) {
+function cancelRequest(foodId) {
   var dataPost = {
     status: 0,
     updatedBy: objAccount.id,
@@ -1020,9 +1180,9 @@ function deleteRequest(foodId) {
       if (request) {
         document.getElementById("request-row-" + objAccount.id).style.display =
           "none";
-        modal3.style.display = "none";
+        modalCancel.style.display = "none";
         swal("Success!", "Delete success!", "success");
-        getListRequest(objAccount.id);
+        getListPendingRequest(objAccount.id);
       }
     })
     .catch((error) => console.log(error));
@@ -1032,29 +1192,35 @@ function deleteRequest(foodId) {
 // hoangtl2 - 01/10/2021 - close Modal by clicking "close" button
 // start
 function cancelModal() {
-  modal3.style.display = "none";
-  modalfinish.style.display = "none";
-  modalfeedback.style.display = "none";
+  modalCancel.style.display = "none";
+  modalFinish.style.display = "none";
+  modalFeedback.style.display = "none";
 }
+
+$(document).keyup(function (e) {
+  if (e.key === "Escape") {
+    cancelModal();
+  }
+});
 
 // close Modal by clicking "esc" button
 $(document).keydown(function (event) {
   if (event.keyCode == 27) {
-    modal3.style.display = "none";
+    modalCancel.style.display = "none";
     event.preventDefault();
   }
 });
 
 // confirm request
-var finishId;
+var foodID;
 function formConfirmRequest(id) {
-  modalfinish.style.display = "flex";
-  finishId = id;
+  modalFinish.style.display = "flex";
+  foodID = id;
 }
 
 function finishRequest() {
   fetch(
-    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${objAccount.id}/${finishId}`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${objAccount.id}/${foodID}`,
     {
       method: "POST",
       headers: {
@@ -1070,28 +1236,28 @@ function finishRequest() {
     .then((response) => response.json())
     .then(function (request) {
       if (request.status == 200) {
-        modalfinish.style.display = "none";
-        var confirm_btn = document.getElementById(`confirmBtn${finishId}`);
+        modalFinish.style.display = "none";
+        var confirm_btn = document.getElementById(`confirmBtn${foodID}`);
         confirm_btn.innerText = "Feedback";
-        confirm_btn.setAttribute("onClick", `formFeedbackRequest(${finishId})`);
-        confirm_btn.setAttribute("id", `feedbackBtn${finishId}`);
-        document
-          .getElementsByClassName("request_tab")[0]
-          .children[0].lastElementChild.remove();
-        document.getElementsByClassName(
-          "request_tab"
-        )[0].children[0].lastElementChild.innerHTML = "Feedback";
-        document.getElementsByClassName("delete_td")[0].remove();
+        confirm_btn.setAttribute("onClick", `formFeedbackRequest(${foodID})`);
+        confirm_btn.setAttribute("id", `feedbackBtn${foodID}`);
+        // document
+        //   .getElementsByClassName("request_tab")[0]
+        //   .children[0].lastElementChild.remove();
+        // document.getElementsByClassName(
+        //   "request_tab"
+        // )[0].children[0].lastElementChild.innerHTML = "Feedback";
+        // document.getElementsByClassName("delete_td")[0].remove();
         swal("Success!", "Now you can leave feedback", "success");
       }
     })
     .catch((error) => console.log(error));
 }
 
-var feedbackId;
+var foodId;
 function formFeedbackRequest(id) {
-  modalfeedback.style.display = "flex";
-  feedbackId = id;
+  modalFeedback.style.display = "flex";
+  foodId = id;
 }
 
 function sentFeedback(img, ct, cb, r, t, ui) {
@@ -1114,7 +1280,6 @@ function sentFeedback(img, ct, cb, r, t, ui) {
     .then(function (dataReturn) {
       let notifyFeedbackPromise = new Promise(function (myResolve) {
         var today = new Date();
-        console.log(dataReturn);
         time =
           today.getDate() +
           "-" +
@@ -1133,7 +1298,7 @@ function sentFeedback(img, ct, cb, r, t, ui) {
         Notification.send(dataReturn.data.userId, {
           idNotify: "",
           usernameaccount: dataReturn.data.username,
-          foodid: feedbackId,
+          foodid: foodId,
           avatar: dataReturn.data.avatar,
           title: "User " + objAccount.name + " send feedback for you",
           message: "Time request: " + time,
@@ -1158,9 +1323,9 @@ function feedbackRequest() {
     } else if (listImageFeedback.length > 3) {
       swal("Warning!", "You should only add a maximum of 3 images!", "warning");
     } else {
-      new Promise(function (myResolve) {
+      let sentFB = new Promise(function (myResolve) {
         fetch(
-          `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${feedbackId}`,
+          `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${foodId}`,
           {
             method: "GET",
             headers: {
@@ -1188,10 +1353,39 @@ function feedbackRequest() {
             let t = 1;
             let ui = request.data.supplierId;
             sentFeedback(img, ct, cb, r, t, ui);
+            var feedbackModal = document.querySelector(
+              ".modal-account-confirm-feedback"
+            );
+            feedbackModal.style.display = "none";
+            var fbBtn = document.getElementById(`feedbackBtn${foodId}`);
+            fbBtn.style.backgroundColor = "lightcoral";
+            fbBtn.style.borderColor = "lightcoral";
+            fbBtn.style.color = "black";
+            fbBtn.innerText = "All Done";
+            fbBtn.disabled = true;
+            swal("Success!", "Successfully sent feedback!", "success");
           })
           .catch((error) => console.log(error));
         myResolve();
       });
+      sentFB
+        .then(
+          fetch(
+            `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${objAccount.id}/${foodID}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${isToken}`,
+              },
+              body: JSON.stringify({
+                status: 4,
+                updatedBy: objAccount.id,
+              }),
+            }
+          )
+        )
+        .catch((error) => console.log(error));
     }
   } else {
     swal("Warning!", "Please rate and leave a comment!", "warning");
@@ -1259,9 +1453,9 @@ $("body").on("click", ".cloudinary-delete", function () {
   $(`input[data-cloudinary-public-id="${imgName}"]`).remove();
 });
 // detail request
-function formDetailRequest(id) {
+function formDetailRequest(foodId, requestStatus) {
   fetch(
-    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${id}`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/${objAccount.id}/${foodId}`,
     {
       method: "GET",
       headers: {
@@ -1272,25 +1466,39 @@ function formDetailRequest(id) {
     .then((response) => response.json())
     .then((food) => {
       if (food) {
-        document
-          .getElementsByClassName("listRequest")[0]
-          .classList.remove("active");
-        document.getElementById("listRequest").classList.remove("active");
-        document
-          .getElementsByClassName("detailRequest")[0]
-          .classList.add("active");
-        document.getElementById("detailRequest").classList.add("active");
-        document
-          .getElementsByClassName("detailRequest")[0]
-          .classList.remove("d-none");
-        bindDataDetailRequest(food.data);
+        switch (requestStatus) {
+          case 1:
+            listPendingRequestCN.classList.remove("active");
+            listPendingRequestID.classList.remove("active");
+            detailRequestCN.classList.remove("d-none");
+            detailRequestCN.classList.add("active");
+            detailRequestID.classList.add("active");
+            break;
+          case 4:
+            listCanceledRequestCN.classList.remove("active");
+            listCanceledRequestID.classList.remove("active");
+            detailRequestCN.classList.remove("d-none");
+            detailRequestCN.classList.add("active");
+            detailRequestID.classList.add("active");
+            break;
+          case 5:
+            listDeniedRequestCN.classList.remove("active");
+            listDeniedRequestID.classList.remove("active");
+            detailRequestCN.classList.remove("d-none");
+            detailRequestCN.classList.add("active");
+            detailRequestID.classList.add("active");
+            break;
+        }
+
+        bindDataDetailRequest(food.data, requestStatus);
       }
     })
     .catch((error) => console.log(error));
 }
 
 // bind data detail request
-function bindDataDetailRequest(data) {
+function bindDataDetailRequest(data, requestStatus) {
+  document.getElementById("message").disabled = false;
   document.getElementById(
     "image_food_detail_request"
   ).src = `${cloudinary_url}${data.foodDTO.avatar}`;
@@ -1306,8 +1514,21 @@ function bindDataDetailRequest(data) {
     <button type="button" class="btn btn-sm btn-block btn-warning" onclick="updateRequestMessage(${data.foodDTO.id})">
       <i class="fa fa-edit"></i> Update Message
     </button></div><div class="col-sm-12">
-    <a onclick="backToRequestList()" type="button" lass="btn btn-sm btn-round" style="padding: 6px 0px 0px 0px !important">
+    <a onclick="backToRequestList(${requestStatus})" type="button" lass="btn btn-sm btn-round" style="padding: 6px 0px 0px 0px !important">
     <i class="fa fa-angle-double-left"></i> Back to list</a></div>`;
+
+  if (requestStatus == 4 || requestStatus == 5) {
+    document.getElementById("message").disabled = true;
+    document
+      .getElementsByClassName("row-btn")
+      .item(0).innerHTML = `<div class="col-sm-12">
+      <input id="old-message" style="display:none" value="${data.message}"/>
+      <button type="button" class="btn btn-sm btn-block btn-warning" onclick="updateRequestMessage(${data.foodDTO.id})" disabled>
+        <i class="fa fa-edit"></i> Update Message
+      </button></div><div class="col-sm-12">
+      <a onclick="backToRequestList(${requestStatus})" type="button" lass="btn btn-sm btn-round" style="padding: 6px 0px 0px 0px !important">
+      <i class="fa fa-angle-double-left"></i> Back to list</a></div>`;
+  }
 }
 
 function updateRequestMessage(foodID, supplierID) {
@@ -1375,7 +1596,7 @@ function updateRequestMessage(foodID, supplierID) {
             });
           });
           swal("Success!", "Successfully updated message!", "success");
-          getListRequest(objAccount.id);
+          getListPendingRequest(objAccount.id);
         });
     }
   } else {
@@ -1399,38 +1620,70 @@ function convertRequestStatus(status) {
       status = "Done";
       break;
     case 4:
-      status = "Cancel";
+      status = "Canceled";
+      break;
+    case 5:
+      status = "Denied";
       break;
   }
   return status;
 }
 
 // back button
-function backToRequestList() {
-  detailRequestCN.classList.remove("active");
-  detailRequestCN.classList.add("d-none");
-  detailRequestID.classList.remove("active");
-  listRequestCN.classList.add("active");
-  listRequestCN.classList.remove("d-none");
-  listRequestID.classList.add("active");
+// start
+function backToRequestList(requestStatus) {
+  switch (requestStatus) {
+    case 1:
+      detailRequestCN.classList.remove("active");
+      detailRequestCN.classList.add("d-none");
+      detailRequestID.classList.remove("active");
+      listPendingRequestCN.classList.add("active");
+      listPendingRequestCN.classList.remove("d-none");
+      listPendingRequestID.classList.add("active");
+      break;
+    case 4:
+      detailRequestCN.classList.remove("active");
+      detailRequestCN.classList.add("d-none");
+      detailRequestID.classList.remove("active");
+      listCanceledRequestCN.classList.add("active");
+      listCanceledRequestCN.classList.remove("d-none");
+      listCanceledRequestID.classList.add("active");
+      break;
+    case 5:
+      detailRequestCN.classList.remove("active");
+      detailRequestCN.classList.add("d-none");
+      detailRequestID.classList.remove("active");
+      listDeniedRequestCN.classList.add("active");
+      listDeniedRequestCN.classList.remove("d-none");
+      listDeniedRequestID.classList.add("active");
+      break;
+  }
 }
 // end
 
-// hoangtl2 - 03/11/2021 - confirm user request on food
+// confirm user request on food
 // start
-function clickListRequest() {
+function clickListPendingRequest() {
   detailRequestCN.classList.remove("active");
   detailRequestCN.classList.add("d-none");
   detailRequestID.classList.remove("active");
   listUsersRequestCN.classList.remove("active");
   listUsersRequestCN.classList.add("d-none");
   listUsersRequestID.classList.remove("active");
-  getFoodActive();
+  listCanceledRequestCN.classList.remove("active");
+  listCanceledRequestID.classList.remove("active");
+  listDeniedRequestCN.classList.remove("active");
+  listDeniedRequestID.classList.remove("active");
+  getListPendingRequest();
 }
 
 function clickListActiveFood() {
-  listRequestCN.classList.remove("active");
-  listRequestID.classList.remove("active");
+  listPendingRequestCN.classList.remove("active");
+  listPendingRequestID.classList.remove("active");
+  listCanceledRequestCN.classList.remove("active");
+  listCanceledRequestID.classList.remove("active");
+  listDeniedRequestCN.classList.remove("active");
+  listDeniedRequestID.classList.remove("active");
   detailRequestCN.classList.remove("active");
   detailRequestCN.classList.add("d-none");
   detailRequestID.classList.remove("active");
@@ -1440,6 +1693,41 @@ function clickListActiveFood() {
   getFoodActive();
 }
 
+function clickListCanceledRequest() {
+  listPendingRequestCN.classList.remove("active");
+  listPendingRequestID.classList.remove("active");
+  listActiveFoodCN.classList.remove("active");
+  listActiveFoodID.classList.remove("active");
+  listDeniedRequestCN.classList.remove("active");
+  listDeniedRequestID.classList.remove("active");
+  detailRequestCN.classList.remove("active");
+  detailRequestCN.classList.add("d-none");
+  detailRequestID.classList.remove("active");
+  listUsersRequestCN.classList.remove("active");
+  listUsersRequestCN.classList.add("d-none");
+  listUsersRequestID.classList.remove("active");
+  getListCanceledRequest();
+}
+
+function clickListDeniedRequest() {
+  listPendingRequestCN.classList.remove("active");
+  listPendingRequestID.classList.remove("active");
+  listActiveFoodCN.classList.remove("active");
+  listActiveFoodID.classList.remove("active");
+  listCanceledRequestCN.classList.remove("active");
+  listCanceledRequestID.classList.remove("active");
+  detailRequestCN.classList.remove("active");
+  detailRequestCN.classList.add("d-none");
+  detailRequestID.classList.remove("active");
+  listUsersRequestCN.classList.remove("active");
+  listUsersRequestCN.classList.add("d-none");
+  listUsersRequestID.classList.remove("active");
+  getListDeniedRequest();
+}
+// end
+
+// get food active
+// start
 function getFoodActive() {
   var foodListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?status=2&createdBy=${objAccount.id}`;
   fetch(foodListAPI, {
@@ -1454,7 +1742,7 @@ function getFoodActive() {
 
 function renderListActiveFood(listFood) {
   var foodRequestCount = 0;
-  let container = $(".pagination3");
+  let container = $(".list-active-food-pagination");
   container.pagination({
     dataSource: listFood,
     pageSize: 5,
@@ -1478,6 +1766,8 @@ function renderListActiveFood(listFood) {
       $("#list-active-food").html(dataHtml);
     },
   });
+
+  // end
 
   var foodRequestDataTable = document.getElementById("food-active-data-table");
 
@@ -1526,7 +1816,7 @@ var listUncheckedValue = [];
 
 function renderUserRequests(listUserRequests) {
   var userRequestCount = 0;
-  let container = $(".pagination4");
+  let container = $(".user-request-list-pagination");
   container.pagination({
     dataSource: listUserRequests,
     pageSize: 5,
@@ -1572,15 +1862,14 @@ function renderUserRequests(listUserRequests) {
           <td>${e.recipientPhone}</td>
           <td>${
             e.status == 2
-              ? `<button
-            type="button"
-            onclick="finish(${e.foodId})" id="finish-button"
-            class="btn btn-success btn-round">Feedback</button>`
+              ? `<button onclick="formFeedbackRequest(${e.foodId})" type="button" class="btn btn-round feedback-button" id="feedbackBtn${e.foodId}">Feedback</button>`
               : `<input class="form-check-input" id="flexCheckChecked" type="checkbox" value=" ${e.recipientId}" name="${e.recipientId}" disabled>`
           }</td>`;
 
           // document.getElementById("checkAll").style.display = "none";
-          document.getElementById("checkAllCell").innerText = "Feedback";
+          if (e.status == 2) {
+            document.getElementById("checkAllCell").innerText = "Feedback";
+          }
         }
       });
 
@@ -1618,11 +1907,9 @@ function confirmation(foodId) {
   );
 
   for (var i = 0; i < changeToFeedbackButton.length; i++) {
-    console.log(changeToFeedbackButton[i]);
-    changeToFeedbackButton[i].parentElement.innerHTML = `<button
-    type="button"
-    onclick="finish(${foodId})" id="finish-button"
-    class="btn btn-success btn-round">Feedback</button>`;
+    changeToFeedbackButton[i].parentElement.innerHTML = `
+    <button onclick="formFeedbackRequest(${foodId})" type="button" class="btn btn-round feedback-button" id="feedbackBtn${foodId}">Feedback</button>
+    `;
   }
   // document.getElementById("checkAll").disabled = "true";
   var checkboxes = document.querySelectorAll(
@@ -1674,10 +1961,10 @@ function confirmation(foodId) {
 }
 
 // send feedback nguoi cho
-function finish(foodId) {
-  modalfeedback.style.display = "flex";
-  feedbackId = foodId;
-}
+// function finish(foodId) {
+//   modalFeedback.style.display = "flex";
+//   feedbackId = foodId;
+// }
 
 // update stautus for approved request and send notify to selected user
 function acceptRequest(foodId) {
@@ -1849,7 +2136,7 @@ function getReceivedFeedbackList() {
 }
 
 function renderFeedback(listFeedback) {
-  let container = $(".paginationFeedback");
+  let container = $(".feedback-pagination");
   container.pagination({
     dataSource: listFeedback,
     pageSize: 5,
@@ -1990,3 +2277,19 @@ function currentSlide(n) {
 }
 
 // end
+
+$("[data-dismiss=modal]").on("click", function (e) {
+  var $t = $(this),
+    target = $t[0].href || $t.data("target") || $t.parents(".modal") || [];
+
+  $(target)
+    .find("img")
+    .attr("src", "")
+    .end()
+    .find(
+      ".numbertext, .food-name, .food-category, .food-uploaded-date, .food-quantity, .supplier-name, .supplier-email, .food-exp-date"
+    )
+    .contents()
+    .remove()
+    .end();
+});
