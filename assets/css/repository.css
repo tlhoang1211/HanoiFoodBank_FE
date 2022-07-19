@@ -1,3 +1,51 @@
+.img-avatar {
+  pointer-events: none;
+  cursor: default;
+}
+/* modal */
+.modal-dialog {
+  margin: auto;
+  pointer-events: auto;
+}
+
+.slider-info-food {
+  display: none;
+}
+
+.cursor-img-info-food {
+  cursor: pointer;
+}
+
+.column-img-info-food {
+  float: left;
+  width: 16.66%;
+  margin: 10px 10px 0 0;
+  height: 120px;
+}
+
+.demo-slides-img-food {
+  height: 100%;
+  opacity: 0.6;
+}
+
+.active-info-food,
+.demo-slides-img-food:hover {
+  opacity: 1;
+}
+
+#goToFoodList {
+  background-color: khaki;
+  padding: 15px;
+  border: 1px solid;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#supplier-name {
+  margin-top: -5px !important;
+  font-weight: 700;
+}
+
 .form-control {
   text-transform: none;
   font-size: 14px;
@@ -105,6 +153,15 @@
     height: 100px;
     width: 100px;
     margin: auto;
+  }
+
+  .user-card {
+    padding-top: 170px !important;
+  }
+
+  .active-info-food,
+  .cursor-img-info-food {
+    height: 60%;
   }
 }
 
@@ -382,4 +439,78 @@
   to {
     opacity: 1;
   }
+}
+
+/* Food Detail */
+.food-card {
+  padding-bottom: 20px;
+}
+
+.label1,
+.label2,
+.label3,
+.label4 {
+  font-size: 14px;
+}
+
+.expiration-date,
+.time-countdown,
+.food-content,
+.food-description {
+  font-weight: bolder;
+  color: black;
+}
+
+.user-card {
+  padding-top: 50px;
+}
+
+.food-detail-module {
+  position: relative;
+  padding: 50px 0 0 0;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+#supplier-email,
+#supplier-phone,
+#supplier-address {
+  color: black;
+}
+
+.list-user-data li {
+  font-size: 15px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list-user-data li > i {
+  padding-right: 5px;
+}
+
+/* Rating list */
+.rating-group {
+  display: inline-flex;
+}
+.rating__icon {
+  pointer-events: none;
+}
+.rating__input {
+  position: absolute !important;
+  left: -9999px !important;
+}
+.rating__label {
+  cursor: pointer;
+  font-size: 2rem;
+}
+.rating__icon--star {
+  color: orange;
+}
+.rating_score_wrap {
+  font-size: 2rem;
+  margin-bottom: unset;
+  padding-right: 10px;
+  color: orange;
 }

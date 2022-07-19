@@ -203,7 +203,8 @@
                     <li class="list-action">
                       <a
                         class="myFoodInfo"
-                        onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myfood')"
+                        onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myfood');
+                        getListFoodAll()"
                       >
                         <i class="custom-i fa fa-cutlery"></i> My food</a
                       >
@@ -211,7 +212,8 @@
                     <li class="list-action">
                       <a
                         class="myRequestInfo"
-                        onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myrequest')"
+                        onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myrequest');
+                        getListPendingRequest()"
                       >
                         <i
                           class="custom-i fa fa-file-text"
@@ -223,7 +225,7 @@
                     <li class="list-action">
                       <a
                         class="myFeedbackInfo"
-                        onclick="onAddClassActive(this, 'list-action', 'parent'); showTabPanel('myfeedback')"
+                        onclick="onAddClassActive(this, 'list-action', 'parent'); showTabPanel('myfeedback'); getSentFeedbackList()"
                       >
                         <i
                           class="custom-i fa fa-comments"
@@ -299,9 +301,9 @@
                         Denied requests</a
                       >
                     </li>
-                    <li class="tab-account listActiveFood d-none">
+                    <li class="tab-account listRequestedFood d-none">
                       <a
-                        href="#listActiveFood"
+                        href="#listRequestedFood"
                         onclick="clickListActiveFood()"
                         data-toggle="tab"
                       >
@@ -800,15 +802,17 @@
                       </div>
                     </div>
                     <!-- list of active food -->
-                    <div class="tab-pane" id="listActiveFood">
-                      <div class="card radius-10 listActiveFoodPagination">
-                        <div class="card-body" id="center-food-noti">
-                          <span id="no-food-noti" style="display: none"
-                            >No data yet!</span
+                    <div class="tab-pane" id="listRequestedFood">
+                      <div class="card radius-10 listRequestedFoodPagination">
+                        <div class="card-body" id="center-requested-food-noti">
+                          <span
+                            id="no-requested-food-noti"
+                            style="display: none"
+                            >No one has requested for your food yet!</span
                           >
                           <div
                             class="table-responsive"
-                            id="food-active-data-table"
+                            id="requested-food-data-table"
                           >
                             <table
                               class="table align-middle mb-0 table-striped table-bordered"
@@ -1160,7 +1164,7 @@
                         <br />
                         <button
                           type="button"
-                          id="upload_image_foodFeedback"
+                          id="upload-image-food-feedback"
                           class="upload-btn btn btn-round"
                         >
                           <i class="fa fa-download"></i> Upload image
@@ -1295,11 +1299,11 @@
     <script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
     <script src="assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
     <script src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
-    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/user/plugins.js"></script>
     <script src="assets/js/user/common.js"></script>
-    <script src="./assets/js/validator.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/account.js"></script>
+    <script src="./assets/js/user/validator.js"></script>
+    <script src="assets/js/user/main.js"></script>
+    <script src="assets/js/user/account.js"></script>
 
     <script
       src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"
@@ -1313,10 +1317,10 @@
       defer
       src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"
     ></script>
-    <script src="./assets/js/notification.js"></script>
-    <!-- <script src="./assets/js/app.js"></script> -->
+    <script src="./assets/js/user/notification.js"></script>
+    <!-- <script src="./assets/js/user/app.js"></script> -->
 
-    <script src="./assets/js/cloudinary.js"></script>
+    <script src="./assets/js/user/cloudinary.js"></script>
 
     <script
       src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"
@@ -1335,7 +1339,7 @@
       referrerpolicy="no-referrer"
     ></script>
 
-    <script src="./assets/js/account_pagination.js"></script>
+    <script src="./assets/js/user/account_pagination.js"></script>
     <script>
       var tokenaccount = document.cookie;
       if (!tokenaccount) {
