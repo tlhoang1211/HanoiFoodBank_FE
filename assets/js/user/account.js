@@ -83,7 +83,7 @@ function showTabPanel(e) {
       document.querySelector(".myFeedbackInfo").style.color = "#000";
 
       document
-        .getElementsByClassName("listActiveFood")[0]
+        .getElementsByClassName("listRequestedFood")[0]
         .classList.remove("d-none");
       document
         .getElementsByClassName("listCanceledRequest")[0]

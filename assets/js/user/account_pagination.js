@@ -1,4 +1,4 @@
-// hoangtl2 - 01/11/2021 - get data user
+// get data user
 // start
 var detailRequestID = document.getElementById("detailRequest");
 var detailRequestCN = document.getElementsByClassName("detailRequest")[0];
@@ -10,8 +10,10 @@ var listPendingRequestCN = document.getElementsByClassName(
 )[0];
 var detailRequestID = document.getElementById("detailRequest");
 var detailRequestCN = document.getElementsByClassName("detailRequest")[0];
-var listActiveFoodID = document.getElementById("listActiveFood");
-var listActiveFoodCN = document.getElementsByClassName("listActiveFood")[0];
+var listRequestedFoodID = document.getElementById("listRequestedFood");
+var listRequestedFoodCN = document.getElementsByClassName(
+  "listRequestedFood"
+)[0];
 var listCanceledRequestID = document.getElementById("listCanceledRequest");
 var listCanceledRequestCN = document.getElementsByClassName(
   "listCanceledRequest"
@@ -50,7 +52,6 @@ function getAccount() {
       if (account && account.data) {
         objAccount = account.data;
         accountID = objAccount.id;
-        getListFoodAll();
         bindDataAccount(account.data);
       }
     })
@@ -276,7 +277,7 @@ function changePassword() {
 
 // end
 
-// hoangtl2 - 01/11/2021 - food list pagination on account page
+// food list pagination on account page
 // start
 function listfood() {
   getListFoodAll();
@@ -348,7 +349,6 @@ function getListFoodActive() {
     .then((response) => response.json())
     .then((foodList) => {
       renderListFood(foodList.data.content);
-      console.log(foodCount);
     })
     .catch((error) => console.log(error));
 }
@@ -361,7 +361,6 @@ function getListFoodPending() {
     .then((response) => response.json())
     .then((foodList) => {
       renderListFood(foodList.data.content);
-      console.log(foodCount);
     })
     .catch((error) => console.log(error));
 }
@@ -374,7 +373,6 @@ function getListFoodExpired() {
     .then((response) => response.json())
     .then((foodList) => {
       renderListFood(foodList.data.content);
-      console.log(foodCount);
     })
     .catch((error) => console.log(error));
 }
@@ -421,17 +419,11 @@ function renderListFood(listFood) {
   });
 
   var foodDataTable = document.getElementById("food-data-table");
-
-  if (foodCount == 0) {
-    foodDataTable.style.display = "none";
-    document.getElementById("no-food-noti").removeAttribute("style");
-    document
-      .getElementById("center-food-noti")
-      .setAttribute("style", "text-align: center;");
-  } else {
-    foodDataTable.style.display = "block";
-    document.getElementById("no-food-noti").style.display = "none";
-  }
+  foodDataTable.style.display = "none";
+  document.getElementById("no-food-noti").removeAttribute("style");
+  document
+    .getElementById("center-food-noti")
+    .setAttribute("style", "text-align: center;");
 }
 
 // update food
@@ -1189,7 +1181,7 @@ function cancelRequest(foodId) {
 }
 // end
 
-// hoangtl2 - 01/10/2021 - close Modal by clicking "close" button
+// close Modal by clicking "close" button
 // start
 function cancelModal() {
   modalCancel.style.display = "none";
@@ -1388,7 +1380,11 @@ function feedbackRequest() {
         .catch((error) => console.log(error));
     }
   } else {
-    swal("Warning!", "Please rate and leave a comment!", "warning");
+    swal(
+      "Warning!",
+      "Please rate at least 1 star and/or leave a comment!",
+      "warning"
+    );
   }
 }
 
@@ -1418,7 +1414,7 @@ var myWidgetFoodFeedback = cloudinary.createUploadWidget(
   }
 );
 
-document.getElementById("upload_image_foodFeedback").addEventListener(
+document.getElementById("upload-image-food-feedback").addEventListener(
   "click",
   function () {
     myWidgetFoodFeedback.open();
@@ -1696,8 +1692,8 @@ function clickListActiveFood() {
 function clickListCanceledRequest() {
   listPendingRequestCN.classList.remove("active");
   listPendingRequestID.classList.remove("active");
-  listActiveFoodCN.classList.remove("active");
-  listActiveFoodID.classList.remove("active");
+  listRequestedFoodCN.classList.remove("active");
+  listRequestedFoodID.classList.remove("active");
   listDeniedRequestCN.classList.remove("active");
   listDeniedRequestID.classList.remove("active");
   detailRequestCN.classList.remove("active");
@@ -1712,8 +1708,8 @@ function clickListCanceledRequest() {
 function clickListDeniedRequest() {
   listPendingRequestCN.classList.remove("active");
   listPendingRequestID.classList.remove("active");
-  listActiveFoodCN.classList.remove("active");
-  listActiveFoodID.classList.remove("active");
+  listRequestedFoodCN.classList.remove("active");
+  listRequestedFoodID.classList.remove("active");
   listCanceledRequestCN.classList.remove("active");
   listCanceledRequestID.classList.remove("active");
   detailRequestCN.classList.remove("active");
@@ -1735,7 +1731,26 @@ function getFoodActive() {
   })
     .then((response) => response.json())
     .then((foodList) => {
-      renderListActiveFood(foodList.data.content);
+      if (
+        foodList &&
+        foodList.data &&
+        foodList.data.content &&
+        foodList.data.content.length > 0
+      ) {
+        renderListActiveFood(foodList.data.content);
+      } else {
+        var foodRequestDataTable = document.getElementById(
+          "requested-food-data-table"
+        );
+
+        foodRequestDataTable.style.display = "none";
+        document
+          .getElementById("no-requested-food-noti")
+          .removeAttribute("style");
+        document
+          .getElementById("center-requested-food-noti")
+          .setAttribute("style", "text-align: center;");
+      }
     })
     .catch((error) => console.log(error));
 }
@@ -1766,19 +1781,9 @@ function renderListActiveFood(listFood) {
       $("#list-active-food").html(dataHtml);
     },
   });
-
-  // end
-
-  var foodRequestDataTable = document.getElementById("food-active-data-table");
-
-  if (foodRequestCount == 0) {
-    foodRequestDataTable.style.display = "none";
-    document.getElementById("no-food-noti").removeAttribute("style");
-    document
-      .getElementById("center-food-noti")
-      .setAttribute("style", "text-align: center;");
-  }
 }
+
+// end
 
 function viewUsersRequestFood(foodID) {
   fetch(
@@ -1798,8 +1803,8 @@ function viewUsersRequestFood(foodID) {
         requests.data.content &&
         requests.data.content.length > 0
       ) {
-        listActiveFoodCN.classList.remove("active");
-        listActiveFoodID.classList.remove("active");
+        listRequestedFoodCN.classList.remove("active");
+        listRequestedFoodID.classList.remove("active");
         listUsersRequestCN.classList.remove("d-none");
         listUsersRequestCN.classList.add("active");
         listUsersRequestID.classList.add("active");
@@ -2083,8 +2088,8 @@ function denyRequest(foodId) {
 }
 
 function backToFoodRequestList() {
-  listActiveFoodCN.classList.add("active");
-  listActiveFoodID.classList.add("active");
+  listRequestedFoodCN.classList.add("active");
+  listRequestedFoodID.classList.add("active");
   listUsersRequestCN.classList.add("d-none");
   listUsersRequestCN.classList.remove("active");
   listUsersRequestID.classList.remove("active");
@@ -2099,7 +2104,7 @@ function getTimeFromString2(strDate) {
 }
 // end
 
-// hoangtl0711 v3 - 07/11/2021 - feedback list
+// feedback list
 // start
 var feedbackCount = 0;
 function getSentFeedbackList() {
@@ -2113,7 +2118,23 @@ function getSentFeedbackList() {
   })
     .then((response) => response.json())
     .then((sentFeedbackList) => {
-      renderFeedback(sentFeedbackList.data.content);
+      if (
+        sentFeedbackList &&
+        sentFeedbackList.data &&
+        sentFeedbackList.data.content &&
+        sentFeedbackList.data.content.length > 0
+      ) {
+        renderFeedback(sentFeedbackList.data.content);
+      } else {
+        var sentFeedbackDataTable = document.getElementById(
+          "feedback-data-table"
+        );
+        sentFeedbackDataTable.style.display = "none";
+        document.getElementById("no-feedback-noti").removeAttribute("style");
+        document
+          .getElementById("center-feedback-noti")
+          .setAttribute("style", "text-align: center;");
+      }
     })
     .catch((error) => console.log(error));
 }
@@ -2129,8 +2150,24 @@ function getReceivedFeedbackList() {
   })
     .then((response) => response.json())
     .then((receivedFeedbackList) => {
-      document.getElementById("changeFinal").innerText = "Feedback From";
-      renderFeedback(receivedFeedbackList.data.content);
+      if (
+        receivedFeedbackList &&
+        receivedFeedbackList.data &&
+        receivedFeedbackList.data.content &&
+        receivedFeedbackList.data.content.length > 0
+      ) {
+        document.getElementById("changeFinal").innerText = "Feedback From";
+        renderFeedback(receivedFeedbackList.data.content);
+      } else {
+        var receivedFeedbackDataTable = document.getElementById(
+          "feedback-data-table"
+        );
+        receivedFeedbackDataTable.style.display = "none";
+        document.getElementById("no-feedback-noti").removeAttribute("style");
+        document
+          .getElementById("center-feedback-noti")
+          .setAttribute("style", "text-align: center;");
+      }
     })
     .catch((error) => console.log(error));
 }
@@ -2163,19 +2200,6 @@ function renderFeedback(listFeedback) {
       feedbackCount = 0;
     },
   });
-
-  var foodDataTable = document.getElementById("food-data-table");
-
-  if (foodCount == 0) {
-    foodDataTable.style.display = "none";
-    document.getElementById("no-food-noti").removeAttribute("style");
-    document
-      .getElementById("center-food-noti")
-      .setAttribute("style", "text-align: center;");
-  } else {
-    foodDataTable.style.display = "block";
-    document.getElementById("no-food-noti").style.display = "none";
-  }
 }
 
 $("#foodInfoModal").on("show.bs.modal", function (event) {
