@@ -1,3 +1,5 @@
+var supplierId = null;
+
 // slides image
 function showSlides(n) {
   var slides = document.getElementsByClassName("slider-info-food");
@@ -61,12 +63,15 @@ function bindDataAccount(data) {
   } else {
     document.querySelector("#supplier-avatar").setAttribute("src", avatar_url);
   }
-
+  // document
+  //   .querySelector(".supplier-data-card")
+  //   .setAttribute("data-value", data.id);
   document.getElementById("supplier-name").innerHTML = data.name;
   document.getElementById("supplier-email").innerHTML = data.email;
   document.getElementById("supplier-phone").innerHTML =
     data.phone.slice(0, 6) + "***";
   document.getElementById("supplier-address").innerHTML = data.address;
+  getRatingData(data.id);
 }
 
 $(document).ready(function () {
@@ -96,7 +101,7 @@ var usernameAccount = cookies.username;
 
 var itemFoodInfo;
 // Get InfoFood
-function getInfoFood() {
+async function getInfoFood() {
   fetch(getDetailFood, {
     method: "GET",
     headers: {
@@ -148,6 +153,7 @@ function getInfoFood() {
             <div class="col-sm-12">
               <h1 class="product-title font-alt">${listItems.data.name}</h1>
               <p class="product_meta">Categories: <span style="font-weight: bolder">${listItems.data.category}<span></p>
+              <hr style="border-top: 1px solid darkgrey">
             </div>
           </div>
           <div class="col-sm-12">
@@ -451,7 +457,7 @@ function getTimeFromString2(strDate) {
 
 function getAverageRating(supplierId) {
   fetch(
-    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks/search?userId=${supplierId}&status=1`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks/search?userId=${supplierId}&status=1&sortBy=id&order=desc`,
     {
       method: "GET",
       headers: {
@@ -468,12 +474,294 @@ function getAverageRating(supplierId) {
         sumAllRate = sumAllRate + parseInt(feedback.rate);
       }
       avgRating = Math.round(sumAllRate / feedbacksList.length);
-      document.getElementById("avg-rating-score").innerHTML = avgRating;
-
-      for (var i = 1; i <= avgRating; i++) {
-        document
-          .getElementsByClassName(`star${i}`)[0]
-          .classList.add("rating__icon--star");
+      if (data.data.content.length == "0") {
+        document.getElementById("avg-rating-score").innerHTML = 0;
+      } else {
+        document.getElementById("avg-rating-score").innerHTML = avgRating;
+        for (var i = 1; i <= avgRating; i++) {
+          document
+            .getElementsByClassName(`star${i}`)[0]
+            .classList.add("rating__icon--star");
+        }
       }
     });
 }
+
+function getRatingData(supplierID) {
+  fetch(
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks/search?userId=${supplierID}&status=1`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${isToken}`,
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((feedback) => {
+      renderRatingList(feedback.data.content);
+    });
+}
+
+function renderRatingList(feedbacksList) {
+  var cloudinarySrc = "https://res.cloudinary.com/vernom/image/upload/";
+  let container = $(".list-rating-pagination");
+  container.pagination({
+    dataSource: feedbacksList,
+    pageSize: 5,
+    showGoInput: true,
+    showGoButton: true,
+    formatGoInput: "go to <%= input %>",
+    callback: function (data, pagination) {
+      var ratingHTML = ``;
+      $.each(data, function (a, feedback) {
+        // feedbacksList.forEach((feedback) => {
+        let feedbackImagesList = feedback.image.split(",");
+        ratingHTML += `<div class="hfb-rating-card">`;
+        ratingHTML += `<a class="hfb-rating-card__avatar">
+                          <div class="feedback-sender-avatar">
+                            <div class="feedback-sender-avatar__placeholder">
+                              <svg
+                                enable-background="new 0 0 15 15"
+                                viewBox="0 0 15 15"
+                                x="0"
+                                y="0"
+                                class="hfb-svg-icon icon-headshot"
+                              >
+                                <g>
+                                  <circle
+                                    cx="7.5"
+                                    cy="4.5"
+                                    fill="none"
+                                    r="3.8"
+                                    stroke-miterlimit="10"
+                                  ></circle>
+                                  <path
+                                    d="m1.5 14.2c0-3.3 2.7-6 6-6s6 2.7 6 6"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-miterlimit="10"
+                                  ></path>
+                                </g>
+                              </svg>
+                            </div>
+                            <img
+                              class="feedback-sender-avatar__img"
+                              src="${cloudinarySrc + feedback.sentAvatar}"
+                            />
+                          </div>
+                      </a>`;
+        ratingHTML += `
+          <div class="hfb-rating-card__main">
+            <a class="feedback-sender__name">${feedback.sentName}</a>
+            <div class="repeat-purchase-con">
+              <div class="feedback-sender__rating">`;
+        for (let i = 1; i <= feedback.rate; i++) {
+          ratingHTML += `
+                  <label
+                    aria-label="${i} star"
+                    class="feedback-sender-rating__label"
+                    for="rating-${i}"
+                    ><i
+                      class="feedback-sender-star${i} rating__icon fa fa-star rating__icon--star"
+                    ></i
+                  ></label>
+                  <input
+                    class="feedback-sender-rating__input"
+                    name="rating"
+                    id="rating-${i}"
+                    value="${i}"
+                    type="radio"
+                    disabled
+                  />
+                  `;
+        }
+        if (feedback.rate < 5) {
+          for (let j = feedback.rate + 1; j <= 5; j++) {
+            ratingHTML += `
+              <label
+                aria-label="${j} star"
+                class="feedback-sender-rating__label"
+                for="rating-${j}"
+                ><i
+                  class="feedback-sender-star${j} rating__icon fa fa-star"
+                ></i
+              ></label>
+              <input
+                class="feedback-sender-rating__input"
+                name="rating"
+                id="rating-${j}"
+                value="${j}"
+                type="radio"
+                disabled
+              />
+          `;
+          }
+        }
+        ratingHTML += `</div>
+            </div>
+            <div class="feedback-sender__time">
+              ${feedback.createdAt} | Food: ${feedback.foodName} | Category: ${feedback.foodCategory}
+            </div>
+            <div class="feedback-sender__content">
+              ${feedback.content}
+            </div>
+            `;
+        ratingHTML += `
+            <div class="feedback-sender__image-list-wrapper">
+              <div class="rating-media-list">
+                <div class="rating-media-list__container">`;
+        feedbackImagesList.forEach((feedbackImage, index) => {
+          ratingHTML += `
+                  <div
+                    class="rating-media-list__image-wrapper rating-media-list__image-wrapper--inactive"
+                  >
+                    <div
+                      class="hfb-rating-media-list-image__wrapper"
+                    >
+                      <div
+                        class="hfb-rating-media-list-image__place-holder"
+                      >
+                        <svg
+                          enable-background="new 0 0 15 15"
+                          viewBox="0 0 15 15"
+                          x="0"
+                          y="0"
+                          class="hfb-svg-icon icon-loading-image"
+                        >
+                          <g>
+                            <rect
+                              fill="none"
+                              height="8"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-miterlimit="10"
+                              width="10"
+                              x="1"
+                              y="4.5"
+                            ></rect>
+                            <line
+                              fill="none"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-miterlimit="10"
+                              x1="1"
+                              x2="11"
+                              y1="6.5"
+                              y2="6.5"
+                            ></line>
+                            <rect
+                              fill="none"
+                              height="3"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-miterlimit="10"
+                              width="3"
+                              x="11"
+                              y="6.5"
+                            ></rect>
+                            <line
+                              fill="none"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-miterlimit="10"
+                              x1="1"
+                              x2="11"
+                              y1="14.5"
+                              y2="14.5"
+                            ></line>
+                            <line
+                              fill="none"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-miterlimit="10"
+                              x1="6"
+                              x2="6"
+                              y1=".5"
+                              y2="3"
+                            ></line>
+                            <line
+                              fill="none"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-miterlimit="10"
+                              x1="3.5"
+                              x2="3.5"
+                              y1="1"
+                              y2="3"
+                            ></line>
+                            <line
+                              fill="none"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-miterlimit="10"
+                              x1="8.5"
+                              x2="8.5"
+                              y1="1"
+                              y2="3"
+                            ></line>
+                          </g>
+                        </svg>
+                      </div>
+                      <img
+                        class="hfb-rating-media-list-image__content"
+                        id="hfb-rating-media-list-image__content${index}"
+                        style="
+                          background-image: url('${
+                            cloudinarySrc + feedbackImage
+                          }');"
+                        onclick="zoomImg(this)"/>
+                    </div>
+                  </div>
+        `;
+        });
+        ratingHTML += `
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+        document.querySelector(".food-ratings__content").innerHTML = ratingHTML;
+      });
+    },
+  });
+  // });
+  var modalImgHTML = `
+      <div
+        id="rating-image-modal"
+        class="rating-image-modal"
+        style="display: none"
+      >
+        <span class="close">&times;</span>
+        <img
+          class="rating-image-modal__content"
+          id="rating-image-modal__content"
+          src=""
+        />
+      </div>`;
+  document.querySelector(".food-ratings__content").innerHTML += modalImgHTML;
+}
+
+function zoomImg(t) {
+  imgURL = t.style.backgroundImage.slice(4, -1).replace(/['"]/g, "");
+  document
+    .querySelector("#rating-image-modal__content")
+    .setAttribute("src", imgURL);
+  document.getElementById("rating-image-modal").style.display = "block";
+
+  document.getElementsByClassName("close")[0].onclick = function () {
+    document.getElementById("rating-image-modal").style.display = "none";
+  };
+}
+
+// Close Modal by clicking "esc" button
+// start
+$(document).keydown(function (event) {
+  if (event.keyCode == 27) {
+    document.getElementsByClassName("rating-image-modal")[0].style.display =
+      "none";
+    event.preventDefault();
+  }
+});
+// end

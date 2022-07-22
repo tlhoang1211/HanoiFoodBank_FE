@@ -148,6 +148,15 @@
     />
 
     <link rel="stylesheet" href="./assets/css/repository.css" />
+    <link rel="stylesheet" href="./assets/css/pagination.css" />
+
+    <style>
+      body {
+        font-family: Helvetica Neue, Helvetica, Arial, 文泉驛正黑,
+          WenQuanYi Zen Hei, Hiragino Sans GB, 儷黑 Pro, LiHei Pro, Heiti TC,
+          微軟正黑體, Microsoft JhengHei UI, Microsoft JhengHei, sans-serif;
+      }
+    </style>
 
     <!-- paypal -->
     <script src="https://www.paypal.com/sdk/js?client-id=ARfjvhupmZbesvNCgtE5AJV8zCxdME-gej0ajX-4aBkkIpdstLDqPA1dqw3oZIozjICO5A78qlEIw1OL&components=buttons"></script>
@@ -200,7 +209,7 @@
                     >
                   </li>
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content supplier-data-card">
                   <div
                     class="tab-pane active"
                     style="min-height: 257px"
@@ -311,10 +320,17 @@
                     </div>
                   </div>
                   <div
-                    class="tab-pane product-ratings"
+                    class="tab-pane food-ratings"
                     id="rating"
                     style="min-height: 257px"
-                  ></div>
+                  >
+                    <div class="food-ratings__content"></div>
+                    <div class="row" id="pagination-button">
+                      <div class="col-sm-12">
+                        <div class="list-rating-pagination font-alt"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -481,6 +497,12 @@
     <script src="assets/js/user/common.js"></script>
     <script src="assets/js/user/main.js"></script>
     <script src="./assets/js/user/validator.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"
+    />
 
     <script
       src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"
