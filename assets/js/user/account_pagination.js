@@ -1252,7 +1252,7 @@ function formFeedbackRequest(id) {
   foodId = id;
 }
 
-function sentFeedback(img, ct, cb, r, t, ui) {
+function sentFeedback(img, ct, cb, r, t, ui, fi) {
   fetch(`https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks`, {
     method: "POST",
     headers: {
@@ -1266,10 +1266,12 @@ function sentFeedback(img, ct, cb, r, t, ui) {
       rate: r,
       type: t,
       userId: ui,
+      foodId: fi,
     }),
   })
     .then((response) => response.json())
     .then(function (dataReturn) {
+      console.log(dataReturn);
       let notifyFeedbackPromise = new Promise(function (myResolve) {
         var today = new Date();
         time =
@@ -1327,6 +1329,7 @@ function feedbackRequest() {
         )
           .then((response) => response.json())
           .then((request) => {
+            listImageFeedback = [];
             jQuery.each(
               $(".thumbnailsFoodFeedback .cloudinary-thumbnails")
                 .children("li")
@@ -1335,16 +1338,22 @@ function feedbackRequest() {
                 })
                 .get(),
               function (i, val) {
-                listImageFeedback.push(JSON.parse(val).path);
+                let imgPath = JSON.parse(val).path;
+                console.log(imgPath);
+                if (!listImageFeedback.includes(imgPath)) {
+                  listImageFeedback.push(imgPath);
+                }
               }
             );
             let img = listImageFeedback.join(",");
             let ct = content;
             let cb = objAccount.id;
-            let r = rate;
+            let r = parseInt(rate);
             let t = 1;
             let ui = request.data.supplierId;
-            sentFeedback(img, ct, cb, r, t, ui);
+            let fi = foodId;
+            console.log(img);
+            sentFeedback(img, ct, cb, r, t, ui, fi);
             var feedbackModal = document.querySelector(
               ".modal-account-confirm-feedback"
             );
@@ -1363,7 +1372,7 @@ function feedbackRequest() {
       sentFB
         .then(
           fetch(
-            `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${objAccount.id}/${foodID}`,
+            `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${objAccount.id}/${foodId}`,
             {
               method: "POST",
               headers: {
