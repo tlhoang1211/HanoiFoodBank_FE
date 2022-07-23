@@ -77,6 +77,7 @@ function bindDataAccount(data) {
 $(document).ready(function () {
   Notification.config();
 });
+
 // lay id theo url
 let params = new URL(document.URL).searchParams;
 var id = params.get("id");
@@ -257,7 +258,6 @@ async function getInfoFood() {
     })
     .catch((error) => console.log(error));
 }
-getInfoFood();
 
 // tai day
 function listRelatedProducts() {
@@ -328,9 +328,9 @@ function listRelatedProducts() {
     .catch((error) => console.log(error));
 }
 
-// Add To Cart
+// Request Food
 var idUserFood;
-var modalsinglefood = document.querySelector(".modal-single-food");
+var modalRequestForFood = document.querySelector(".modal-request-for-food");
 function requestForFood() {
   var cookie = document.cookie;
   if (
@@ -353,31 +353,76 @@ function requestForFood() {
     })
       .then((response) => response.json())
       .then((itemRequest) => {
-        if (itemRequest.status == 200) {
-          modalsinglefood.style.display = "none";
+        if (itemRequest.status == 200 && itemRequest.data.length != 0) {
+          modalRequestForFood.style.display = "none";
           swal(
             "Error!",
             "You have applied, please wait for the giver to confirm",
             "error"
           );
-        } else {
-          modalsinglefood.style.display = "flex";
+        } else if (itemRequest.status == 200 && itemRequest.data.length == 0) {
+          modalRequestForFood.style.display = "flex";
         }
       })
       .catch((error) => console.log(error));
   }
 }
 
+getInfoFood();
+window.onload = function () {
+  checkRequestTime();
+};
+
+function checkRequestTime() {
+  let attention = document.getElementsByClassName("modal-attention")[0]
+    .innerText;
+  fetch(
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${idAccount}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let requestCount = data.option;
+      switch (requestCount) {
+        case 1:
+          attention =
+            "You only have 2 requests for food left today. Only ask if you really need it.";
+          break;
+        case 2:
+          attention =
+            "You only have 2 requests for food left today. Only ask if you really need it.";
+          break;
+        case 3:
+          let askBtn = document.getElementById("requestForFood");
+          askBtn.removeAttribute("onclick");
+          askBtn.addEventListener("click", function () {
+            swal(
+              "Sorry!",
+              "You have reach the limitation on requesting food for today.",
+              "warning"
+            );
+          });
+          break;
+      }
+    })
+    .catch((error) => console.log(error));
+}
+
 // Close Modal Message
 function closeSendMail() {
-  modalsinglefood.style.display = "none";
+  modalRequestForFood.style.display = "none";
 }
 
 var avatarFood;
+var idAccount;
 // Send Request
 function sendRequest() {
   // get Id User
-  var idAccount;
   var getUserByUsername = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${usernameAccount}`;
   fetch(getUserByUsername, {
     method: "GET",
@@ -393,13 +438,12 @@ function sendRequest() {
     .catch((error) => console.log(error));
 }
 
-var postRequestAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests`;
 function postRequest() {
   var message = document.querySelector("#messageModal").value;
   if (message == "" || message == null || message == undefined) {
     swal("Warning!", "Please say something to the giver!", "warning");
   } else {
-    fetch(postRequestAPI, {
+    fetch(`https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -426,8 +470,9 @@ function postRequest() {
           today.getMinutes() +
           ":" +
           today.getSeconds();
+
         swal("Success!", "Successful request for food!", "success");
-        modalsinglefood.style.display = "none";
+        modalRequestForFood.style.display = "none";
 
         Notification.send(idUserFood, {
           idNotify: "",
@@ -514,9 +559,14 @@ function renderRatingList(feedbacksList) {
     showGoButton: true,
     formatGoInput: "go to <%= input %>",
     callback: function (data, pagination) {
+      if (data.length == 0) {
+        document.getElementById("pagination-button").style.display = "none";
+        document.getElementById("no-feedback").removeAttribute("style");
+        document.getElementsByClassName("food-ratings")[0].style.textAlign =
+          "center";
+      }
       var ratingHTML = ``;
       $.each(data, function (a, feedback) {
-        // feedbacksList.forEach((feedback) => {
         let feedbackImagesList = feedback.image.split(",");
         ratingHTML += `<div class="hfb-rating-card">`;
         ratingHTML += `<a class="hfb-rating-card__avatar">
