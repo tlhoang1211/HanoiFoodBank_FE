@@ -205,7 +205,7 @@
                   </li>
                   <li>
                     <a href="#rating" data-toggle="tab"
-                      ><span class="icon-heart"></span> Rating</a
+                      ><span class="icon-heart"></span> Rating on supplier</a
                     >
                   </li>
                 </ul>
@@ -324,6 +324,9 @@
                     id="rating"
                     style="min-height: 257px"
                   >
+                    <span id="no-feedback" style="display: none"
+                      >No feedback yet!</span
+                    >
                     <div class="food-ratings__content"></div>
                     <div class="row" id="pagination-button">
                       <div class="col-sm-12">
@@ -409,7 +412,7 @@
 
         <!-- Modal send request layout -->
         <section class="modalLayout">
-          <div class="modal modal-single-food">
+          <div class="modal modal-request-for-food">
             <div class="modal-overlay"></div>
 
             <div class="modal-dialog">
@@ -417,6 +420,10 @@
                 <div class="modal-container">
                   <div class="modal-header">
                     <h3 class="modal-heading">Send message</h3>
+                    <p class="modal-attention">
+                      Attention! You can only make a request up to 3 times a
+                      day.
+                    </p>
                   </div>
                   <div class="modal-body">
                     <form id="formMessageRequest" action="" method="POST">
