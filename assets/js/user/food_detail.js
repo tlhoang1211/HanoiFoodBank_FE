@@ -330,6 +330,7 @@ function listRelatedProducts() {
 
 // Request Food
 var idUserFood;
+var requestStatus;
 var modalRequestForFood = document.querySelector(".modal-request-for-food");
 function requestForFood() {
   var cookie = document.cookie;
@@ -354,12 +355,24 @@ function requestForFood() {
       .then((response) => response.json())
       .then((itemRequest) => {
         if (itemRequest.status == 200 && itemRequest.data.length != 0) {
-          modalRequestForFood.style.display = "none";
-          swal(
-            "Error!",
-            "You have applied, please wait for the giver to confirm",
-            "error"
-          );
+          console.log(itemRequest);
+          requestStatus = itemRequest.data.status;
+          switch (requestStatus) {
+            case 1:
+              modalRequestForFood.style.display = "none";
+              swal(
+                "Error!",
+                "You have applied, please wait for the giver to confirm",
+                "error"
+              );
+              break;
+            case 2:
+              document.getElementById("requestForFood").disabled = true;
+              document.getElementById("requestForFood").innerText =
+                "Contact food owner to get your food";
+              document.getElementById("requestForFood").style.fontSize =
+                "unset";
+          }
         } else if (itemRequest.status == 200 && itemRequest.data.length == 0) {
           modalRequestForFood.style.display = "flex";
         }
@@ -374,8 +387,6 @@ window.onload = function () {
 };
 
 function checkRequestTime() {
-  let attention = document.getElementsByClassName("modal-attention")[0]
-    .innerText;
   fetch(
     `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${idAccount}`,
     {
@@ -390,12 +401,12 @@ function checkRequestTime() {
       let requestCount = data.option;
       switch (requestCount) {
         case 1:
-          attention =
-            "You only have 2 requests for food left today. Only ask if you really need it.";
+          document.getElementsByClassName("modal-attention")[0].innerText =
+            "Attention! You only have 2 requests for food left today. Only ask if you really need it.";
           break;
         case 2:
-          attention =
-            "You only have 2 requests for food left today. Only ask if you really need it.";
+          document.getElementsByClassName("modal-attention")[0].innerText =
+            "Attention! Only one more time to request for food.";
           break;
         case 3:
           let askBtn = document.getElementById("requestForFood");
@@ -403,7 +414,7 @@ function checkRequestTime() {
           askBtn.addEventListener("click", function () {
             swal(
               "Sorry!",
-              "You have reach the limitation on requesting food for today.",
+              "You have reach the limitation on requesting food for today. Come back tomorrow.",
               "warning"
             );
           });
