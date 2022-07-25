@@ -215,11 +215,11 @@ function onBrowseFood() {
     "/" +
     today.getFullYear() +
     " " +
-    today.getHours() +
+    ("0" + today.getHours()).slice(-2) +
     ":" +
-    today.getMinutes() +
+    ("0" + today.getMinutes()).slice(-2) +
     ":" +
-    today.getSeconds();
+    ("0" + today.getSeconds()).slice(-2);
   getConnectAPI(
     "POST",
     `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/update-list-status`,
