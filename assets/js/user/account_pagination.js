@@ -150,13 +150,13 @@ function updateStatusRequest(request) {
         ":" +
         ("0" + today.getSeconds()).slice(-2);
       Notification.send(request.recipientId, {
-        sender_id: "System",
-        sender_email: "System",
-        food_id: data.data.foodId,
-        food_avatar: data.data.foodDTO.avatar,
+        senderID: "System",
+        senderEmail: "System",
+        foodID: data.data.foodId,
+        foodAvatar: data.data.foodDTO.avatar,
         title: "Request " + data.data.foodDTO.name + " has expired.",
-        message: "Request time: " + time,
-        notify_category: "Request",
+        requestTime: "Request time: " + time,
+        notifyCategory: "Request",
         status: 1,
       });
     })
@@ -689,16 +689,16 @@ function newFoodEdit() {
                 notifyFoodPromise.then(function () {
                   listAdmin2.map(function (admin) {
                     Notification.send(admin.id, {
-                      sender_id: admin.id,
-                      sender_email: admin.username,
-                      food_id: idFood,
-                      food_avatar: avatarFood,
+                      senderID: admin.id,
+                      senderEmail: admin.username,
+                      foodID: idFood,
+                      foodAvatar: avatarFood,
                       title:
                         "User " +
                         objAccount.name +
                         " has just updated the food information.",
-                      message: "Request time: " + time,
-                      notify_category: "Food",
+                      requestTime: "Request time: " + time,
+                      notifyCategory: "Food",
                       status: 1,
                     });
                   });
@@ -1293,13 +1293,13 @@ function sentFeedback(img, ct, cb, r, t, ui, fi) {
       });
       notifyFeedbackPromise.then(function () {
         Notification.send(dataReturn.data.userId, {
-          sender_id: objAccount.id,
-          sender_email: objAccount.email,
-          food_id: foodId,
-          food_avatar: dataReturn.data.avatar,
+          senderID: objAccount.id,
+          senderEmail: objAccount.email,
+          foodID: foodId,
+          foodAvatar: dataReturn.data.avatar,
           title: "User " + objAccount.name + " sent you a feedback",
-          message: "Request time: " + time,
-          notify_category: "Food",
+          requestTime: "Request time: " + time,
+          notifyCategory: "Food",
           status: 1,
         });
       });
@@ -1592,14 +1592,14 @@ function updateRequestMessage(foodID, supplierID) {
           notifyRequestPromise.then(function () {
             formDetailRequest(idFood);
             Notification.send(supplierID, {
-              sender_id: objAccount.id,
-              sender_email: objAccount.email,
-              food_id: idFood,
-              food_avatar: avatarFood,
+              senderID: objAccount.id,
+              senderEmail: objAccount.email,
+              foodID: idFood,
+              foodAvatar: avatarFood,
               title:
                 "User " + objAccount.name + " has just updated request message",
-              message: "Request time: " + time,
-              notify_category: "Request",
+              requestTime: "Request time: " + time,
+              notifyCategory: "Request",
               status: 1,
             });
           });
@@ -1881,7 +1881,14 @@ function renderUserRequests(listUserRequests) {
           <td>${e.message}</td>
           <td>${e.createdAt}</td>
           <td>${e.recipientPhone}</td>
-          <td id="tdCheckbox"><input class="form-check-input" id="flexCheckChecked" type="checkbox" value="${e.recipientId}" name="${e.recipientId}"></td>`;
+          <td id="tdCheckbox">
+            <input class="form-check-input" 
+                   id="flexCheckChecked" 
+                   type="checkbox" 
+                   value="${e.recipientId}" 
+                   name="${e.recipientId}"
+                   onclick="setCheckAll()">
+          </td>`;
 
           buttonsHtml = `<div class="col-sm-6" style="padding-left: unset"><button
           type="button"
@@ -1928,12 +1935,15 @@ function renderUserRequests(listUserRequests) {
 }
 
 function checkAll(source) {
-  var checkboxes = document.querySelectorAll(
-    '#list-users-request input[type="checkbox"]'
-  );
-  for (var i = 0, n = checkboxes.length; i < n; i++) {
-    checkboxes[i].checked = source.checked;
-  }
+  document
+    .querySelectorAll('#list-users-request input[type="checkbox"]')
+    .forEach((el) => (el.checked = source.checked));
+}
+
+function setCheckAll() {
+  document.querySelector("input#checkAll").checked =
+    document.querySelectorAll("#flexCheckChecked").length ==
+    document.querySelectorAll("#flexCheckChecked:checked").length;
 }
 
 function confirmation(foodId) {
@@ -2055,14 +2065,14 @@ function acceptRequest(foodId) {
         });
         notifyRequestPromise.then(function () {
           Notification.send(checkedValue, {
-            sender_id: objAccount.id,
-            sender_email: objAccount.email,
-            food_id: foodId,
-            food_avatar: avatarFood,
+            senderID: objAccount.id,
+            senderEmail: objAccount.email,
+            foodID: foodId,
+            foodAvatar: avatarFood,
             title:
               "User " + objAccount.name + " has just updated request message",
-            message: "Request time: " + time,
-            notify_category: "Request",
+            requestTime: "Request time: " + time,
+            notifyCategory: "Request",
             status: 1,
           });
         });
@@ -2074,7 +2084,7 @@ function acceptRequest(foodId) {
 // update stautus for unapproved request and send notify to unselected user
 function denyRequest(foodId) {
   var denyDataPost = {
-    status: 0,
+    status: 5,
     updatedBy: objAccount.id,
   };
   listUncheckedValue.forEach((uncheckedValue) => {
@@ -2114,13 +2124,13 @@ function denyRequest(foodId) {
         });
         notifyRequestPromise.then(function () {
           Notification.send(uncheckedValue, {
-            sender_id: objAccount.id,
-            sender_email: objAccount.email,
-            food_id: foodId,
-            food_avatar: avatarFood,
-            title: `I'm sorry I couldn't send you food this time. Try again another time!\n Dear, ${objAccount.name}!`,
-            message: "Request time: " + time,
-            notify_category: "Request",
+            senderID: objAccount.id,
+            senderEmail: objAccount.email,
+            foodID: foodId,
+            foodAvatar: avatarFood,
+            title: `I'm sorry I couldn't send you food this time. See you next time!\n Dear, ${objAccount.name}!`,
+            requestTime: "Request time: " + time,
+            notifyCategory: "Request",
             status: 1,
           });
         });

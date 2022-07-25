@@ -75,18 +75,14 @@ if (token === null || token === undefined || token === NaN || token === "") {
       viewAccount.innerHTML = htmlsItem;
 
       Notification.show(account.data.id, function (listNotify) {
-        var li = "";
-        var quantityNotify = 0;
-        if (listNotify == [] || listNotify == null || listNotify == undefined) {
-          // li  += `
-          //   <li >
-          //   </li>
-          // `;
-        } else {
+        var arrNotify = [];
+        var notificationsCount = 0;
+        // listNotify = Object.keys(listNotify).reverse();
+        if (listNotify != [] || listNotify != null || listNotify != undefined) {
           listNotify.forEach(function (child) {
-            console.log(child.val());
+            var li = "";
             if (child.val().status == 1) {
-              quantityNotify++;
+              notificationsCount++;
             }
             li += `
             <li class="header__notify-item header__notify-item--status-${
@@ -94,7 +90,7 @@ if (token === null || token === undefined || token === NaN || token === "") {
             }" data-id="${child.key}">
               <a href="#" class="header__notify-link">
               <img src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${
-                child.val().food_avatar
+                child.val().foodAvatar
               }" alt="" class="header__notify-img">
               <div class="header__notify-info">
                 <span class="header__notify-name">${child.val().title}</span>
@@ -103,14 +99,16 @@ if (token === null || token === undefined || token === NaN || token === "") {
               </a>
             </li>
             `;
+            arrNotify.push(li);
           });
-          $("#notification").html(li);
+          arrNotify.slice().reverse();
+          $("#notification").html(arrNotify.join(""));
 
           // console.log(111);
-          if (quantityNotify == 0) {
+          if (notificationsCount == 0) {
             document.querySelector(".header__notify-notice").style.display =
               "none";
-          } else if (quantityNotify > 9) {
+          } else if (notificationsCount > 9) {
             document
               .querySelector(".header__notify-notice")
               .removeAttribute("style");
@@ -121,7 +119,7 @@ if (token === null || token === undefined || token === NaN || token === "") {
               .removeAttribute("style");
             document.querySelector(
               ".header__notify-notice"
-            ).innerHTML = quantityNotify;
+            ).innerHTML = notificationsCount;
           }
         }
       });
@@ -165,9 +163,9 @@ $(document).on("click", ".header__notify-item", function () {
     Notification.show(idAccount, function (listNotify) {
       listNotify.forEach(function (child) {
         if (child.val().idNotify == idNoti) {
-          categoryNoti = child.val().category;
-          foodIdNoti = child.val().foodid;
-          usernameAccount = child.val().usernameaccount;
+          categoryNoti = child.val().notifyCategory;
+          foodIdNoti = child.val().foodID;
+          usernameAccount = child.val().senderEmail;
           title = child.val().title;
           messageNoti = child.val().message;
         }
@@ -233,7 +231,7 @@ $(document).on("click", ".header__notify-item", function () {
                         Notification.show(admin.id, function (listNotifyAdmin) {
                           listNotifyAdmin.forEach(function (child) {
                             if (
-                              child.val().foodid == foodIdNoti &&
+                              child.val().foodID == foodIdNoti &&
                               child.val().title == title &&
                               child.val().message == messageNoti
                             ) {
@@ -386,13 +384,13 @@ function newFoodModal() {
               notifyFoodPromise.then(function () {
                 listAdmin2.map(function (admin) {
                   Notification.send(admin.id, {
-                    sender_id: objAccount.id,
-                    sender_email: objAccount.email,
-                    food_id: idFood,
-                    food_avatar: avatarFood,
+                    senderID: objAccount.id,
+                    senderEmail: objAccount.email,
+                    foodID: idFood,
+                    foodAvatar: avatarFood,
                     title: "User " + objAccount.name + " add new food.",
-                    message: "Request time: " + time,
-                    notify_category: "Food",
+                    requestTime: "Request time: " + time,
+                    notifyCategory: "Food",
                     status: 1,
                   });
                 });

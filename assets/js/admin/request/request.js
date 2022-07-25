@@ -271,13 +271,13 @@ function onBrowseRequest(status) {
         getListRequest();
         notification("success", result.message);
         Notification.send(parseInt(idApprovalRequest.recipientId), {
-          sender_id: "Admin",
-          sender_email: "Admin",
-          food_id: parseInt(idApprovalRequest.id),
-          food_avatar: idApprovalRequest.avatar,
+          senderID: "Admin",
+          senderEmail: "Admin",
+          foodID: parseInt(idApprovalRequest.id),
+          foodAvatar: idApprovalRequest.avatar,
           title: "Admin has approved your request.",
-          message: "Request time: " + time,
-          notify_category: "Request",
+          requestTime: "Request time: " + time,
+          notifyCategory: "Request",
           status: 1,
         });
       }
