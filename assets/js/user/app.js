@@ -1,17 +1,17 @@
-fetch("./inc/header.html")
-  .then(response => {
-    return response.text()
+fetch("./header.html")
+  .then((response) => {
+    return response.text();
   })
-  .then(data => {
+  .then((data) => {
     document.querySelector("#header").innerHTML = data;
   })
-  .catch(error => console.log(console.log(error)));
+  .catch((error) => console.log(console.log(error)));
 
-fetch("./inc/footer.html")
-  .then(response => {
-    return response.text()
+fetch("./footer.html")
+  .then((response) => {
+    return response.text();
   })
-  .then(data => {
+  .then((data) => {
     document.querySelector("#footer").innerHTML = data;
   })
-  .catch(error => console.log(console.log(error)));
+  .catch((error) => console.log(console.log(error)));
