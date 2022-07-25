@@ -230,6 +230,7 @@ function updateRequest() {
     function (errorThrown) {}
   );
 }
+
 function approvalRequest(e, foodId, recipientId) {
   idApprovalRequest = {
     status: 3,
@@ -247,10 +248,10 @@ function onBrowseRequest(status) {
   };
   var today = new Date();
   var time =
-    today.getDate() +
-    "-" +
-    (today.getMonth() + 1) +
-    "-" +
+    ("0" + today.getDate()).slice(-2) +
+    "/" +
+    ("0" + (today.getMonth() + 1)).slice(-2) +
+    "/" +
     today.getFullYear() +
     " " +
     today.getHours() +
@@ -270,14 +271,13 @@ function onBrowseRequest(status) {
         getListRequest();
         notification("success", result.message);
         Notification.send(parseInt(idApprovalRequest.recipientId), {
-          sender: objAccount.id,
-          idNotify: "",
-          usernameaccount: "",
-          Requestid: parseInt(idApprovalRequest.recipientId),
-          avatar: idApproval.avatar,
-          title: "Admin approved",
-          message: "Time request: " + time,
-          category: "Request",
+          sender_id: "Admin",
+          sender_email: "Admin",
+          food_id: parseInt(idApprovalRequest.id),
+          food_avatar: idApprovalRequest.avatar,
+          title: "Admin has approved your request.",
+          message: "Request time: " + time,
+          notify_category: "Request",
           status: 1,
         });
       }

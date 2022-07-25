@@ -199,6 +199,7 @@ function approvalFood(e, id, createdBy, avatar) {
   };
   $("#approvalFood").modal("show");
 }
+
 function onBrowseFood() {
   var arrId = [idApproval.id];
   var dataPost = {
@@ -208,10 +209,10 @@ function onBrowseFood() {
   };
   var today = new Date();
   var time =
-    today.getDate() +
-    "-" +
-    (today.getMonth() + 1) +
-    "-" +
+    ("0" + today.getDate()).slice(-2) +
+    "/" +
+    ("0" + (today.getMonth() + 1)).slice(-2) +
+    "/" +
     today.getFullYear() +
     " " +
     today.getHours() +
@@ -229,14 +230,13 @@ function onBrowseFood() {
         $("#approvalFood").modal("hide");
         getListFood();
         Notification.send(parseInt(idApproval.createdBy), {
-          sender: objAccount.id,
-          idNotify: "",
-          usernameaccount: "",
-          foodid: parseInt(idApproval.id),
-          avatar: idApproval.avatar,
-          title: "Admin approved",
+          sender_id: objAccount.id,
+          sender_email: "",
+          food_id: parseInt(idApproval.id),
+          food_avatar: idApproval.avatar,
+          title: "Admin has approved your food.",
           message: "Time request: " + time,
-          category: "food",
+          notify_category: "food",
           status: 1,
         });
       }
@@ -244,6 +244,7 @@ function onBrowseFood() {
     function (errorThrown) {}
   );
 }
+
 var objDelete;
 function deleteFood(
   e,

@@ -118,20 +118,20 @@
 }
 
 .header__notify-notice {
+  width: 20px;
   position: absolute;
   padding: 0px 4px;
-  top: -3px;
   text-align: center;
-  right: 2px;
+  left: 25px;
   font-size: 12px;
-  line-height: 16px;
-  background: whitesmoke;
+  background: red;
   color: #000;
-  border-radius: 10px;
+  border-radius: 50%;
   font-weight: 600;
+  letter-spacing: 1px;
 }
 
-  /* padding: 1px 15px;
+/* padding: 1px 15px;
   margin-left: 15px; */
 
 .header__notify-icon {
@@ -139,4 +139,10 @@
   color: whitesmoke;
   margin-top: 10px;
   padding: 0 15px;
+}
+
+@media (max-width: 767px) {
+  .navbar__item--has-notify {
+    margin: 15px 0px 10px 0px;
+  }
 }

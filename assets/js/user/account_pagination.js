@@ -131,7 +131,7 @@ function updateStatusRequest(request) {
         Authorization: `Bearer ${isToken}`,
       },
       body: JSON.stringify({
-        status: 4,
+        status: 0,
         updatedBy: 1,
       }),
     }
@@ -140,10 +140,10 @@ function updateStatusRequest(request) {
     .then(function (data) {
       var today = new Date();
       var time =
-        today.getDate() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
+        ("0" + today.getDate()).slice(-2) +
+        "/" +
+        ("0" + (today.getMonth() + 1)).slice(-2) +
+        "/" +
         today.getFullYear() +
         " " +
         today.getHours() +
@@ -152,13 +152,13 @@ function updateStatusRequest(request) {
         ":" +
         today.getSeconds();
       Notification.send(request.recipientId, {
-        idNotify: "",
-        usernameaccount: "",
-        foodid: data.data.foodId,
-        avatar: data.data.foodDTO.avatar,
-        title: "Request " + data.data.foodDTO.name + " has expired",
-        message: "Time request: " + time,
-        category: "request",
+        sender_id: "System",
+        sender_email: "System",
+        food_id: data.data.foodId,
+        food_avatar: data.data.foodDTO.avatar,
+        title: "Request " + data.data.foodDTO.name + " has expired.",
+        message: "Request time: " + time,
+        notify_category: "Request",
         status: 1,
       });
     })
@@ -675,10 +675,10 @@ function newFoodEdit() {
                   avatarFood = data1.data.avatar;
                   var today = new Date();
                   time =
-                    today.getDate() +
-                    "-" +
-                    (today.getMonth() + 1) +
-                    "-" +
+                    ("0" + today.getDate()).slice(-2) +
+                    "/" +
+                    ("0" + (today.getMonth() + 1)).slice(-2) +
+                    "/" +
                     today.getFullYear() +
                     " " +
                     today.getHours() +
@@ -691,16 +691,16 @@ function newFoodEdit() {
                 notifyFoodPromise.then(function () {
                   listAdmin2.map(function (admin) {
                     Notification.send(admin.id, {
-                      idNotify: "",
-                      usernameaccount: admin.username,
-                      foodid: idFood,
-                      avatar: avatarFood,
+                      sender_id: admin.id,
+                      sender_email: admin.username,
+                      food_id: idFood,
+                      food_avatar: avatarFood,
                       title:
                         "User " +
                         objAccount.name +
-                        " has just updated the food information",
-                      message: "Time request: " + time,
-                      category: "food",
+                        " has just updated the food information.",
+                      message: "Request time: " + time,
+                      notify_category: "Food",
                       status: 1,
                     });
                   });
@@ -962,12 +962,17 @@ function renderListPendingRequest(listRequest) {
           pendingRequestDataHtml += `<tr id="request-row-${
             e.recipientId
           }" data-value="${e.foodId}"><td>${pendingRequestsCount}</td>
-        <td data-toggle="tooltip" title="Show food data"><button type="button" id="showFoodInfo" class="btn btn-primary" data-toggle="modal" data-target="#foodInfoModal" data-value="${
-          e.foodId
-        }">${e.foodName}</button>
-          </td><td id="supplier-name">${e.supplierName}</td><td>${
-            e.supplierPhone
-          }</td><td>${convertRequestStatus(e.status)}</td>
+        <td data-toggle="tooltip" title="Show food data">
+          <button type="button" 
+                  id="showFoodInfo" 
+                  class="btn btn-primary" 
+                  data-toggle="modal" 
+                  data-target="#foodInfoModal" 
+                  data-value="${e.foodId}">${e.foodName}</button>
+        </td>
+        <td id="supplier-name">${e.supplierName}</td>
+        <td>${e.supplierPhone}</td>
+        <td>${convertRequestStatus(e.status)}</td>
         <td onclick="formDetailRequest(${e.foodId}, 1)">
           <i class="fa fa-pencil-square-o"></i>
         </td>`;
@@ -1275,10 +1280,10 @@ function sentFeedback(img, ct, cb, r, t, ui, fi) {
       let notifyFeedbackPromise = new Promise(function (myResolve) {
         var today = new Date();
         time =
-          today.getDate() +
-          "-" +
-          (today.getMonth() + 1) +
-          "-" +
+          ("0" + today.getDate()).slice(-2) +
+          "/" +
+          ("0" + (today.getMonth() + 1)).slice(-2) +
+          "/" +
           today.getFullYear() +
           " " +
           today.getHours() +
@@ -1290,13 +1295,13 @@ function sentFeedback(img, ct, cb, r, t, ui, fi) {
       });
       notifyFeedbackPromise.then(function () {
         Notification.send(dataReturn.data.userId, {
-          idNotify: "",
-          usernameaccount: dataReturn.data.username,
-          foodid: foodId,
-          avatar: dataReturn.data.avatar,
-          title: "User " + objAccount.name + " send feedback for you",
-          message: "Time request: " + time,
-          category: "food",
+          sender_id: objAccount.id,
+          sender_email: objAccount.email,
+          food_id: foodId,
+          food_avatar: dataReturn.data.avatar,
+          title: "User " + objAccount.name + " sent you a feedback",
+          message: "Request time: " + time,
+          notify_category: "Food",
           status: 1,
         });
       });
@@ -1573,10 +1578,10 @@ function updateRequestMessage(foodID, supplierID) {
             avatarFood = requestData.foodDTO.avatar;
             var today = new Date();
             time =
-              today.getDate() +
-              "-" +
-              (today.getMonth() + 1) +
-              "-" +
+              ("0" + today.getDate()).slice(-2) +
+              "/" +
+              ("0" + (today.getMonth() + 1)).slice(-2) +
+              "/" +
               today.getFullYear() +
               " " +
               today.getHours() +
@@ -1589,14 +1594,14 @@ function updateRequestMessage(foodID, supplierID) {
           notifyRequestPromise.then(function () {
             formDetailRequest(idFood);
             Notification.send(supplierID, {
-              idNotify: "",
-              usernameaccount: "",
-              foodid: idFood,
-              avatar: avatarFood,
+              sender_id: objAccount.id,
+              sender_email: objAccount.email,
+              food_id: idFood,
+              food_avatar: avatarFood,
               title:
-                "User " + objAccount.name + "has just updated request message",
-              message: "Time request: " + time,
-              category: "request",
+                "User " + objAccount.name + " has just updated request message",
+              message: "Request time: " + time,
+              notify_category: "Request",
               status: 1,
             });
           });
@@ -1682,7 +1687,7 @@ function clickListPendingRequest() {
   getListPendingRequest();
 }
 
-function clickListActiveFood() {
+function clickListRequestedFood() {
   listPendingRequestCN.classList.remove("active");
   listPendingRequestID.classList.remove("active");
   listCanceledRequestCN.classList.remove("active");
@@ -1695,7 +1700,7 @@ function clickListActiveFood() {
   listUsersRequestCN.classList.remove("active");
   listUsersRequestCN.classList.add("d-none");
   listUsersRequestID.classList.remove("active");
-  getFoodActive();
+  getRequestedFood();
 }
 
 function clickListCanceledRequest() {
@@ -1733,26 +1738,25 @@ function clickListDeniedRequest() {
 
 // get food active
 // start
-function getFoodActive() {
-  var foodListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?status=2&createdBy=${objAccount.id}`;
-  fetch(foodListAPI, {
-    method: "GET",
-  })
+function getRequestedFood() {
+  fetch(
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/get-requested-food?userID=${accountID}`,
+    {
+      method: "GET",
+    }
+  )
     .then((response) => response.json())
-    .then((foodList) => {
+    .then((requestedFoodList) => {
       if (
-        foodList &&
-        foodList.data &&
-        foodList.data.content &&
-        foodList.data.content.length > 0
+        requestedFoodList &&
+        requestedFoodList.data &&
+        requestedFoodList.data &&
+        requestedFoodList.data.length > 0
       ) {
-        renderListActiveFood(foodList.data.content);
+        renderListRequestedFood(requestedFoodList.data);
       } else {
-        var foodRequestDataTable = document.getElementById(
-          "requested-food-data-table"
-        );
-
-        foodRequestDataTable.style.display = "none";
+        document.getElementById("requested-food-data-table").style.display =
+          "none";
         document
           .getElementById("no-requested-food-noti")
           .removeAttribute("style");
@@ -1764,11 +1768,11 @@ function getFoodActive() {
     .catch((error) => console.log(error));
 }
 
-function renderListActiveFood(listFood) {
+function renderListRequestedFood(listRequestedFood) {
   var foodRequestCount = 0;
   let container = $(".list-active-food-pagination");
   container.pagination({
-    dataSource: listFood,
+    dataSource: listRequestedFood,
     pageSize: 5,
     showGoInput: true,
     showGoButton: true,
@@ -1776,14 +1780,44 @@ function renderListActiveFood(listFood) {
     callback: function (data, pagination) {
       var dataHtml = "<div>";
       $.each(data, function (index, e) {
+        let expirationDate = new Date(e.expiration_date);
+        let createdAt = new Date(e.created_at);
+        let edYear = expirationDate.getFullYear();
+        let edMonth = expirationDate.getMonth() + 1;
+        let edDay = expirationDate.getDate();
+        let caYear = createdAt.getFullYear();
+        let caMonth = createdAt.getMonth() + 1;
+        let caDay = createdAt.getDate();
+        console.log(data);
         foodRequestCount++;
         dataHtml += `<tr>
         <td>${foodRequestCount}</td>
-        <td>${e.name}</td>
-        <td>${e.expirationDate}</td>
-        <td>${e.createdAt}</td>
+        <td data-toggle="tooltip" title="Show food data">
+          <button type="button" 
+                  id="showFoodInfo" 
+                  class="btn btn-primary" 
+                  data-toggle="modal" 
+                  data-target="#foodInfoModal" 
+                  data-value="${e.id}">${e.name}</button>
+        </td>
+        <td>${
+          ("0" + edDay).slice(-2) +
+          "/" +
+          ("0" + edMonth).slice(-2) +
+          "/" +
+          edYear
+        }</td>
+        <td>${
+          ("0" + caDay).slice(-2) +
+          "/" +
+          ("0" + caMonth).slice(-2) +
+          "/" +
+          caYear
+        }</td>
         <td>active</td>
-        <td onclick="viewUsersRequestFood(${e.id})"><i class="fa fa-search"></i></td>`;
+        <td onclick="viewUsersRequestFood(${
+          e.id
+        })"><i class="fa fa-search"></i></td>`;
       });
 
       dataHtml += "</div>";
@@ -2008,10 +2042,10 @@ function acceptRequest(foodId) {
           avatarFood = requestData.foodDTO.avatar;
           var today = new Date();
           time =
-            today.getDate() +
-            "-" +
-            (today.getMonth() + 1) +
-            "-" +
+            ("0" + today.getDate()).slice(-2) +
+            "/" +
+            ("0" + (today.getMonth() + 1)).slice(-2) +
+            "/" +
             today.getFullYear() +
             " " +
             today.getHours() +
@@ -2023,13 +2057,14 @@ function acceptRequest(foodId) {
         });
         notifyRequestPromise.then(function () {
           Notification.send(checkedValue, {
-            idNotify: "",
-            usernameaccount: "",
-            foodid: foodId,
-            avatar: avatarFood,
-            title: "User " + objAccount.name + " agreed to give you food",
-            message: "Time request: " + time,
-            category: "request",
+            sender_id: objAccount.id,
+            sender_email: objAccount.email,
+            food_id: foodId,
+            food_avatar: avatarFood,
+            title:
+              "User " + objAccount.name + " has just updated request message",
+            message: "Request time: " + time,
+            notify_category: "Request",
             status: 1,
           });
         });
@@ -2066,10 +2101,10 @@ function denyRequest(foodId) {
           avatarFood = requestData.foodDTO.avatar;
           var today = new Date();
           time =
-            today.getDate() +
-            "-" +
-            (today.getMonth() + 1) +
-            "-" +
+            ("0" + today.getDate()).slice(-2) +
+            "/" +
+            ("0" + (today.getMonth() + 1)).slice(-2) +
+            "/" +
             today.getFullYear() +
             " " +
             today.getHours() +
@@ -2081,13 +2116,13 @@ function denyRequest(foodId) {
         });
         notifyRequestPromise.then(function () {
           Notification.send(uncheckedValue, {
-            idNotify: "",
-            usernameaccount: "",
-            foodid: foodId,
-            avatar: avatarFood,
+            sender_id: objAccount.id,
+            sender_email: objAccount.email,
+            food_id: foodId,
+            food_avatar: avatarFood,
             title: `I'm sorry I couldn't send you food this time. Try again another time!\n Dear, ${objAccount.name}!`,
-            message: "Time request: " + time,
-            category: "request",
+            message: "Request time: " + time,
+            notify_category: "Request",
             status: 1,
           });
         });
