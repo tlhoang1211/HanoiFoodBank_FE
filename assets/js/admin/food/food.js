@@ -230,13 +230,13 @@ function onBrowseFood() {
         $("#approvalFood").modal("hide");
         getListFood();
         Notification.send(parseInt(idApproval.createdBy), {
-          sender_id: objAccount.id,
-          sender_email: "",
-          food_id: parseInt(idApproval.id),
-          food_avatar: idApproval.avatar,
+          senderID: objAccount.id,
+          senderEmail: "",
+          foodID: parseInt(idApproval.id),
+          foodAvatar: idApproval.avatar,
           title: "Admin has approved your food.",
-          message: "Time request: " + time,
-          notify_category: "food",
+          requestTime: "Time request: " + time,
+          notifyCategory: "food",
           status: 1,
         });
       }

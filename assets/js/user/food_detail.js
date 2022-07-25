@@ -355,7 +355,6 @@ function requestForFood() {
       .then((response) => response.json())
       .then((itemRequest) => {
         if (itemRequest.status == 200 && itemRequest.data.length != 0) {
-          console.log(itemRequest);
           requestStatus = itemRequest.data.status;
           switch (requestStatus) {
             case 1:
@@ -486,13 +485,13 @@ function postRequest() {
         modalRequestForFood.style.display = "none";
 
         Notification.send(idUserFood, {
-          sender_id: response.data.userId,
-          sender_email: usernameAccount,
-          food_id: id,
-          food_avatar: avatarFood,
+          senderID: response.data.userId,
+          senderEmail: usernameAccount,
+          foodID: id,
+          foodAvatar: avatarFood,
           title: `${usernameAccount} asked for your food.`,
-          message: "Request time: " + time,
-          notify_category: "Request",
+          requestTime: "Request time: " + time,
+          notifyCategory: "Request",
           status: 1,
         });
       })
