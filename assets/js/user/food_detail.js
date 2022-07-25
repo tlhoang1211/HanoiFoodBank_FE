@@ -476,11 +476,11 @@ function postRequest() {
           "/" +
           today.getFullYear() +
           " " +
-          today.getHours() +
+          ("0" + today.getHours()).slice(-2) +
           ":" +
-          today.getMinutes() +
+          ("0" + today.getMinutes()).slice(-2) +
           ":" +
-          today.getSeconds();
+          ("0" + today.getSeconds()).slice(-2);
 
         swal("Success!", "Successful request for food!", "success");
         modalRequestForFood.style.display = "none";

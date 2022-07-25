@@ -50,6 +50,7 @@
 
 .header__notify-header {
   height: 40px;
+  text-align: center;
 }
 
 .header__notify-header h6 {
@@ -109,12 +110,18 @@
   display: flex;
 }
 .header__notify-footer-btn {
-  color: #999999;
+  color: crimson;
   padding: 6px 0;
   width: 100%;
   font-size: 12px;
   font-weight: 600;
   text-align: center;
+}
+
+.header__notify-footer-btn:hover,
+header__notify-footer-btn:focus {
+  background-color: crimson;
+  color: white;
 }
 
 .header__notify-notice {

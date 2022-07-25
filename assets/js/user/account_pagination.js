@@ -144,13 +144,11 @@ function updateStatusRequest(request) {
         "/" +
         ("0" + (today.getMonth() + 1)).slice(-2) +
         "/" +
-        today.getFullYear() +
-        " " +
-        today.getHours() +
+        ("0" + today.getHours()).slice(-2) +
         ":" +
-        today.getMinutes() +
+        ("0" + today.getMinutes()).slice(-2) +
         ":" +
-        today.getSeconds();
+        ("0" + today.getSeconds()).slice(-2);
       Notification.send(request.recipientId, {
         sender_id: "System",
         sender_email: "System",
@@ -681,11 +679,11 @@ function newFoodEdit() {
                     "/" +
                     today.getFullYear() +
                     " " +
-                    today.getHours() +
+                    ("0" + today.getHours()).slice(-2) +
                     ":" +
-                    today.getMinutes() +
+                    ("0" + today.getMinutes()).slice(-2) +
                     ":" +
-                    today.getSeconds();
+                    ("0" + today.getSeconds()).slice(-2);
                   myResolve();
                 });
                 notifyFoodPromise.then(function () {
@@ -1286,11 +1284,11 @@ function sentFeedback(img, ct, cb, r, t, ui, fi) {
           "/" +
           today.getFullYear() +
           " " +
-          today.getHours() +
+          ("0" + today.getHours()).slice(-2) +
           ":" +
-          today.getMinutes() +
+          ("0" + today.getMinutes()).slice(-2) +
           ":" +
-          today.getSeconds();
+          ("0" + today.getSeconds()).slice(-2);
         myResolve();
       });
       notifyFeedbackPromise.then(function () {
@@ -1584,11 +1582,11 @@ function updateRequestMessage(foodID, supplierID) {
               "/" +
               today.getFullYear() +
               " " +
-              today.getHours() +
+              ("0" + today.getHours()).slice(-2) +
               ":" +
-              today.getMinutes() +
+              ("0" + today.getMinutes()).slice(-2) +
               ":" +
-              today.getSeconds();
+              ("0" + today.getSeconds()).slice(-2);
             myResolve();
           });
           notifyRequestPromise.then(function () {
@@ -2048,11 +2046,11 @@ function acceptRequest(foodId) {
             "/" +
             today.getFullYear() +
             " " +
-            today.getHours() +
+            ("0" + today.getHours()).slice(-2) +
             ":" +
-            today.getMinutes() +
+            ("0" + today.getMinutes()).slice(-2) +
             ":" +
-            today.getSeconds();
+            ("0" + today.getSeconds()).slice(-2);
           myResolve();
         });
         notifyRequestPromise.then(function () {
@@ -2107,11 +2105,11 @@ function denyRequest(foodId) {
             "/" +
             today.getFullYear() +
             " " +
-            today.getHours() +
+            ("0" + today.getHours()).slice(-2) +
             ":" +
-            today.getMinutes() +
+            ("0" + today.getMinutes()).slice(-2) +
             ":" +
-            today.getSeconds();
+            ("0" + today.getSeconds()).slice(-2);
           myResolve();
         });
         notifyRequestPromise.then(function () {
