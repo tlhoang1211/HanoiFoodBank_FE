@@ -94,7 +94,9 @@ if (token === null || token === undefined || token === NaN || token === "") {
               }" alt="" class="header__notify-img">
               <div class="header__notify-info">
                 <span class="header__notify-name">${child.val().title}</span>
-                <span class="header__notify-des">${child.val().message}</span>
+                <span class="header__notify-des">${
+                  child.val().requestTime
+                }</span>
               </div>
               </a>
             </li>
@@ -167,7 +169,7 @@ $(document).on("click", ".header__notify-item", function () {
           foodIdNoti = child.val().foodID;
           usernameAccount = child.val().senderEmail;
           title = child.val().title;
-          messageNoti = child.val().message;
+          messageNoti = child.val().requestTime;
         }
       });
     });
