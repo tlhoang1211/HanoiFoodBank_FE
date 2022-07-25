@@ -84,6 +84,7 @@ if (token === null || token === undefined || token === NaN || token === "") {
           // `;
         } else {
           listNotify.forEach(function (child) {
+            console.log(child.val());
             if (child.val().status == 1) {
               quantityNotify++;
             }
@@ -93,7 +94,7 @@ if (token === null || token === undefined || token === NaN || token === "") {
             }" data-id="${child.key}">
               <a href="#" class="header__notify-link">
               <img src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${
-                child.val().avatar
+                child.val().food_avatar
               }" alt="" class="header__notify-img">
               <div class="header__notify-info">
                 <span class="header__notify-name">${child.val().title}</span>
@@ -110,8 +111,14 @@ if (token === null || token === undefined || token === NaN || token === "") {
             document.querySelector(".header__notify-notice").style.display =
               "none";
           } else if (quantityNotify > 9) {
+            document
+              .querySelector(".header__notify-notice")
+              .removeAttribute("style");
             document.querySelector(".header__notify-notice").innerHTML = "9+";
           } else {
+            document
+              .querySelector(".header__notify-notice")
+              .removeAttribute("style");
             document.querySelector(
               ".header__notify-notice"
             ).innerHTML = quantityNotify;
@@ -363,10 +370,10 @@ function newFoodModal() {
                 avatarFood = data1.data.avatar;
                 var today = new Date();
                 time =
-                  today.getDate() +
-                  "-" +
-                  (today.getMonth() + 1) +
-                  "-" +
+                  ("0" + today.getDate()).slice(-2) +
+                  "/" +
+                  ("0" + (today.getMonth() + 1)).slice(-2) +
+                  "/" +
                   today.getFullYear() +
                   " " +
                   today.getHours() +
@@ -379,13 +386,13 @@ function newFoodModal() {
               notifyFoodPromise.then(function () {
                 listAdmin2.map(function (admin) {
                   Notification.send(admin.id, {
-                    idNotify: "",
-                    usernameaccount: admin.username,
-                    foodid: idFood,
-                    avatar: avatarFood,
-                    title: "User " + objAccount.name + " add new food",
-                    message: "Time request: " + time,
-                    category: "food",
+                    sender_id: objAccount.id,
+                    sender_email: objAccount.email,
+                    food_id: idFood,
+                    food_avatar: avatarFood,
+                    title: "User " + objAccount.name + " add new food.",
+                    message: "Request time: " + time,
+                    notify_category: "Food",
                     status: 1,
                   });
                 });

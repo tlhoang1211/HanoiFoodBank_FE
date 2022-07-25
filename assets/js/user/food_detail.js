@@ -467,13 +467,13 @@ function postRequest() {
       }),
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then((response) => {
         var today = new Date();
         var time =
-          today.getDate() +
-          "-" +
-          (today.getMonth() + 1) +
-          "-" +
+          ("0" + today.getDate()).slice(-2) +
+          "/" +
+          ("0" + (today.getMonth() + 1)).slice(-2) +
+          "/" +
           today.getFullYear() +
           " " +
           today.getHours() +
@@ -486,13 +486,13 @@ function postRequest() {
         modalRequestForFood.style.display = "none";
 
         Notification.send(idUserFood, {
-          idNotify: "",
-          usernameaccount: usernameAccount,
-          foodid: id,
-          avatar: avatarFood,
-          title: "Someone is asking you about food",
-          message: "Time request: " + time,
-          category: "request",
+          sender_id: response.data.userId,
+          sender_email: usernameAccount,
+          food_id: id,
+          food_avatar: avatarFood,
+          title: `${usernameAccount} asked for your food.`,
+          message: "Request time: " + time,
+          notify_category: "Request",
           status: 1,
         });
       })
