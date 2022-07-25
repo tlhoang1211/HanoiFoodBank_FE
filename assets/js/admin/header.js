@@ -49,8 +49,7 @@ function loadNotifyHeader() {
         arrNotify.push(htmlC);
       }
     });
-    arrNotify.slice().reverse();
-    $("#notification").html(arrNotify.join(""));
+    $("#notification").html(arrNotify.slice().reverse().join(""));
     if (notificationsCount == 0) {
       $(".alert-count").css("display", "none");
     } else {

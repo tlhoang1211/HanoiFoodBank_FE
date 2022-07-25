@@ -103,8 +103,7 @@ if (token === null || token === undefined || token === NaN || token === "") {
             `;
             arrNotify.push(li);
           });
-          arrNotify.slice().reverse();
-          $("#notification").html(arrNotify.join(""));
+          $("#notification").html(arrNotify.slice().reverse().join(""));
 
           // console.log(111);
           if (notificationsCount == 0) {
