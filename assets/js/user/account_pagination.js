@@ -1786,7 +1786,6 @@ function renderListRequestedFood(listRequestedFood) {
         let caYear = createdAt.getFullYear();
         let caMonth = createdAt.getMonth() + 1;
         let caDay = createdAt.getDate();
-        console.log(data);
         foodRequestCount++;
         dataHtml += `<tr>
         <td>${foodRequestCount}</td>
@@ -1812,7 +1811,7 @@ function renderListRequestedFood(listRequestedFood) {
           "/" +
           caYear
         }</td>
-        <td>active</td>
+        <td>${e.requestCount}</td>
         <td onclick="viewUsersRequestFood(${
           e.id
         })"><i class="fa fa-search"></i></td>`;

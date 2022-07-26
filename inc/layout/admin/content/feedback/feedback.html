@@ -1,62 +1,56 @@
 <div class="card">
-    <div class="card-body">
-        <div class="row align-items-center">
-            <div class="col-lg-12 col-xl-12">
-                <form class="float-lg-start">
-                    <div class="row row-cols-lg-auto g-2">
-                        <div class="col-12">
-                            <div class="btn-group float-start">
-                                <button class="btn btn-light dropdown-toggle show" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="true">Order by</button>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"
-                                    style="margin: 0px;">
-                                    <a class="dropdown-item active" onclick="onChangeOrderByFeedback(this, 'asc')">From a-z</a>
-                                    <a class="dropdown-item" onclick="onChangeOrderByFeedback(this, 'desc')">From z-a</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-lg-12 col-xl-12">
+        <form class="float-lg-start">
+          <div class="row row-cols-lg-auto g-2"></div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 <div class="card radius-10">
-    <div class="card-body">
-        <div class="d-flex align-items-center">
-            <div>
-                <h5 class="mb-0">Feedback list</h5>
-            </div>
-        </div>
-        <hr />
-        
-        <div class="table-responsive" id="table-Feedback">
-            <table class="table align-middle mb-0 table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Avatar</th>
-                        <th>Sender</th>
-                        <th>Food</th>
-                        <th>Rate</th>
-                        <th>Content</th>
-                        <th>Recipient</th>
-                        <th>Created At</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-        <div class="axbox-footer mt-2 float-end">
-            <div id="nextpage"></div>
-        </div>
-        <div class="zero-warning d-none">
-            <div class="box-icon-warning d-flex" style="justify-content: center;align-items: center;margin: auto;flex-direction: column;">
-                <div><i class='bx bx-file-find' style="font-size: 50px;"></i></div>
-                <div>No records found</div>
-            </div>
-        </div>
+  <div class="card-body">
+    <div class="d-flex align-items-center">
+      <div>
+        <h5 class="mb-0">LIST OF FEEDBACKS</h5>
+      </div>
     </div>
+    <hr />
+
+    <div class="table-responsive" id="table-Feedback">
+      <table class="table align-middle mb-0 table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Avatar</th>
+            <th>Sender</th>
+            <th>Food</th>
+            <th>Rate</th>
+            <th>Content</th>
+            <th>Recipient</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="axbox-footer mt-2 float-end">
+      <div id="data-page"></div>
+    </div>
+    <div class="zero-warning d-none">
+      <div
+        class="box-icon-warning d-flex"
+        style="
+          justify-content: center;
+          align-items: center;
+          margin: auto;
+          flex-direction: column;
+        "
+      >
+        <div><i class="bx bx-file-find" style="font-size: 50px"></i></div>
+        <div>No records found</div>
+      </div>
+    </div>
+  </div>
 </div>

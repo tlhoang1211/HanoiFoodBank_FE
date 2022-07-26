@@ -38,11 +38,7 @@ var orderByRequest = "desc",
 //         function(errorThrown){}
 //     )
 // }
-function onChangeOrderByRequest(e, type) {
-  orderByRequest = type;
-  addActive(e);
-  getListRequest();
-}
+
 function filterStatusRequest(e, type) {
   if (type) {
     statusRequest = type;
@@ -107,7 +103,9 @@ function getListRequest(pageIndex) {
               getListRequest(page - 1);
             },
           };
-          $("#nextpage").bootstrapPaginator(options);
+          $("#data-page").bootstrapPaginator(options);
+        } else {
+          swal("Info", "There are no data that satisfy the condition", "info");
         }
       }
     },
@@ -138,7 +136,7 @@ function renderListRequest(data) {
     htmls += "<td>" + (e.recipientAddr || "") + "</td>";
     htmls += "<td>";
     htmls +=
-      '<div class="d-flex align-items-center ' +
+      '<div class="data-status d-flex align-items-center ' +
       colorStatusRequest(e.status) +
       '">';
     htmls +=
@@ -334,10 +332,10 @@ function convertStatusRequest(status) {
       text = "Done";
       break;
     case 4:
-      text = "Expired";
+      text = "Canceled";
       break;
-    default:
-      text = "Pending";
+    case 5:
+      text = "Denied";
       break;
   }
   return text;

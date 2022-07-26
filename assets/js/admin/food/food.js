@@ -2,6 +2,7 @@ var orderBy = "desc",
   statusFood = null,
   searchName,
   filter_Category;
+
 function formAddFood() {
   var pageContent = document.getElementsByClassName("page-content");
   if (pageContent.item(0)) {
@@ -18,11 +19,7 @@ function formAddFood() {
     "../../../assets/js/admin/food/newFood.js"
   );
 }
-function onChangeOrderBy(e, type) {
-  orderBy = type;
-  addActive(e);
-  getListFood();
-}
+
 function filterStatus(e, type) {
   if (type) {
     statusFood = type;
@@ -32,19 +29,21 @@ function filterStatus(e, type) {
   addActive(e);
   getListFood();
 }
-function filterCategory(e, id) {
-  if (id) {
-    filter_Category = parseInt(id);
+function filterCategory(e, categoryId) {
+  if (categoryId) {
+    filter_Category = parseInt(categoryId);
   } else {
     filter_Category = null;
   }
   addActive(e);
   getListFood();
 }
+
 function searchNameFood(ele) {
   searchName = $(ele).val();
   getListFood();
 }
+
 // get data food
 function getListFood(pageIndex) {
   if (!pageIndex) {
@@ -103,14 +102,18 @@ function getListFood(pageIndex) {
               getListFood(page - 1);
             },
           };
-          $("#nextpage").bootstrapPaginator(options);
+          $("#data-page").bootstrapPaginator(options);
+        } else {
+          swal("Info", "There are no data that satisfy the condition", "info");
         }
       }
     },
     function (errorThrown) {}
   );
 }
+
 getListFood();
+
 function renderListFood(data) {
   var count = 0;
   var html = data.map(function (e) {
@@ -124,10 +127,11 @@ function renderListFood(data) {
       '" style="width: 30px;height: 30px;"/></td>';
     htmlS += "<td>" + (e.name || "") + "</td>";
     htmlS += "<td>" + convertCategory(e.categoryId) + "</td>";
+    htmlS += "<td>" + e.createdAt + "</td>";
     htmlS += "<td>" + (e.expirationDate || "") + "</td>";
     htmlS += "<td>";
     htmlS +=
-      '<div class="d-flex align-items-center ' +
+      '<div class="data-status d-flex align-items-center ' +
       colorStatusFood(e.status) +
       '">';
     htmlS +=
@@ -135,7 +139,6 @@ function renderListFood(data) {
     htmlS += "<span>" + convertStatusFood(e.status) + "</span>";
     htmlS += "</div>";
     htmlS += "</td>";
-    htmlS += "<td>" + e.createdAt + "</td>";
     htmlS += '<td style="width: 55px;">';
     htmlS += '<div class="d-flex order-actions">';
     htmlS +=
@@ -270,6 +273,7 @@ function deleteFood(
   };
   $("#deleteFood").modal("show");
 }
+
 function onDeleteFood() {
   var dataPost = {
     name: objDelete.name,
@@ -363,6 +367,7 @@ function renderDropdowFilterCategory() {
   }
   $(".filter-category .dropdown-menu").append(html);
 }
+
 renderDropdowFilterCategory();
 var dataIdFood;
 function formUpdateFood(e, id) {
@@ -395,4 +400,85 @@ function reloadFood() {
     },
     function (errorThrown) {}
   );
+}
+
+function sortTable(n) {
+  var table,
+    tbody,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  table = document.getElementsByClassName("table-responsive")[0];
+  tbody = table.getElementsByTagName("tbody")[0];
+  rows = tbody.rows;
+  switching = true;
+  dir = "asc";
+  while (switching) {
+    switching = false;
+    for (i = 0; i < rows.length - 1; i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (n != 0) {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      } else if (dir == "desc") {
+        if (n != 0) {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount++;
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+
+function searchNameFood() {
+  var input, filter, table, tbody, tr, td, i, txtValue;
+  input = document.getElementById("searchFood");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("food-table");
+  tbody = table.getElementsByTagName("tbody")[0];
+  tr = tbody.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
 }

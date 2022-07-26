@@ -289,7 +289,7 @@ $("#addformModal").validate({
   },
   messages: {
     nameFoodModal: {
-      required: "Please provide name food.",
+      required: "Please provide food name.",
     },
     categoryModal: {
       required: "Please choose category.",

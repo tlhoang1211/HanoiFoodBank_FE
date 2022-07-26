@@ -4,11 +4,6 @@ var orderBy = "desc",
   filter_Category,
   objDetail;
 
-function onChangeOrderBy(e, type) {
-  orderBy = type;
-  addActive(e);
-  getListDonate();
-}
 function searchNameDonate(ele, e) {
   searchName_Donate = $(ele).val();
   if (e) {
@@ -20,6 +15,7 @@ function searchNameDonate(ele, e) {
     getListDonate();
   }
 }
+
 // get data Donate
 function getListDonate(pageIndex) {
   if (!pageIndex) {
@@ -47,16 +43,16 @@ function getListDonate(pageIndex) {
         if (result && result.data && result.data.content) {
           if (result.data.content.length > 0) {
             if (
-              document.querySelectorAll("#table-Donate tbody").lastElementChild
+              document.querySelectorAll("#table-donate tbody").lastElementChild
             ) {
               document
-                .querySelectorAll("#table-Donate tbody")
+                .querySelectorAll("#table-donate tbody")
                 .item(0).innerHTML = "";
             }
             document
-              .querySelectorAll("#table-Donate tbody")
+              .querySelectorAll("#table-donate tbody")
               .item(0).innerHTML = renderListDonate(result.data.content);
-            $("#table-Donate").removeClass("d-none");
+            $("#table-donate").removeClass("d-none");
             $(".axbox-footer").removeClass("d-none");
             $(".zero-warning").addClass("d-none");
             var total = 0;
@@ -75,19 +71,23 @@ function getListDonate(pageIndex) {
                 getListDonate(page - 1);
               },
             };
-            $("#nextpage").bootstrapPaginator(options);
+            $("#data-page").bootstrapPaginator(options);
           } else {
-            $("#table-Donate").addClass("d-none");
+            $("#table-donate").addClass("d-none");
             $(".axbox-footer").addClass("d-none");
             $(".zero-warning").removeClass("d-none");
           }
         }
+      } else {
+        swal("Info", "There are no data that satisfy the condition", "info");
       }
     },
     function (errorThrown) {}
   );
 }
+
 getListDonate();
+
 function renderListDonate(data) {
   var count = 0;
   var html = data.map(function (e) {
@@ -139,4 +139,99 @@ function viewDetailsDonate(e, id) {
     },
     function (errorThrown) {}
   );
+}
+
+function searchNameDonation() {
+  var input, filter, table, tbody, tr, td, i, txtValue;
+  input = document.getElementById("searchDonation");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("donation-table");
+  tbody = table.getElementsByTagName("tbody")[0];
+  tr = tbody.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+function sortTable(n) {
+  var table,
+    tbody,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  table = document.getElementsByClassName("table-responsive")[0];
+  tbody = table.getElementsByTagName("tbody")[0];
+  rows = tbody.rows;
+  switching = true;
+  dir = "asc";
+  while (switching) {
+    switching = false;
+    for (i = 0; i < rows.length - 1; i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (n != 0 && n != 2) {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (n == 0) {
+            if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+              shouldSwitch = true;
+              break;
+            }
+          } else {
+            if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+      } else if (dir == "desc") {
+        if (n != 0 && n != 2) {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (n == 0) {
+            if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+              shouldSwitch = true;
+              break;
+            }
+          } else {
+            if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount++;
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
 }

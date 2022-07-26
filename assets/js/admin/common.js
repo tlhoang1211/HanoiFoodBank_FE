@@ -3,6 +3,7 @@
 $(document).ready(function () {
   Notification.config();
 });
+
 // get token
 var token, pageContent, currentUserName, objAccount;
 var pageSize = 20,
@@ -49,15 +50,6 @@ function startLoad(cookie) {
       "afterbegin",
       "../../../assets/js/admin/sidebar.js"
     );
-    loadHtml(
-      "setBg.html",
-      ".wrapper",
-      "div",
-      "switcher-wrapper",
-      "",
-      "afterend",
-      "../../../assets/js/admin/setBg.js"
-    );
     creaElement("div", "page-wrapper", "", ".wrapper", "afterbegin");
     loadHtml(
       "../../../inc/layout/admin/content/dashboard/dashboard.html",
@@ -82,6 +74,7 @@ function startLoad(cookie) {
     );
   }
 }
+
 startLoad(document.cookie);
 function getCookie(key, cookie) {
   if (cookie) {
@@ -100,6 +93,7 @@ function getCookie(key, cookie) {
     return "";
   }
 }
+
 function getAccount() {
   getConnectAPI(
     "GET",
@@ -114,6 +108,7 @@ function getAccount() {
     function (errorThrown) {}
   );
 }
+
 function creaElement(ele, className, id, position, position1) {
   var positionElement = document.querySelectorAll(position);
   var eleFirst = document.createElement(ele);
@@ -129,10 +124,12 @@ function creaElement(ele, className, id, position, position1) {
     positionElement.item(0).appendChild();
   }
 }
+
 function insertHtml(startPoint, text, position) {
   var positionElement = document.querySelectorAll(startPoint);
   positionElement.item(0).insertAdjacentHTML(position, text);
 }
+
 // load html
 function loadHtml(url, startPoint, createEle, className, id, position, src) {
   fetch(url)
@@ -158,6 +155,7 @@ function loadHtml(url, startPoint, createEle, className, id, position, src) {
     })
     .catch((error) => console.log(console.log(error)));
 }
+
 function loadScript(arrSrc) {
   if (arrSrc) {
     if (arrSrc.length > 0) {
@@ -169,6 +167,7 @@ function loadScript(arrSrc) {
     }
   }
 }
+
 function getConnectAPI(method, url, dataPost, successCallback, failCallback) {
   fetch(url, {
     method: method,
@@ -208,6 +207,7 @@ function addActive(ele) {
   }
   ele.classList.add("active");
 }
+
 var arr_Category = [];
 function listCategory() {
   getConnectAPI(
@@ -229,6 +229,7 @@ function listCategory() {
     function (errorThrown) {}
   );
 }
+
 function goBack(parentFile, file) {
   var pageContent = document.getElementsByClassName("page-content");
   if (pageContent.item(0)) {
@@ -245,6 +246,7 @@ function goBack(parentFile, file) {
     "../../../assets/js/admin/" + parentFile + "/" + file + ".js"
   );
 }
+
 function notification(type, message) {
   var icon;
   switch (type) {
