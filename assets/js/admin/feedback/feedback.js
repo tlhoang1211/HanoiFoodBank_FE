@@ -1,10 +1,5 @@
 var orderBy = "desc";
 
-function onChangeOrderByFeedback(e, type) {
-  orderBy = type;
-  addActive(e);
-  getListFeedback();
-}
 // get data Feedback
 function getListFeedback(pageIndex) {
   if (!pageIndex) {
@@ -57,19 +52,23 @@ function getListFeedback(pageIndex) {
                 getListFeedback(page - 1);
               },
             };
-            $("#nextpage").bootstrapPaginator(options);
+            $("#data-page").bootstrapPaginator(options);
           } else {
             $("#table-Feedback").addClass("d-none");
             $(".axbox-footer").addClass("d-none");
             $(".zero-warning").removeClass("d-none");
           }
         }
+      } else {
+        swal("Info", "There are no data that satisfy the condition", "info");
       }
     },
     function (errorThrown) {}
   );
 }
+
 getListFeedback();
+
 function renderListFeedback(data) {
   var count = 0;
   var html = data.map(function (e) {

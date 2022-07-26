@@ -27,32 +27,34 @@ $("#login").on("click", function (event) {
     body: JSON.stringify(dataPost),
   })
     .then((response) => response.json())
-    .then(function (data) {
-      fetch(
-        `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/roles?username=${username}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${data.data.access_token}`,
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((res) => {
-          if (res.data[0].name == "ROLE_ADMIN") {
-            if (data.status == 200) {
-              document.cookie = `token=${data.data.access_token}`;
-              document.cookie = `username=${username}`;
-              document.querySelector(".wrapper").remove();
-              startLoad(document.cookie);
-            } else {
-              swal("Error!", "Incorrect account or password", "error");
-            }
-          } else {
-            swal("Error!", "You are not allowed to access", "error");
+    .then((data) => {
+      if (data.status != "403") {
+        fetch(
+          `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/roles?username=${username}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${data.data.access_token}`,
+            },
           }
-        });
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (res.data[0].name == "ROLE_ADMIN") {
+              if (data.status == 200) {
+                document.cookie = `token=${data.data.access_token}`;
+                document.cookie = `username=${username}`;
+                document.querySelector(".wrapper").remove();
+                startLoad(document.cookie);
+              }
+            } else {
+              swal("Error!", "You are not allowed to access", "error");
+            }
+          });
+      } else {
+        swal("Error!", "Incorrect account or password", "error");
+      }
     })
     .catch(function (error) {
       console.log(error);

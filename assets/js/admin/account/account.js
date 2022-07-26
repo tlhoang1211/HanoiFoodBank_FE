@@ -1,6 +1,5 @@
 var orderByAccount = "desc",
-  statusAccount = null,
-  searchName_Account;
+  statusAccount = null;
 function formNewAccount() {
   var pageContent = document.getElementsByClassName("page-content");
   if (pageContent.item(0)) {
@@ -17,11 +16,7 @@ function formNewAccount() {
     "../../../assets/js/admin/account/newAccount.js"
   );
 }
-function onChangeOrderBy(e, type) {
-  orderByAccount = type;
-  addActive(e);
-  getListAccount();
-}
+
 function filterStatus(e, type) {
   if (type) {
     statusAccount = type;
@@ -31,10 +26,27 @@ function filterStatus(e, type) {
   addActive(e);
   getListAccount();
 }
-function searchNameAccount(ele) {
-  searchName_Account = $(ele).val();
-  getListAccount();
+
+function searchNameAccount() {
+  var input, filter, table, tbody, tr, td, i, txtValue;
+  input = document.getElementById("searchAccount");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("account-table");
+  tbody = table.getElementsByTagName("tbody")[0];
+  tr = tbody.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
 }
+
 // get data Account
 function getListAccount(pageIndex) {
   if (!pageIndex) {
@@ -47,10 +59,7 @@ function getListAccount(pageIndex) {
   if (orderByAccount) {
     optionUrl += "&order=" + orderByAccount;
   }
-  optionUrl += "&sortBy=createdAt";
-  if (searchName_Account) {
-    optionUrl += "&keyword=" + searchName_Account;
-  }
+  optionUrl += "&sortBy=name";
   getConnectAPI(
     "GET",
     "https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/search?page=" +
@@ -68,14 +77,14 @@ function getListAccount(pageIndex) {
           result.data.content.length > 0
         ) {
           if (
-            document.querySelectorAll("#table-Account tbody").lastElementChild
+            document.querySelectorAll("#table-account tbody").lastElementChild
           ) {
             document
-              .querySelectorAll("#table-Account tbody")
+              .querySelectorAll("#table-account tbody")
               .item(0).innerHTML = "";
           }
           document
-            .querySelectorAll("#table-Account tbody")
+            .querySelectorAll("#table-account tbody")
             .item(0).innerHTML = renderListAccount(result.data.content);
           var total = 0;
           total = result.data.totalElements;
@@ -93,14 +102,18 @@ function getListAccount(pageIndex) {
               getListAccount(page - 1);
             },
           };
-          $("#nextpage").bootstrapPaginator(options);
+          $("#data-page").bootstrapPaginator(options);
+        } else {
+          swal("Info", "There are no data that satisfy the condition", "info");
         }
       }
     },
     function (errorThrown) {}
   );
 }
+
 getListAccount();
+
 function renderListAccount(data) {
   var count = 0;
   var html = data.map(function (e) {
@@ -122,7 +135,7 @@ function renderListAccount(data) {
     htmld += "<td>" + (e.address || "") + "</td>";
     htmld += "<td>";
     htmld +=
-      '<div class="d-flex align-items-center ' +
+      '<div class="data-status d-flex align-items-center ' +
       colorStatusAccount(e.status) +
       '">';
     htmld +=
@@ -235,9 +248,11 @@ function colorStatusAccount(status) {
   }
   return color;
 }
+
 function changeRole(e, id) {
   $("#modal-changeRole").modal("show");
 }
+
 var usernameDetail, idUserDetail;
 function formUpdateAccount(e, id, username) {
   idUserDetail = id;
@@ -248,7 +263,7 @@ function formUpdateAccount(e, id, username) {
   }
   localStorage.setItem("page", "updateAccount");
   loadHtml(
-    "../../../inc/layout/admin/content/account/profile",
+    "../../../inc/layout/admin/content/account/profile.html",
     ".page-wrapper",
     "div",
     "page-content",
@@ -256,4 +271,65 @@ function formUpdateAccount(e, id, username) {
     "afterbegin",
     "../../../assets/js/admin/account/profile.js"
   );
+}
+
+function sortTable(n) {
+  var table,
+    tbody,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  table = document.getElementsByClassName("table-responsive")[0];
+  tbody = table.getElementsByTagName("tbody")[0];
+  rows = tbody.rows;
+  switching = true;
+  dir = "asc";
+  while (switching) {
+    switching = false;
+    for (i = 0; i < rows.length - 1; i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (n != 0) {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      } else if (dir == "desc") {
+        if (n != 0) {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount++;
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
 }

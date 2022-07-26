@@ -36,11 +36,7 @@ function saveCategory() {
     function (errorThrown) {}
   );
 }
-function onChangeOrderByCategory(e, type) {
-  orderByCategory = type;
-  addActive(e);
-  getListCategory();
-}
+
 function filterStatusCategory(e, type) {
   if (type) {
     statusCategory = type;
@@ -112,7 +108,9 @@ function getListCategory(pageIndex) {
               getListCategory(page - 1);
             },
           };
-          $("#nextpage").bootstrapPaginator(options);
+          $("#data-page").bootstrapPaginator(options);
+        } else {
+          swal("Info", "There are no data that satisfy the condition", "info");
         }
       }
     },
@@ -131,7 +129,7 @@ function renderListCategory(data) {
                 <td>${e.createdAt}</td>
                 <td>${e.createdBy}</td>
                 <td>
-                    <div class="d-flex align-items-center ${colorStatusCategory(
+                    <div class="data-status d-flex align-items-center ${colorStatusCategory(
                       e.status
                     )}">
                         <i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
@@ -227,4 +225,86 @@ function colorStatusCategory(status) {
       break;
   }
   return color;
+}
+
+function sortTable(n) {
+  var table,
+    tbody,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  table = document.getElementsByClassName("table-responsive")[0];
+  tbody = table.getElementsByTagName("tbody")[0];
+  rows = tbody.rows;
+  switching = true;
+  dir = "asc";
+  console.log(n);
+  while (switching) {
+    switching = false;
+    for (i = 0; i < rows.length - 1; i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (n != 0 && n != 3) {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      } else if (dir == "desc") {
+        if (n != 0 && n != 3) {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount++;
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+
+function searchNameCategory() {
+  var input, filter, table, tbody, tr, td, i, txtValue;
+  input = document.getElementById("searchCategory");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("category-table");
+  tbody = table.getElementsByTagName("tbody")[0];
+  tr = tbody.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
 }

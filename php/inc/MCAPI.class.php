@@ -1280,7 +1280,7 @@ class MCAPI {
      *
      * @param string $id the list id to connect to. Get by calling lists()
      * @return array list of merge tags for the list
-                string name Name of the merge field
+                string Name of the merge field
                 bool req Denotes whether the field is required (true) or not (false)
                 string field_type The "data type" of this merge var. One of: email, text, number, radio, dropdown, date, address, phone, url, imageurl
                 bool public Whether or not this field is visible to list subscribers
@@ -1392,7 +1392,7 @@ class MCAPI {
      * @param string $id the list id to connect to. Get by calling lists()
      * @return struct list of interest groups for the list
                 int id The id for the Grouping
-                string name Name for the Interest groups
+                string Name for the Interest groups
                 string form_field Gives the type of interest group: checkbox,radio,select
                 array groups Array of the grouping options including:
                     string bit the bit value - not really anything to be done with this
@@ -2122,7 +2122,7 @@ class MCAPI {
                         boolean only    only include inactive templates. defaults to false.
      * @return array An array of arrays, one for each template
                 int id Id of the template
-                string name Name of the template
+                string Name of the template
                 string layout Layout of the template - "basic", "left_column", "right_column", or "postcard"
                 string preview_image If we've generated it, the url of the preview image for the template. We do out best to keep these up to date, but Preview image urls are not guaranteed to be available
                 string date_created The date/time the template was created
@@ -2362,7 +2362,7 @@ class MCAPI {
      * @param string $type optional the type of folders to return - either "campaign" or "autoresponder". Defaults to "campaign"
      * @return array Array of folder structs (see Returned Fields for details)
                 int folder_id Folder Id for the given folder, this can be used in the campaigns() function to filter on.
-                string name Name of the given folder
+                string Name of the given folder
                 string date_created The date/time the folder was created
                 string type The type of the folders being returned, just to make sure you know.
      */

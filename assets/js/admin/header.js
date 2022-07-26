@@ -37,10 +37,6 @@ function loadNotifyHeader() {
           "</h6>";
         htmlC +=
           '<p class="msg-info" style="overflow: hidden;text-overflow: ellipsis;">' +
-          child.val().title +
-          "</p>";
-        htmlC +=
-          '<p class="msg-info" style="overflow: hidden;text-overflow: ellipsis;">' +
           child.val().requestTime +
           "</p>";
         htmlC += "</div>";
@@ -62,6 +58,7 @@ function loadNotifyHeader() {
     }
   });
 }
+
 function changePageFormHeader(page, idActive) {
   var classLi = document.getElementsByClassName("mm-sidebar");
   if (classLi && classLi.length > 0) {
@@ -87,12 +84,18 @@ function changePageFormHeader(page, idActive) {
     "../../../assets/js/admin/" + page + "/" + page + ".js"
   );
 }
+
 function logout() {
-  document.cookie = `token=${token}; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
-  document.cookie = `username=${currentUserName}; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
+  document.cookie
+    .split(";")
+    .forEach(
+      (cookie) =>
+        (document.cookie = cookie
+          .replace(/^ +/, "")
+          .replace(/=.*/, `=;expires=${new Date(0).toUTCString()};path=/`))
+    );
   token = null;
   currentUserName = null;
-  document.getElementsByClassName("switcher-wrapper").item(0).remove();
   document.getElementsByClassName("wrapper").item(0).innerHTML = "";
   startLoad(null);
 }
