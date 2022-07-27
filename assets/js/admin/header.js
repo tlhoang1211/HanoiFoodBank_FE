@@ -17,9 +17,9 @@ function loadNotifyHeader() {
           '<a class="dropdown-item header__notify-item--status-' +
           child.val().status +
           '" onclick="changePageFormHeader(\'' +
-          (child.val().notifyCategory == "food" ? "food" : "request") +
+          (child.val().notifyCategory == "Food" ? "food" : "request") +
           "', '" +
-          (child.val().notifyCategory == "food"
+          (child.val().notifyCategory == "Food"
             ? "page_food"
             : "page_request") +
           "')\">";
@@ -33,7 +33,7 @@ function loadNotifyHeader() {
         htmlC += '<div class="flex-grow-1" style="overflow: hidden;">';
         htmlC +=
           '<h6 class="msg-name">' +
-          (child.val().notifyCategory == "food" ? "New Food" : "New Request") +
+          (child.val().notifyCategory == "Food" ? "New Food" : "New Request") +
           "</h6>";
         htmlC +=
           '<p class="msg-info" style="overflow: hidden;text-overflow: ellipsis;">' +

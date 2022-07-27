@@ -209,10 +209,10 @@ function approvalFood(e, id, createdBy, avatar) {
 }
 
 function onBrowseFood() {
-  var arrId = [idApproval.id];
+  var foodID = idApproval.id;
+  console.log(foodID);
   var dataPost = {
     status: 2,
-    arrId: JSON.stringify(arrId),
     updatedBy: objAccount.id,
   };
   var today = new Date();
@@ -230,7 +230,7 @@ function onBrowseFood() {
     ("0" + today.getSeconds()).slice(-2);
   getConnectAPI(
     "POST",
-    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/update-list-status`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/status/${foodID}`,
     JSON.stringify(dataPost),
     function (result) {
       if (result && result.status == 200) {
