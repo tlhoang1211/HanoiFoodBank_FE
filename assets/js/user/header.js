@@ -89,7 +89,7 @@ if (token === null || token === undefined || token === NaN || token === "") {
               child.val().status
             }" data-id="${child.key}">
               <a href="#" class="header__notify-link">
-              <img src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${
+              <img src="https://res.cloudinary.com/vernom/image/upload/${
                 child.val().foodAvatar
               }" alt="" class="header__notify-img">
               <div class="header__notify-info">
@@ -329,7 +329,6 @@ function newFoodModal() {
         description: description,
         content: content,
       };
-      console.log(dataPost);
       fetch("https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods", {
         method: "POST",
         headers: {
@@ -355,9 +354,7 @@ function newFoodModal() {
               var idFood;
               var avatarFood;
               var time;
-              console.log(data1);
               let notifyFoodPromise = new Promise(function (myResolve) {
-                console.log(data1);
                 listAdmin2 = listAdmin.data;
                 idFood = data1.data.id;
                 avatarFood = data1.data.avatar;
