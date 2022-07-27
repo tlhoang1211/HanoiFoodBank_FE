@@ -337,6 +337,7 @@ function newFoodModal() {
         description: description,
         content: content,
       };
+      console.log(dataPost);
       fetch("https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods", {
         method: "POST",
         headers: {
@@ -347,7 +348,6 @@ function newFoodModal() {
       })
         .then((response) => response.json())
         .then(function (data1) {
-          console.log(data1.data);
           fetch(
             `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users?role=ROLE_ADMIN`,
             {
@@ -402,8 +402,10 @@ function newFoodModal() {
           swal("Success!", "Add Food success!", "success");
           var frm = document.getElementsByName("upload_new_food_form")[0];
           frm.reset();
-          // var image1 = document.getElementsByClassName("cloudinary-thumbnails");
-          // image1.parentNode.removeChild(image1);
+          var image1 = document.getElementsByClassName(
+            "cloudinary-thumbnails"
+          )[0];
+          image1.parentNode.removeChild(image1);
         })
         .catch((error) => console.log(error));
     }
@@ -411,12 +413,14 @@ function newFoodModal() {
 }
 
 // food
+var e = document.getElementById("categoryModal");
+var text = e.options[e.selectedIndex].text;
 var myWidgetFoodModal = cloudinary.createUploadWidget(
   {
     cloudName: "vernom",
     uploadPreset: "fn5rpymu",
     form: "#addformModal",
-    folder: "hanoi_food_bank_project/uploaded_food",
+    folder: `hanoi_food_bank_project/uploaded_food/${text}`,
     fieldName: "thumbnailsFoodModal[]",
     thumbnails: ".thumbnailsFoodModal",
   },

@@ -97,3 +97,7 @@
   color: white;
   background-color: black;
 }
+
+#expirationDateModal {
+  padding: 3px 10px 3px 10px;
+}

@@ -1,7 +1,6 @@
 "use strict";
 
 function changePage(e, page) {
-  console.log(e.parentElement);
   document.getElementsByClassName("mm-active")[0].classList.remove("mm-active");
   e.parentElement.classList.add("mm-active");
   var classLi = document.getElementsByClassName("mm-sidebar");
