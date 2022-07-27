@@ -528,8 +528,12 @@ function getAverageRating(supplierId) {
       for (feedback of feedbacksList) {
         sumAllRate = sumAllRate + parseInt(feedback.rate);
       }
-      avgRating = Math.round(sumAllRate / feedbacksList.length);
-      if (data.data.content.length == "0") {
+      if (feedbacksList.length != 0) {
+        avgRating = Math.round(sumAllRate / feedbacksList.length);
+      } else {
+        avgRating = 0;
+      }
+      if (feedbacksList.length == "0") {
         document.getElementById("avg-rating-score").innerHTML = 0;
       } else {
         document.getElementById("avg-rating-score").innerHTML = avgRating;

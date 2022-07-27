@@ -86,6 +86,9 @@ function getListFood(pageIndex) {
           document
             .querySelectorAll("#table-food tbody")
             .item(0).innerHTML = renderListFood(result.data.content);
+          $("#table-food").removeClass("d-none");
+          $(".axbox-footer").removeClass("d-none");
+          $(".zero-warning").addClass("d-none");
           var total = 0;
           total = result.data.totalElements;
           var pageNumber = Math.ceil(total / pageSize);
@@ -104,7 +107,9 @@ function getListFood(pageIndex) {
           };
           $("#data-page").bootstrapPaginator(options);
         } else {
-          swal("Info", "There are no data that satisfy the condition", "info");
+          $("#table-food").addClass("d-none");
+          $(".axbox-footer").addClass("d-none");
+          $(".zero-warning").removeClass("d-none");
         }
       }
     },

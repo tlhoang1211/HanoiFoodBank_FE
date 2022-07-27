@@ -10,11 +10,11 @@
                   id="searchRequest"
                   type="text"
                   class="form-control ps-5"
-                  placeholder="Search for names..."
+                  placeholder="Search for food names..."
+                  onkeyup="searchNameRequest()"
                 />
                 <span
                   class="position-absolute top-50 product-show translate-middle-y"
-                  onclick="searchNameRequest('#searchRequest')"
                   ><i class="bx bx-search"></i
                 ></span>
               </div>
@@ -82,22 +82,39 @@
             </div> -->
     </div>
     <hr />
-    <div class="table-responsive" id="table-Request">
-      <table class="table align-middle mb-0 table-striped">
+    <div class="zero-warning d-none">
+      <div
+        class="box-icon-warning d-flex"
+        style="
+          justify-content: center;
+          align-items: center;
+          margin: auto;
+          flex-direction: column;
+        "
+      >
+        <div><i class="bx bx-file-find" style="font-size: 50px"></i></div>
+        <div>No records found</div>
+      </div>
+    </div>
+    <div class="table-responsive" id="table-request">
+      <table class="table align-middle mb-0 table-striped" id="request-table">
         <thead>
           <tr>
-            <th>
-              <input type="checkbox" class="check-all form-check-input" />
-            </th>
-            <th>#</th>
-            <th>Food Name</th>
+            <th># <i class="fa fa-sort" onclick="sortTable(0)"></i></th>
+            <th>Food Name <i class="fa fa-sort" onclick="sortTable(1)"></i></th>
             <th>Message</th>
-            <th>Supplier Name</th>
-            <th>Recipient Name</th>
+            <th>
+              Supplier Name <i class="fa fa-sort" onclick="sortTable(3)"></i>
+            </th>
+            <th>
+              Recipient Name <i class="fa fa-sort" onclick="sortTable(4)"></i>
+            </th>
             <th>Recipient Phone</th>
             <th>Recipient Address</th>
-            <th>Status</th>
-            <th>Created at</th>
+            <th>Status <i class="fa fa-sort" onclick="sortTable(7)"></i></th>
+            <th>
+              Created At <i class="fa fa-sort" onclick="sortTable(8)"></i>
+            </th>
             <th>Action</th>
             <th></th>
             <th></th>
@@ -145,7 +162,7 @@
   <div class="modal-dialog">
     <div class="modal-content bg-secondary">
       <div class="modal-header" style="border-bottom: none">
-        <h5 class="modal-title">Browse</h5>
+        <h5 class="modal-title">Accept Request</h5>
         <button
           type="button"
           class="btn-close"
@@ -154,7 +171,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <p>Do you want to browse this dish?</p>
+        <p>Do you want to accept this request?</p>
       </div>
       <div class="modal-footer" style="border-top: none">
         <button
@@ -162,14 +179,14 @@
           class="btn btn-danger"
           onclick="onBrowseRequest('4')"
         >
-          Do not browse
+          No
         </button>
         <button
           type="button"
           class="btn btn-success"
           onclick="onBrowseRequest('3')"
         >
-          Browse
+          Yes
         </button>
       </div>
     </div>
@@ -206,7 +223,8 @@
               <option value="1">Pending</option>
               <option value="2">Confirmed</option>
               <option value="3">Done</option>
-              <option value="4">Expired</option>
+              <option value="4">Canceled</option>
+              <option value="5">Denied</option>
             </select>
           </div>
         </form>

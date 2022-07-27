@@ -12,7 +12,10 @@
 </div>
 <div class="card">
   <div class="row g-0">
-    <div class="col-md-4 border-end">
+    <div
+      class="col-md-6 border-end"
+      style="display: flex; justify-content: center"
+    >
       <img
         id="avatar_food"
         class="img-fluid"
@@ -24,7 +27,7 @@
         class="row mb-3 row-cols-auto g-2 justify-content-center mt-3 list-image-food"
       ></div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
       <div class="card-body">
         <h4 class="card-title titleFood"></h4>
         <div class="d-flex gap-3 py-3">
@@ -127,7 +130,9 @@
                 <th>
                   Date expired <i class="fa fa-sort" onclick="sortTable(3)"></i>
                 </th>
-                <th>Status</th>
+                <th>
+                  Status <i class="fa fa-sort" onclick="sortTable(4)"></i>
+                </th>
               </tr>
             </thead>
             <tbody></tbody>
