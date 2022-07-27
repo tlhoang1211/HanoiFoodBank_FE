@@ -78,15 +78,18 @@ function getListRequest(pageIndex) {
           result.data.content.length > 0
         ) {
           if (
-            document.querySelectorAll("#table-Request tbody").lastElementChild
+            document.querySelectorAll("#table-request tbody").lastElementChild
           ) {
             document
-              .querySelectorAll("#table-Request tbody")
+              .querySelectorAll("#table-request tbody")
               .item(0).innerHTML = "";
           }
           document
-            .querySelectorAll("#table-Request tbody")
+            .querySelectorAll("#table-request tbody")
             .item(0).innerHTML = renderListRequest(result.data.content);
+          $("#table-request").removeClass("d-none");
+          $(".axbox-footer").removeClass("d-none");
+          $(".zero-warning").addClass("d-none");
           var total = 0;
           total = result.data.totalElements;
           var pageNumber = Math.ceil(total / pageSize);
@@ -105,7 +108,9 @@ function getListRequest(pageIndex) {
           };
           $("#data-page").bootstrapPaginator(options);
         } else {
-          swal("Info", "There are no data that satisfy the condition", "info");
+          $("#table-request").addClass("d-none");
+          $(".axbox-footer").addClass("d-none");
+          $(".zero-warning").removeClass("d-none");
         }
       }
     },
@@ -119,14 +124,6 @@ function renderListRequest(data) {
     count++;
     var htmls = "";
     htmls += "<tr>";
-    htmls += "<td>";
-    if (e.status == 1 || e.status == 2) {
-      htmls +=
-        '<input type="checkbox" class="form-check-input" data-id="' +
-        e.recipientId +
-        '">';
-    }
-    htmls += "</td>";
     htmls += "<td>" + count + "</td>";
     htmls += "<td>" + (e.foodName || "") + "</td>";
     htmls += "<td>" + (e.message || "") + "</td>";
@@ -364,4 +361,86 @@ function colorStatusRequest(status) {
       break;
   }
   return color;
+}
+
+function sortTable(n) {
+  var table,
+    tbody,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  table = document.getElementsByClassName("table-responsive")[0];
+  tbody = table.getElementsByTagName("tbody")[0];
+  rows = tbody.rows;
+  switching = true;
+  dir = "asc";
+  console.log(n);
+  while (switching) {
+    switching = false;
+    for (i = 0; i < rows.length - 1; i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (n != 0 && n != 3) {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      } else if (dir == "desc") {
+        if (n != 0 && n != 3) {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount++;
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+
+function searchNameRequest() {
+  var input, filter, table, tbody, tr, td, i, txtValue;
+  input = document.getElementById("searchRequest");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("request-table");
+  tbody = table.getElementsByTagName("tbody")[0];
+  tr = tbody.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
 }

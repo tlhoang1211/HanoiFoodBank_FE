@@ -92,6 +92,9 @@ function getListCategory(pageIndex) {
           document
             .querySelectorAll("#table-category tbody")
             .item(0).innerHTML = renderListCategory(result.data.content);
+          $("#table-category").removeClass("d-none");
+          $(".axbox-footer").removeClass("d-none");
+          $(".zero-warning").addClass("d-none");
           var total = 0;
           total = result.data.totalElements;
           var pageNumber = Math.ceil(total / pageSize);
@@ -110,14 +113,18 @@ function getListCategory(pageIndex) {
           };
           $("#data-page").bootstrapPaginator(options);
         } else {
-          swal("Info", "There are no data that satisfy the condition", "info");
+          $("#table-category").addClass("d-none");
+          $(".axbox-footer").addClass("d-none");
+          $(".zero-warning").removeClass("d-none");
         }
       }
     },
     function (errorThrown) {}
   );
 }
+
 getListCategory();
+
 function renderListCategory(data) {
   var count = 0;
   var html = data.map(function (e) {

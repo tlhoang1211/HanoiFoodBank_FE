@@ -1,5 +1,6 @@
 var orderByAccount = "desc",
   statusAccount = null;
+
 function formNewAccount() {
   var pageContent = document.getElementsByClassName("page-content");
   if (pageContent.item(0)) {
@@ -48,7 +49,7 @@ function searchNameAccount() {
 }
 
 // get data Account
-function getListAccount(pageIndex) {
+async function getListAccount(pageIndex) {
   if (!pageIndex) {
     pageIndex = 0;
   }
@@ -60,7 +61,7 @@ function getListAccount(pageIndex) {
     optionUrl += "&order=" + orderByAccount;
   }
   optionUrl += "&sortBy=name";
-  getConnectAPI(
+  await getConnectAPI(
     "GET",
     "https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/search?page=" +
       pageIndex +
@@ -68,7 +69,7 @@ function getListAccount(pageIndex) {
       pageSize +
       optionUrl,
     null,
-    function (result) {
+    async function (result) {
       if (result && result.status == 200) {
         if (
           result &&
@@ -83,9 +84,10 @@ function getListAccount(pageIndex) {
               .querySelectorAll("#table-account tbody")
               .item(0).innerHTML = "";
           }
-          document
-            .querySelectorAll("#table-account tbody")
-            .item(0).innerHTML = renderListAccount(result.data.content);
+          $("#table-account").removeClass("d-none");
+          $(".axbox-footer").removeClass("d-none");
+          $(".zero-warning").addClass("d-none");
+          await renderListAccount(result.data.content);
           var total = 0;
           total = result.data.totalElements;
           var pageNumber = Math.ceil(total / pageSize);
@@ -104,7 +106,9 @@ function getListAccount(pageIndex) {
           };
           $("#data-page").bootstrapPaginator(options);
         } else {
-          swal("Info", "There are no data that satisfy the condition", "info");
+          $("#table-account").addClass("d-none");
+          $(".axbox-footer").addClass("d-none");
+          $(".zero-warning").removeClass("d-none");
         }
       }
     },
@@ -114,56 +118,75 @@ function getListAccount(pageIndex) {
 
 getListAccount();
 
-function renderListAccount(data) {
+async function renderListAccount(dataList) {
   var count = 0;
-  var html = data.map(function (e) {
-    count++;
-    var htmld = "";
-    htmld += "<tr><td>" + count + "</td>";
-    if (e.avatar) {
-      htmld +=
-        '<td><img src="https://res.cloudinary.com/vernom/image/upload/' +
-        e.avatar +
-        '" style="width: 30px;height: 30px;"/></td>';
-    } else {
-      htmld +=
-        '<td><img src="https://via.placeholder.com/110x110" style="width: 30px;height: 30px;"/></td>';
-    }
-    htmld += "<td>" + (e.name || "") + "</td>";
-    htmld += "<td>" + (e.username || "") + "</td>";
-    htmld += "<td>" + (e.phone || "") + "</td>";
-    htmld += "<td>" + (e.address || "") + "</td>";
-    htmld += "<td>";
-    htmld +=
-      '<div class="data-status d-flex align-items-center ' +
-      colorStatusAccount(e.status) +
-      '">';
-    htmld +=
-      '<i class="bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1"></i>';
-    htmld += "<span>" + convertStatusAccount(e.status) + "</span></div></td>";
-    htmld += "<td>" + e.createdAt + "</td>";
-    htmld += '<td><div class="d-flex order-actions">';
-    htmld +=
-      "<a onclick=\"formUpdateAccount(this, '" +
-      e.id +
-      "', '" +
-      e.username +
-      '\')"><i class="bx bx-edit"></i></a>';
-    htmld +=
-      '<a class="ms-4" onclick="changeRole(this, \'' +
-      e.id +
-      '\')"><i class="bx bx-user"></i></a>';
-    htmld +=
-      '<a class="ms-4 ' +
-      (e.status == 1 ? "" : "d-none") +
-      '" onclick="deleteAccount(this, \'' +
-      e.id +
-      '\')"><i class="bx bx-trash"></i></a>';
-    htmld += "</td>";
-    return htmld;
-  });
-  return html.join("");
+  for (var e of dataList) {
+    await fetch(
+      `https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks/search?userId=${e.id}&status=1&sortBy=id&order=desc`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((data) => data.json())
+      .then((data) => {
+        var feedbacksList = data.data.content;
+
+        count++;
+        var htmld = "";
+        htmld += "<tr><td>" + count + "</td>";
+        if (e.avatar) {
+          htmld +=
+            '<td><img src="https://res.cloudinary.com/vernom/image/upload/' +
+            e.avatar +
+            '" style="width: 30px;height: 30px;"/></td>';
+        } else {
+          htmld +=
+            '<td><img src="https://via.placeholder.com/110x110" style="width: 30px;height: 30px;"/></td>';
+        }
+        htmld += "<td>" + (e.name || "") + "</td>";
+        htmld += "<td>" + feedbacksList.length + "</td>";
+        htmld += "<td>" + (e.username || "") + "</td>";
+        htmld += "<td>" + (e.phone || "") + "</td>";
+        htmld += "<td>" + (e.address || "") + "</td>";
+        htmld += "<td>";
+        htmld +=
+          '<div class="data-status d-flex align-items-center ' +
+          colorStatusAccount(e.status) +
+          '">';
+        htmld +=
+          '<i class="bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1"></i>';
+        htmld +=
+          "<span>" + convertStatusAccount(e.status) + "</span></div></td>";
+        htmld += "<td>" + e.createdAt + "</td>";
+        htmld += '<td><div class="d-flex order-actions">';
+        htmld +=
+          "<a onclick=\"formUpdateAccount(this, '" +
+          e.id +
+          "', '" +
+          e.username +
+          '\')"><i class="bx bx-edit"></i></a>';
+        htmld +=
+          '<a class="ms-4" onclick="changeRole(this, \'' +
+          e.id +
+          '\')"><i class="bx bx-user"></i></a>';
+        htmld +=
+          '<a class="ms-4 ' +
+          (e.status == 1 ? "" : "d-none") +
+          '" onclick="deleteAccount(this, \'' +
+          e.id +
+          '\')"><i class="bx bx-trash"></i></a>';
+        htmld += "</td>";
+        document
+          .querySelectorAll("#table-account tbody")
+          .item(0).innerHTML += htmld;
+      });
+  }
 }
+
 var objDeleteAccount;
 function deleteAccount(
   e,
@@ -189,6 +212,7 @@ function deleteAccount(
   };
   $("#deleteAccount").modal("show");
 }
+
 function onDeleteAccount() {
   var dataPost = {
     name: objDeleteAccount.name,
@@ -233,6 +257,7 @@ function convertStatusAccount(status) {
   }
   return text;
 }
+
 function colorStatusAccount(status) {
   var color = "";
   switch (status) {

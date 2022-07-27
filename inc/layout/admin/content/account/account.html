@@ -67,6 +67,20 @@
       </div>
     </div>
     <hr />
+    <div class="zero-warning d-none">
+      <div
+        class="box-icon-warning d-flex"
+        style="
+          justify-content: center;
+          align-items: center;
+          margin: auto;
+          flex-direction: column;
+        "
+      >
+        <div><i class="bx bx-file-find" style="font-size: 50px"></i></div>
+        <div>No records found</div>
+      </div>
+    </div>
     <div class="table-responsive" id="table-account">
       <table class="table align-middle mb-0 table-striped" id="account-table">
         <thead>
@@ -81,18 +95,22 @@
               <i class="fa fa-sort" onclick="sortTable(2)"></i>
             </th>
             <th>
-              Email
+              Feedbacks Received
               <i class="fa fa-sort" onclick="sortTable(3)"></i>
+            </th>
+            <th>
+              Email
+              <i class="fa fa-sort" onclick="sortTable(4)"></i>
             </th>
             <th>Phone</th>
             <th>Address</th>
             <th>
               Status
-              <i class="fa fa-sort" onclick="sortTable(6)"></i>
+              <i class="fa fa-sort" onclick="sortTable(7)"></i>
             </th>
             <th>
-              Created at
-              <i class="fa fa-sort" onclick="sortTable(7)"></i>
+              Created At
+              <i class="fa fa-sort" onclick="sortTable(8)"></i>
             </th>
             <th>Action</th>
           </tr>
