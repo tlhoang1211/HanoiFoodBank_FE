@@ -2239,7 +2239,9 @@ function renderFeedback(listFeedback) {
     callback: function (data, pagination) {
       var dataHtml = "<div>";
       $.each(data, function (index, e) {
-        var food_image = `https://res.cloudinary.com/vernom/image/upload/${e.image}`;
+        var food_image = `https://res.cloudinary.com/vernom/image/upload/${
+          e.image.split(",")[0]
+        }`;
         feedbackCount++;
         dataHtml += `<tr>
           <td>${feedbackCount}</td>
