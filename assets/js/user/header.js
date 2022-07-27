@@ -355,7 +355,9 @@ function newFoodModal() {
               var idFood;
               var avatarFood;
               var time;
+              console.log(data1);
               let notifyFoodPromise = new Promise(function (myResolve) {
+                console.log(data1);
                 listAdmin2 = listAdmin.data;
                 idFood = data1.data.id;
                 avatarFood = data1.data.avatar;

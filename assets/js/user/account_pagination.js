@@ -378,50 +378,55 @@ function getListFoodExpired() {
 function renderListFood(listFood) {
   foodCount = 0;
   let container = $(".food-list-pagination");
-  container.pagination({
-    dataSource: listFood,
-    pageSize: 5,
-    showGoInput: true,
-    showGoButton: true,
-    formatGoInput: "go to <%= input %>",
-    callback: function (data, pagination) {
-      var dataHtml = "<div>";
-      $.each(data, function (index, e) {
-        foodCount++;
-        dataHtml += `<tr id="food-row-${e.id}">
+
+  if (listFood.length > 0) {
+    document.getElementById("food-data-table").removeAttribute("style");
+    document.getElementById("no-food-noti").style.display = "none";
+    container.pagination({
+      dataSource: listFood,
+      pageSize: 5,
+      showGoInput: true,
+      showGoButton: true,
+      formatGoInput: "go to <%= input %>",
+      callback: function (data, pagination) {
+        var dataHtml = "<div>";
+        $.each(data, function (index, e) {
+          foodCount++;
+          dataHtml += `<tr id="food-row-${e.id}">
           <td>${foodCount}</td>`;
-        if (e.status == 2 || e.status == 0) {
-          dataHtml += `<td><a href="./food_detail?id=${
-            e.id
-          }" style="color: blue;">${e.name || ""}</a></td>`;
-        } else {
-          dataHtml += `<td>${e.name || ""}</td>`;
-        }
-        dataHtml += `<td>${formatCategory(e.categoryId)}</td>
+          if (e.status == 2 || e.status == 0) {
+            dataHtml += `<td><a href="./food_detail?id=${
+              e.id
+            }" style="color: blue;">${e.name || ""}</a></td>`;
+          } else {
+            dataHtml += `<td>${e.name || ""}</td>`;
+          }
+          dataHtml += `<td>${formatCategory(e.categoryId)}</td>
             <td>${e.expirationDate}</td>
             <td>${e.createdAt}</td>
             <td>${
               e.status == 0 ? "deactive" : e.status == 1 ? "pending" : "active"
             }</td>`;
-        if (e.status == 0) {
-          dataHtml += `<td><i class="fa fa-pencil-square-o" style="pointer-events: none; opacity: 0.5;"></i></td>`;
-        } else {
-          dataHtml += `<td onclick="formUpdateFood(${e.id})"><i class="fa fa-pencil-square-o"></i></td>`;
-        }
-        dataHtml += `<td onclick="confirmDeleteFood(${e.id})"><i class="fa fa-trash-o"></i></td></tr>`;
-      });
+          if (e.status == 0) {
+            dataHtml += `<td><i class="fa fa-pencil-square-o" style="pointer-events: none; opacity: 0.5;"></i></td>`;
+          } else {
+            dataHtml += `<td onclick="formUpdateFood(${e.id})"><i class="fa fa-pencil-square-o"></i></td>`;
+          }
+          dataHtml += `<td onclick="confirmDeleteFood(${e.id})"><i class="fa fa-trash-o"></i></td></tr>`;
+        });
 
-      dataHtml += "</div>";
-      $("#list-food").html(dataHtml);
-    },
-  });
-
-  var foodDataTable = document.getElementById("food-data-table");
-  foodDataTable.style.display = "none";
-  document.getElementById("no-food-noti").removeAttribute("style");
-  document
-    .getElementById("center-food-noti")
-    .setAttribute("style", "text-align: center;");
+        dataHtml += "</div>";
+        $("#list-food").html(dataHtml);
+      },
+    });
+  } else {
+    var foodDataTable = document.getElementById("food-data-table");
+    foodDataTable.style.display = "none";
+    document.getElementById("no-food-noti").removeAttribute("style");
+    document
+      .getElementById("center-food-noti")
+      .setAttribute("style", "text-align: center;");
+  }
 }
 
 // update food
@@ -2068,8 +2073,7 @@ function acceptRequest(foodId) {
             senderEmail: objAccount.email,
             foodID: foodId,
             foodAvatar: avatarFood,
-            title:
-              "User " + objAccount.name + " has just updated request message",
+            title: "User " + objAccount.name + " has accept your request!",
             requestTime: "Request time: " + time,
             notifyCategory: "Request",
             status: 1,
