@@ -253,16 +253,18 @@ function onBrowseFood() {
           function (listUsers) {
             if (listUsers && listUsers.status == 200) {
               for (var user of listUsers.data) {
-                Notification.send(parseInt(user.id), {
-                  senderID: objAccount.id,
-                  senderEmail: objAccount.email,
-                  foodID: parseInt(idApproval.id),
-                  foodAvatar: idApproval.avatar,
-                  title: "New food uploaded!",
-                  requestTime: "Time request: " + time,
-                  notifyCategory: "food",
-                  status: 1,
-                });
+                if (user.id != idApproval.createdBy) {
+                  Notification.send(parseInt(user.id), {
+                    senderID: objAccount.id,
+                    senderEmail: objAccount.email,
+                    foodID: parseInt(idApproval.id),
+                    foodAvatar: idApproval.avatar,
+                    title: "New food uploaded!",
+                    requestTime: "Time request: " + time,
+                    notifyCategory: "food",
+                    status: 1,
+                  });
+                }
               }
             }
           },
