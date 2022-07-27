@@ -1279,7 +1279,6 @@ function sentFeedback(img, ct, cb, r, t, ui, fi) {
   })
     .then((response) => response.json())
     .then(function (dataReturn) {
-      console.log(dataReturn);
       let notifyFeedbackPromise = new Promise(function (myResolve) {
         var today = new Date();
         time =
@@ -2034,8 +2033,7 @@ function acceptRequest(foodId) {
   };
   listCheckedValue.forEach((checkedValue) => {
     fetch(
-      `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${checkedValue}/
-        ${foodId}`,
+      `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${checkedValue}/${foodId}`,
       {
         method: "POST",
         headers: {
@@ -2092,8 +2090,7 @@ function denyRequest(foodId) {
   };
   listUncheckedValue.forEach((uncheckedValue) => {
     fetch(
-      `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${uncheckedValue}/
-        ${foodId}`,
+      `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests/status/${uncheckedValue}/${foodId}`,
       {
         method: "POST",
         headers: {
@@ -2179,6 +2176,8 @@ function getSentFeedbackList() {
         sentFeedbackList.data.content &&
         sentFeedbackList.data.content.length > 0
       ) {
+        document.getElementById("feedback-data-table").removeAttribute("style");
+        document.getElementById("no-feedback-noti").style.display = "none";
         renderFeedback(sentFeedbackList.data.content);
       } else {
         var sentFeedbackDataTable = document.getElementById(
@@ -2211,6 +2210,8 @@ function getReceivedFeedbackList() {
         receivedFeedbackList.data.content &&
         receivedFeedbackList.data.content.length > 0
       ) {
+        document.getElementById("feedback-data-table").removeAttribute("style");
+        document.getElementById("no-feedback-noti").style.display = "none";
         document.getElementById("changeFinal").innerText = "Feedback From";
         renderFeedback(receivedFeedbackList.data.content);
       } else {
