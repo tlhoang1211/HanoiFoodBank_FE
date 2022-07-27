@@ -210,7 +210,6 @@ function approvalFood(e, id, createdBy, avatar) {
 
 function onBrowseFood() {
   var foodID = idApproval.id;
-  console.log(foodID);
   var dataPost = {
     status: 2,
     updatedBy: objAccount.id,
@@ -239,7 +238,7 @@ function onBrowseFood() {
         getListFood();
         Notification.send(parseInt(idApproval.createdBy), {
           senderID: objAccount.id,
-          senderEmail: "",
+          senderEmail: objAccount.email,
           foodID: parseInt(idApproval.id),
           foodAvatar: idApproval.avatar,
           title: "Admin has approved your food.",
@@ -247,6 +246,28 @@ function onBrowseFood() {
           notifyCategory: "food",
           status: 1,
         });
+        getConnectAPI(
+          "GET",
+          `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users?role=ROLE_USER`,
+          null,
+          function (listUsers) {
+            if (listUsers && listUsers.status == 200) {
+              for (var user of listUsers.data) {
+                Notification.send(parseInt(user.id), {
+                  senderID: objAccount.id,
+                  senderEmail: objAccount.email,
+                  foodID: parseInt(idApproval.id),
+                  foodAvatar: idApproval.avatar,
+                  title: "New food uploaded!",
+                  requestTime: "Time request: " + time,
+                  notifyCategory: "food",
+                  status: 1,
+                });
+              }
+            }
+          },
+          function (errorThrown) {}
+        );
       }
     },
     function (errorThrown) {}
