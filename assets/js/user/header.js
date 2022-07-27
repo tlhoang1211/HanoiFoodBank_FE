@@ -351,11 +351,11 @@ function newFoodModal() {
           )
             .then((response) => response.json())
             .then((listAdmin) => {
+              var listAdmin2;
+              var idFood;
+              var avatarFood;
+              var time;
               let notifyFoodPromise = new Promise(function (myResolve) {
-                var listAdmin2;
-                var idFood;
-                var avatarFood;
-                var time;
                 listAdmin2 = listAdmin.data;
                 idFood = data1.data.id;
                 avatarFood = data1.data.avatar;
