@@ -148,3 +148,14 @@ td {
   border-color: lightcoral;
   padding: 8px 26px;
 }
+
+#list-feedback > tr > td:nth-child(2) {
+  width: 100px;
+  height: 100px;
+}
+
+.imgFeedback {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
