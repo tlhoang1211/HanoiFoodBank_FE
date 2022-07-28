@@ -213,7 +213,7 @@
                       <a
                         class="myRequestInfo"
                         onclick="onAddClassActive(this, 'list-action', 'parent');showTabPanel('myrequest');
-                        getListPendingRequest()"
+                        getListFinishRequest()"
                       >
                         <i
                           class="custom-i fa fa-file-text"
@@ -268,7 +268,15 @@
                         List expired food</a
                       >
                     </li>
-
+                    <li class="tab-account listFinishRequest d-none">
+                      <a
+                        href="#listFinishRequest"
+                        onclick="clickListFinishRequest()"
+                        data-toggle="tab"
+                      >
+                        Finish requests</a
+                      >
+                    </li>
                     <li class="tab-account listPendingRequest d-none">
                       <a
                         href="#listPendingRequest"
@@ -703,7 +711,7 @@
                         </div>
                       </div>
                     </div>
-                    <!-- list of requests -->
+                    <!-- list of pending requests -->
                     <div class="tab-pane" id="listPendingRequest">
                       <div class="card radius-10">
                         <div class="card-body" id="center-pending-request-noti">
@@ -739,6 +747,49 @@
                               <div class="col-sm-12">
                                 <div
                                   class="pending-requests-pagination font-alt"
+                                ></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- list of finish requests -->
+                    <div class="tab-pane" id="listFinishRequest">
+                      <div class="card radius-10">
+                        <div class="card-body" id="center-finish-request-noti">
+                          <span
+                            id="no-finish-request-noti"
+                            style="display: none"
+                            >No data yet!</span
+                          >
+                          <div
+                            class="table-responsive"
+                            id="finish-request-data-table"
+                          >
+                            <table
+                              class="table align-middle mb-0 table-striped table-bordered"
+                            >
+                              <thead class="table-light request_tab">
+                                <tr>
+                                  <th>#</th>
+                                  <th>Food Name</th>
+                                  <th>Supplier Name</th>
+                                  <th>Supplier Phone</th>
+                                  <th>Status</th>
+                                  <th>Detail</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody
+                                class="row multi-columns-row"
+                                id="list-finish-request"
+                              ></tbody>
+                            </table>
+                            <div class="row" id="pagination-button">
+                              <div class="col-sm-12">
+                                <div
+                                  class="finish-requests-pagination font-alt"
                                 ></div>
                               </div>
                             </div>

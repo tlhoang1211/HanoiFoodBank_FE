@@ -4,6 +4,10 @@ var detailRequestID = document.getElementById("detailRequest");
 var detailRequestCN = document.getElementsByClassName("detailRequest")[0];
 var listUsersRequestID = document.getElementById("listUsersRequest");
 var listUsersRequestCN = document.getElementsByClassName("listUsersRequest")[0];
+var listFinishRequestID = document.getElementById("listFinishRequest");
+var listFinishRequestCN = document.getElementsByClassName(
+  "listFinishRequest"
+)[0];
 var listPendingRequestID = document.getElementById("listPendingRequest");
 var listPendingRequestCN = document.getElementsByClassName(
   "listPendingRequest"
@@ -409,11 +413,12 @@ function renderListFood(listFood) {
             }</td>`;
           if (e.status == 0) {
             dataHtml += `<td><i class="fa fa-pencil-square-o" style="pointer-events: none; opacity: 0.5;"></i></td>`;
-            dataHtml += `<td><i class="fa fa-trash-o" style="pointer-events: none; opacity: 0.5;></i></td></tr>`;
+            dataHtml += `<td><i class="fa fa-trash-o" style="pointer-events: none; opacity: 0.5;></i></td>`;
           } else {
             dataHtml += `<td onclick="formUpdateFood(${e.id})"><i class="fa fa-pencil-square-o"></i></td>`;
-            dataHtml += `<td onclick="confirmDeleteFood(${e.id})"><i class="fa fa-trash-o"></i></td></tr>`;
+            dataHtml += `<td onclick="confirmDeleteFood(${e.id})"><i class="fa fa-trash-o"></i></td>`;
           }
+          dataHtml += "</tr>";
         });
 
         dataHtml += "</div>";
@@ -915,6 +920,8 @@ function deleteFood(id) {
 
 // pending request list pagination on account page
 // start
+var requestExists;
+var listRequests;
 function getListPendingRequest() {
   // console.log(userID);
   var pendingRequestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${accountID}&order=desc&sortBy=createdAt`;
@@ -932,18 +939,33 @@ function getListPendingRequest() {
         requestsList.data.content &&
         requestsList.data.content.length > 0
       ) {
-        renderListPendingRequest(requestsList.data.content);
-      } else {
-        var pendingRequestDataTable = document.getElementById(
-          "pending-request-data-table"
-        );
-        pendingRequestDataTable.style.display = "none";
-        document
-          .getElementById("no-pending-request-noti")
-          .removeAttribute("style");
-        document
-          .getElementById("center-pending-request-noti")
-          .setAttribute("style", "text-align: center;");
+        listRequests = requestsList.data.content;
+        for (var request of listRequests) {
+          if (request.status == 1 || request.status == 2) {
+            requestExists = true;
+          } else {
+            requestExists = false;
+          }
+        }
+        if (requestExists) {
+          document
+            .getElementById("pending-request-data-table")
+            .removeAttribute("style");
+          document.getElementById("no-pending-request-noti").style.display =
+            "none";
+          renderListPendingRequest(listRequests);
+        } else {
+          var pendingRequestDataTable = document.getElementById(
+            "pending-request-data-table"
+          );
+          pendingRequestDataTable.style.display = "none";
+          document
+            .getElementById("no-pending-request-noti")
+            .removeAttribute("style");
+          document
+            .getElementById("center-pending-request-noti")
+            .setAttribute("style", "text-align: center;");
+        }
       }
     })
     .catch((error) => console.log(error));
@@ -961,7 +983,7 @@ function renderListPendingRequest(listRequest) {
     callback: function (data, pagination) {
       var pendingRequestDataHtml = "<div>";
       $.each(data, function (index, e) {
-        if (e.status == 1 || e.status == 2 || e.status == 3) {
+        if (e.status == 1 || e.status == 2) {
           pendingRequestsCount++;
           pendingRequestDataHtml += `<tr id="request-row-${
             e.recipientId
@@ -994,11 +1016,6 @@ function renderListPendingRequest(listRequest) {
             </td>
             </tr>`;
               break;
-            case 3:
-              pendingRequestDataHtml += `<td>
-            <button onclick="formFeedbackRequest(${e.foodId})" type="button" class="btn btn-round feedback-button" id="feedbackBtn${e.foodId}">Feedback</button>
-            </td></tr>`;
-              break;
           }
         }
       });
@@ -1011,10 +1028,118 @@ function renderListPendingRequest(listRequest) {
 
 // end
 
+// finished request list pagination on account page
+// start
+function getListFinishRequest() {
+  // console.log(userID);
+  var finishRequestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${accountID}&order=desc&sortBy=createdAt`;
+  fetch(finishRequestListAPI, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${isToken}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((requestsList) => {
+      if (
+        requestsList &&
+        requestsList.data &&
+        requestsList.data.content &&
+        requestsList.data.content.length > 0
+      ) {
+        listRequests = requestsList.data.content;
+        for (var request of listRequests) {
+          if (request.status == 3 || request.status == 4) {
+            requestExists = true;
+          } else {
+            requestExists = false;
+          }
+        }
+        if (requestExists) {
+          document
+            .getElementById("finish-request-data-table")
+            .removeAttribute("style");
+          document.getElementById("no-finish-request-noti").style.display =
+            "none";
+          renderListFinishRequest(listRequests);
+        } else {
+          var finishRequestDataTable = document.getElementById(
+            "finish-request-data-table"
+          );
+          finishRequestDataTable.style.display = "none";
+          document
+            .getElementById("no-finish-request-noti")
+            .removeAttribute("style");
+          document
+            .getElementById("center-finish-request-noti")
+            .setAttribute("style", "text-align: center;");
+        }
+      }
+    })
+    .catch((error) => console.log(error));
+}
+
+function renderListFinishRequest(listRequest) {
+  var finishRequestsCount = 0;
+  pendingRequestsCount = 0;
+  let requestContainer = $(".finish-requests-pagination");
+  requestContainer.pagination({
+    dataSource: listRequest,
+    pageSize: 5,
+    showGoInput: true,
+    showGoButton: true,
+    formatGoInput: "go to <%= input %>",
+    callback: function (data, pagination) {
+      var finishRequestDataHtml = "<div>";
+      $.each(data, function (index, e) {
+        if (e.status == 3 || e.status == 4) {
+          finishRequestsCount++;
+          finishRequestDataHtml += `<tr id="request-row-${
+            e.recipientId
+          }" data-value="${e.foodId}"><td>${finishRequestsCount}</td>
+        <td data-toggle="tooltip" title="Show food data">
+          <button type="button" 
+                  id="showFoodInfo" 
+                  class="btn btn-primary" 
+                  data-toggle="modal" 
+                  data-target="#foodInfoModal" 
+                  data-value="${e.foodId}">${e.foodName}</button>
+        </td>
+        <td id="supplier-name">${e.supplierName}</td>
+        <td>${e.supplierPhone}</td>
+        <td>${convertRequestStatus(e.status)}</td>
+        <td onclick="formDetailRequest(${e.foodId}, 1)">
+          <i class="fa fa-pencil-square-o"></i>
+        </td>`;
+          switch (e.status) {
+            case 3:
+              finishRequestDataHtml += `<td>
+            <button onclick="formFeedbackRequest(${e.foodId})" type="button" class="btn btn-round feedback-button" id="feedbackBtn${e.foodId}">Feedback</button>
+            </td></tr>`;
+              break;
+            case 4:
+              finishRequestDataHtml += `
+            <td>
+              <button type="button" class="btn btn-round" style="color: black; background-color: lightcoral; border-color: lightcoral;">All Done</button>
+            </td>
+            </tr>`;
+              break;
+          }
+        }
+      });
+      finishRequestDataHtml += "</div>";
+
+      $("#list-finish-request").html(finishRequestDataHtml);
+    },
+  });
+}
+
+// end
+
 // canceled request list pagination on account page
 // start
 function getListCanceledRequest() {
-  var canceledRequestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?status=4&userId=${accountID}&order=desc&sortBy=createdAt`;
+  var canceledRequestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?status=5&userId=${accountID}&order=desc&sortBy=createdAt`;
   fetch(canceledRequestListAPI, {
     method: "GET",
     headers: {
@@ -1029,12 +1154,17 @@ function getListCanceledRequest() {
         requestsList.data.content &&
         requestsList.data.content.length > 0
       ) {
-        renderListCanceledRequest(requestsList.data.content);
+        listRequests = requestsList.data.content;
+
+        document
+          .getElementById("canceled-request-data-table")
+          .removeAttribute("style");
+        document.getElementById("no-canceled-request-noti").style.display =
+          "none";
+        renderListCanceledRequest(listRequests);
       } else {
-        var canceledRequestDataTable = document.getElementById(
-          "canceled-request-data-table"
-        );
-        canceledRequestDataTable.style.display = "none";
+        document.getElementById("canceled-request-data-table").style.display =
+          "none";
         document
           .getElementById("no-canceled-request-noti")
           .removeAttribute("style");
@@ -1083,7 +1213,7 @@ function renderListCanceledRequest(listRequest) {
 // denied request list pagination on account page
 // start
 function getListDeniedRequest() {
-  var deniedRequestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?status=5&userId=${accountID}&order=desc&sortBy=createdAt`;
+  var deniedRequestListAPI = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?status=6&userId=${accountID}&order=desc&sortBy=createdAt`;
   fetch(deniedRequestListAPI, {
     method: "GET",
     headers: {
@@ -1098,12 +1228,17 @@ function getListDeniedRequest() {
         requestsList.data.content &&
         requestsList.data.content.length > 0
       ) {
-        renderListDeniedRequest(requestsList.data.content);
+        listRequests = requestsList.data.content;
+
+        document
+          .getElementById("denied-request-data-table")
+          .removeAttribute("style");
+        document.getElementById("no-denied-request-noti").style.display =
+          "none";
+        renderListDeniedRequest(listRequests);
       } else {
-        var deniedRequestDataTable = document.getElementById(
-          "denied-request-data-table"
-        );
-        deniedRequestDataTable.style.display = "none";
+        document.getElementById("denied-request-data-table").style.display =
+          "none";
         document
           .getElementById("no-denied-request-noti")
           .removeAttribute("style");
@@ -1183,7 +1318,7 @@ function cancelRequest(foodId) {
           "none";
         modalCancel.style.display = "none";
         swal("Success!", "Delete success!", "success");
-        getListPendingRequest(objAccount.id);
+        getListFinishRequest(objAccount.id);
       }
     })
     .catch((error) => console.log(error));
@@ -1238,18 +1373,17 @@ function finishRequest() {
     .then(function (request) {
       if (request.status == 200) {
         modalFinish.style.display = "none";
-        var confirm_btn = document.getElementById(`confirmBtn${foodID}`);
-        confirm_btn.innerText = "Feedback";
-        confirm_btn.setAttribute("onClick", `formFeedbackRequest(${foodID})`);
-        confirm_btn.setAttribute("id", `feedbackBtn${foodID}`);
-        // document
-        //   .getElementsByClassName("request_tab")[0]
-        //   .children[0].lastElementChild.remove();
-        // document.getElementsByClassName(
-        //   "request_tab"
-        // )[0].children[0].lastElementChild.innerHTML = "Feedback";
-        // document.getElementsByClassName("delete_td")[0].remove();
-        swal("Success!", "Now you can leave feedback", "success");
+        swal(
+          "Success!",
+          "If you have received your food, you can leave a feedback on supplier!",
+          "success"
+        );
+        listPendingRequestCN.classList.remove("active");
+        listPendingRequestID.classList.remove("active");
+        listFinishRequestCN.classList.remove("d-none");
+        listFinishRequestCN.classList.add("active");
+        listFinishRequestID.classList.add("active");
+        getListFinishRequest();
       }
     })
     .catch((error) => console.log(error));
@@ -1478,21 +1612,28 @@ function formDetailRequest(foodId, requestStatus) {
     .then((food) => {
       if (food) {
         switch (requestStatus) {
-          case 1:
+          case (1, 2):
             listPendingRequestCN.classList.remove("active");
             listPendingRequestID.classList.remove("active");
             detailRequestCN.classList.remove("d-none");
             detailRequestCN.classList.add("active");
             detailRequestID.classList.add("active");
             break;
-          case 4:
+          case (3, 4):
+            listFinishRequestCN.classList.remove("active");
+            listFinishRequestID.classList.remove("active");
+            detailRequestCN.classList.remove("d-none");
+            detailRequestCN.classList.add("active");
+            detailRequestID.classList.add("active");
+            break;
+          case 5:
             listCanceledRequestCN.classList.remove("active");
             listCanceledRequestID.classList.remove("active");
             detailRequestCN.classList.remove("d-none");
             detailRequestCN.classList.add("active");
             detailRequestID.classList.add("active");
             break;
-          case 5:
+          case 6:
             listDeniedRequestCN.classList.remove("active");
             listDeniedRequestID.classList.remove("active");
             detailRequestCN.classList.remove("d-none");
@@ -1607,7 +1748,7 @@ function updateRequestMessage(foodID, supplierID) {
             });
           });
           swal("Success!", "Successfully updated message!", "success");
-          getListPendingRequest(objAccount.id);
+          getListFinishRequest(objAccount.id);
         });
     }
   } else {
@@ -1647,7 +1788,7 @@ function convertRequestStatus(status) {
 // start
 function backToRequestList(requestStatus) {
   switch (requestStatus) {
-    case 1:
+    case (1, 2):
       detailRequestCN.classList.remove("active");
       detailRequestCN.classList.add("d-none");
       detailRequestID.classList.remove("active");
@@ -1655,7 +1796,15 @@ function backToRequestList(requestStatus) {
       listPendingRequestCN.classList.remove("d-none");
       listPendingRequestID.classList.add("active");
       break;
-    case 4:
+    case (3, 4):
+      detailRequestCN.classList.remove("active");
+      detailRequestCN.classList.add("d-none");
+      detailRequestID.classList.remove("active");
+      listFinishRequestCN.classList.add("active");
+      listFinishRequestCN.classList.remove("d-none");
+      listFinishRequestID.classList.add("active");
+      break;
+    case 5:
       detailRequestCN.classList.remove("active");
       detailRequestCN.classList.add("d-none");
       detailRequestID.classList.remove("active");
@@ -1663,7 +1812,7 @@ function backToRequestList(requestStatus) {
       listCanceledRequestCN.classList.remove("d-none");
       listCanceledRequestID.classList.add("active");
       break;
-    case 5:
+    case 6:
       detailRequestCN.classList.remove("active");
       detailRequestCN.classList.add("d-none");
       detailRequestID.classList.remove("active");
@@ -1675,8 +1824,24 @@ function backToRequestList(requestStatus) {
 }
 // end
 
-// confirm user request on food
+// click tab request
 // start
+function clickListFinishRequest() {
+  detailRequestCN.classList.remove("active");
+  detailRequestCN.classList.add("d-none");
+  detailRequestID.classList.remove("active");
+  listUsersRequestCN.classList.remove("active");
+  listUsersRequestCN.classList.add("d-none");
+  listUsersRequestID.classList.remove("active");
+  listPendingRequestCN.classList.remove("active");
+  listPendingRequestID.classList.remove("active");
+  listCanceledRequestCN.classList.remove("active");
+  listCanceledRequestID.classList.remove("active");
+  listDeniedRequestCN.classList.remove("active");
+  listDeniedRequestID.classList.remove("active");
+  getListFinishRequest();
+}
+
 function clickListPendingRequest() {
   detailRequestCN.classList.remove("active");
   detailRequestCN.classList.add("d-none");
@@ -1684,6 +1849,8 @@ function clickListPendingRequest() {
   listUsersRequestCN.classList.remove("active");
   listUsersRequestCN.classList.add("d-none");
   listUsersRequestID.classList.remove("active");
+  listFinishRequestCN.classList.remove("active");
+  listFinishRequestID.classList.remove("active");
   listCanceledRequestCN.classList.remove("active");
   listCanceledRequestID.classList.remove("active");
   listDeniedRequestCN.classList.remove("active");
@@ -1692,6 +1859,8 @@ function clickListPendingRequest() {
 }
 
 function clickListRequestedFood() {
+  listFinishRequestCN.classList.remove("active");
+  listFinishRequestID.classList.remove("active");
   listPendingRequestCN.classList.remove("active");
   listPendingRequestID.classList.remove("active");
   listCanceledRequestCN.classList.remove("active");
@@ -1708,6 +1877,8 @@ function clickListRequestedFood() {
 }
 
 function clickListCanceledRequest() {
+  listFinishRequestCN.classList.remove("active");
+  listFinishRequestID.classList.remove("active");
   listPendingRequestCN.classList.remove("active");
   listPendingRequestID.classList.remove("active");
   listRequestedFoodCN.classList.remove("active");
@@ -1724,6 +1895,8 @@ function clickListCanceledRequest() {
 }
 
 function clickListDeniedRequest() {
+  listFinishRequestCN.classList.remove("active");
+  listFinishRequestID.classList.remove("active");
   listPendingRequestCN.classList.remove("active");
   listPendingRequestID.classList.remove("active");
   listRequestedFoodCN.classList.remove("active");

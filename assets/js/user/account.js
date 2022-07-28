@@ -91,12 +91,19 @@ function showTabPanel(e) {
       document
         .getElementsByClassName("listDeniedRequest")[0]
         .classList.remove("d-none");
+      // document
+      //   .getElementsByClassName("listPendingRequest")[0]
+      //   .classList.add("active");
+      // document.getElementById("listPendingRequest").classList.add("active");
       document
         .getElementsByClassName("listPendingRequest")[0]
+        .classList.remove("d-none");
+      document
+        .getElementsByClassName("listFinishRequest")[0]
         .classList.add("active");
-      document.getElementById("listPendingRequest").classList.add("active");
+      document.getElementById("listFinishRequest").classList.add("active");
       document
-        .getElementsByClassName("listPendingRequest")[0]
+        .getElementsByClassName("listFinishRequest")[0]
         .classList.remove("d-none");
       break;
     case "myfeedback":
