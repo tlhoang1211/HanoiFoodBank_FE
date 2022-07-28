@@ -259,7 +259,8 @@
 .canceled-requests-pagination,
 .denied-requests-pagination,
 .feedback-pagination,
-.list-rating-pagination {
+.list-rating-pagination,
+.finish-requests-pagination {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -273,7 +274,8 @@
 .canceled-requests-pagination a,
 .denied-requests-pagination a,
 .feedback-pagination a,
-.list-rating-pagination a {
+.list-rating-pagination a,
+.finish-requests-pagination a {
   padding: 0 !important;
 }
 

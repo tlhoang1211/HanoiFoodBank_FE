@@ -69,7 +69,7 @@ var configchart = {
     theme: "dark",
     y: {
       formatter: function (e) {
-        return "$ " + e + " thousands";
+        return "$ " + e;
       },
     },
   },
@@ -113,7 +113,7 @@ function drawChart() {
           theme: "dark",
           y: {
             formatter: function (e) {
-              return "$ " + e + " thousands";
+              return "$ " + e;
             },
           },
         };
@@ -273,7 +273,7 @@ function changTypeChart(e, type) {
       theme: "dark",
       y: {
         formatter: function (e) {
-          return "$ " + e + " thousands";
+          return "$ " + e;
         },
       },
     };
