@@ -398,23 +398,19 @@ function renderListFood(listFood) {
           foodCount++;
           dataHtml += `<tr id="food-row-${e.id}">
           <td>${foodCount}</td>`;
-          if (e.status == 2 || e.status == 0) {
-            dataHtml += `<td><a href="./food_detail?id=${
-              e.id
-            }" style="color: blue;">${e.name || ""}</a></td>`;
-          } else {
-            dataHtml += `<td>${e.name || ""}</td>`;
-          }
+          dataHtml += `<td><a href="./food_detail?id=${
+            e.id
+          }" style="color: blue;">${e.name || ""}</a></td>`;
           dataHtml += `<td>${formatCategory(e.categoryId)}</td>
             <td>${e.expirationDate}</td>
             <td>${e.createdAt}</td>
             <td>${
               e.status == 0 ? "deactive" : e.status == 1 ? "pending" : "active"
             }</td>`;
-          if (e.status == 0) {
+          if (e.status == 0 || e.status == 1) {
             dataHtml += `<td><i class="fa fa-pencil-square-o" style="pointer-events: none; opacity: 0.5;"></i></td>`;
-            dataHtml += `<td><i class="fa fa-trash-o" style="pointer-events: none; opacity: 0.5;></i></td>`;
-          } else {
+            dataHtml += `<td><i class="fa fa-trash-o" style="pointer-events: none; opacity: 0.5;"></i></td>`;
+          } else if (e.status == 2) {
             dataHtml += `<td onclick="formUpdateFood(${e.id})"><i class="fa fa-pencil-square-o"></i></td>`;
             dataHtml += `<td onclick="confirmDeleteFood(${e.id})"><i class="fa fa-trash-o"></i></td>`;
           }
@@ -469,15 +465,35 @@ function formUpdateFood(id) {
         myResolve();
       });
       editFoodPromise.then(function () {
+        let imagesList = foodInfo.data.images.split(",");
+        if (imagesList[imagesList.length - 1] == "") {
+          imagesList.pop();
+        }
         var htmls = `
-      <div class="row multi-columns-row" >
-        <div class="slider-image">
-          <div class="slider-info-food">
-            <img src="https://res.cloudinary.com/vernom/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/${foodInfo.data.avatar}" style="width:100%; max-height: 450px">
-          </div>
+        <div class="slideshow-container" >`;
+        htmls += `
+        <div class="mySlides food-fade" style="display: block">
+          <div class="numbertext">1 / ${imagesList.length}</div>
+          <img src="https://res.cloudinary.com/vernom/image/upload/${foodInfo.data.avatar}" style="width:100%">
+        </div>`;
+        imagesList.slice(1).forEach((img, index) => {
+          htmls += `
+          <div class="mySlides food-fade">
+            <div class="numbertext">${index + 2} / ${imagesList.length}</div>
+            <img src="https://res.cloudinary.com/vernom/image/upload/${img}" style="width:100%">
+          </div>`;
+        });
+        htmls += `
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
         </div>
-      </div>
-      `;
+        <br>`;
+
+        htmls += `<div style="text-align:center">`;
+        for (let i = 1; i <= imagesList.length; i++) {
+          htmls += `<span class="dot" onclick="currentSlide(${i})"></span>`;
+        }
+        htmls += `</div>`;
 
         var htmlsInfoProduct = `
         <div class="row">
@@ -495,21 +511,20 @@ function formUpdateFood(id) {
             <div class="product_meta">Categories:<a href="#"> ${foodInfo.data.category}</a>
             </div>
           </div>
-        </div>
-      `;
+        </div>`;
 
         var htmlsDes = `
-      <div class="row multi-columns-row" >
-      <div class="col-sm-12" style="padding: 0;">
-        <p>Description: ${foodInfo.data.description}</p>
-      </div>
-      </div>
-      <div class="row multi-columns-row" >
+        <div class="row multi-columns-row" >
         <div class="col-sm-12" style="padding: 0;">
-          <p>Content: ${foodInfo.data.content}</p>
+          <p>Description: ${foodInfo.data.description}</p>
         </div>
-      </div>
-      `;
+        </div>
+        <div class="row multi-columns-row" >
+          <div class="col-sm-12" style="padding: 0;">
+            <p>Content: ${foodInfo.data.content}</p>
+          </div>
+        </div>
+        `;
 
         editImageFood.innerHTML = htmls;
         editInfoFood.innerHTML = htmlsInfoProduct;
