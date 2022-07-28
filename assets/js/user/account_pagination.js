@@ -301,10 +301,10 @@ function getListFoodAll() {
       let listFoodPromise = new Promise(function (myResolve) {
         listAllFood = foodList.data.content;
         listAllFood.map(function (food) {
-          if (food.status == 0) {
-            const index = listAllFood.indexOf(food);
-            listAllFood.splice(index, 1);
-          }
+          // if (food.status == 0) {
+          //   const index = listAllFood.indexOf(food);
+          //   listAllFood.splice(index, 1);
+          // }
 
           var tet = getTimeFromString2(food.expirationDate);
           var now1 = new Date().getTime();
@@ -409,10 +409,11 @@ function renderListFood(listFood) {
             }</td>`;
           if (e.status == 0) {
             dataHtml += `<td><i class="fa fa-pencil-square-o" style="pointer-events: none; opacity: 0.5;"></i></td>`;
+            dataHtml += `<td><i class="fa fa-trash-o" style="pointer-events: none; opacity: 0.5;></i></td></tr>`;
           } else {
             dataHtml += `<td onclick="formUpdateFood(${e.id})"><i class="fa fa-pencil-square-o"></i></td>`;
+            dataHtml += `<td onclick="confirmDeleteFood(${e.id})"><i class="fa fa-trash-o"></i></td></tr>`;
           }
-          dataHtml += `<td onclick="confirmDeleteFood(${e.id})"><i class="fa fa-trash-o"></i></td></tr>`;
         });
 
         dataHtml += "</div>";
@@ -1346,7 +1347,6 @@ function feedbackRequest() {
                 .get(),
               function (i, val) {
                 let imgPath = JSON.parse(val).path;
-                console.log(imgPath);
                 if (!listImageFeedback.includes(imgPath)) {
                   listImageFeedback.push(imgPath);
                 }
@@ -1359,7 +1359,6 @@ function feedbackRequest() {
             let t = 1;
             let ui = request.data.supplierId;
             let fi = foodId;
-            console.log(img);
             sentFeedback(img, ct, cb, r, t, ui, fi);
             var feedbackModal = document.querySelector(
               ".modal-account-confirm-feedback"
@@ -1632,9 +1631,12 @@ function convertRequestStatus(status) {
       status = "Done";
       break;
     case 4:
-      status = "Canceled";
+      status = "Feedbacked";
       break;
     case 5:
+      status = "Canceled";
+      break;
+    case 6:
       status = "Denied";
       break;
   }
@@ -2245,7 +2247,7 @@ function renderFeedback(listFeedback) {
         feedbackCount++;
         dataHtml += `<tr>
           <td>${feedbackCount}</td>
-          <td><img style="max-width: 20% !important" src=${food_image}></td>
+          <td><img class="imgFeedback" src=${food_image}></td>
           <td>${objAccount.id == e.createdBy ? e.name : e.sentName}</td>
           <td>${e.content}</td>
           <td>${e.rate}</td>

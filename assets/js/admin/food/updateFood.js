@@ -46,9 +46,12 @@ function convertRequestStatus(status) {
       status = "Done";
       break;
     case 4:
-      status = "Canceled";
+      status = "Feedbacked";
       break;
     case 5:
+      status = "Canceled";
+      break;
+    case 6:
       status = "Denied";
       break;
   }
