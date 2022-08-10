@@ -176,7 +176,7 @@ async function renderListAccount(dataList) {
         htmld +=
           '<a class="ms-4 ' +
           (e.status == 1 ? "" : "d-none") +
-          '" onclick="deleteAccount(this, \'' +
+          '" onclick="deactiveAccount(this, \'' +
           e.id +
           '\')"><i class="bx bx-trash"></i></a>';
         htmld += "</td>";
@@ -187,8 +187,8 @@ async function renderListAccount(dataList) {
   }
 }
 
-var objDeleteAccount;
-function deleteAccount(
+var objDeactiveAccount;
+function deactiveAccount(
   e,
   id,
   name,
@@ -199,7 +199,7 @@ function deleteAccount(
   content,
   expirationDate
 ) {
-  objDeleteAccount = {
+  objDeactiveAccount = {
     ele: e.parentElement.parentElement.parentElement,
     id: id,
     name: name,
@@ -210,29 +210,18 @@ function deleteAccount(
     content: content,
     expirationDate: expirationDate,
   };
-  $("#deleteAccount").modal("show");
+  $("#deactiveAccount").modal("show");
 }
 
-function onDeleteAccount() {
-  var dataPost = {
-    name: objDeleteAccount.name,
-    updatedBy: objAccount.id,
-    categoryId: objDeleteAccount.cateID,
-    status: 0,
-    avatar: objDeleteAccount.avatar,
-    images: objDeleteAccount.images,
-    description: objDeleteAccount.description,
-    content: objDeleteAccount.content,
-    expirationDate: objDeleteAccount.expirationDate,
-  };
+function onDeactiveAccount() {
   getConnectAPI(
     "POST",
-    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/Accounts/${objDeleteAccount.id}`,
-    JSON.stringify(dataPost),
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${objDeactiveAccount.id}/0`,
+    null,
     function (result) {
       if (result && result.status == 200) {
         notification("success", result.message);
-        $("#deleteAccount").modal("hide");
+        $("#deactiveAccount").modal("hide");
         getListAccount();
       } else {
         notification("warning", result.message);
