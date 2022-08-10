@@ -341,6 +341,9 @@ function convertStatusFood(status) {
     case 2:
       text = "Active";
       break;
+    case 3:
+      text = "Expired";
+      break;
     default:
       text = "Pending";
       break;
@@ -359,6 +362,9 @@ function colorStatusFood(status) {
       break;
     case 2:
       color = "text-success";
+      break;
+    case 3:
+      color = "text-default";
       break;
     default:
       color = "text-warning";

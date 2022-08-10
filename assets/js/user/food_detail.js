@@ -114,7 +114,7 @@ async function getInfoFood() {
       getSupplierInfo(listItems.data.supplierEmail);
 
       let myPromiseInfoFood = new Promise(function (myResolve) {
-        listFoodCategory = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?categoryId=${listItems.data.categoryId}&page=0&limit=4&status=2`;
+        listFoodCategory = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?categoryId=${listItems.data.categoryId}&page=1&limit=4&status=2`;
         var listItemImages = listItems.data.images;
         if (listItemImages.slice(-1) == ",") {
           listItemImages = listItemImages.slice(0, -1);
