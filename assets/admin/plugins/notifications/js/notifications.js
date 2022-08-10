@@ -435,17 +435,17 @@ var Lobibox = Lobibox || {};
     error: {
       class: "lobibox-notify-error",
       title: "Error",
-      sound: "sound4",
+      sound: false,
     },
     warning: {
       class: "lobibox-notify-warning",
       title: "Warning",
-      sound: "sound5",
+      sound: false,
     },
     info: {
       class: "lobibox-notify-info",
       title: "Information",
-      sound: "sound6",
+      sound: false,
     },
     icons: {
       bootstrap: {
