@@ -969,18 +969,18 @@ function getListPendingRequest() {
           document.getElementById("no-pending-request-noti").style.display =
             "none";
           renderListPendingRequest(listRequests);
-        } else {
-          var pendingRequestDataTable = document.getElementById(
-            "pending-request-data-table"
-          );
-          pendingRequestDataTable.style.display = "none";
-          document
-            .getElementById("no-pending-request-noti")
-            .removeAttribute("style");
-          document
-            .getElementById("center-pending-request-noti")
-            .setAttribute("style", "text-align: center;");
         }
+      } else {
+        var pendingRequestDataTable = document.getElementById(
+          "pending-request-data-table"
+        );
+        pendingRequestDataTable.style.display = "none";
+        document
+          .getElementById("no-pending-request-noti")
+          .removeAttribute("style");
+        document
+          .getElementById("center-pending-request-noti")
+          .setAttribute("style", "text-align: center;");
       }
     })
     .catch((error) => console.log(error));
@@ -1070,7 +1070,6 @@ function getListFinishRequest() {
             requestExists = false;
           }
         }
-        console.log(requestExists);
         if (requestExists) {
           document
             .getElementById("finish-request-data-table")
@@ -1078,18 +1077,18 @@ function getListFinishRequest() {
           document.getElementById("no-finish-request-noti").style.display =
             "none";
           renderListFinishRequest(listRequests);
-        } else {
-          var finishRequestDataTable = document.getElementById(
-            "finish-request-data-table"
-          );
-          finishRequestDataTable.style.display = "none";
-          document
-            .getElementById("no-finish-request-noti")
-            .removeAttribute("style");
-          document
-            .getElementById("center-finish-request-noti")
-            .setAttribute("style", "text-align: center;");
         }
+      } else {
+        var finishRequestDataTable = document.getElementById(
+          "finish-request-data-table"
+        );
+        finishRequestDataTable.style.display = "none";
+        document
+          .getElementById("no-finish-request-noti")
+          .removeAttribute("style");
+        document
+          .getElementById("center-finish-request-noti")
+          .setAttribute("style", "text-align: center;");
       }
     })
     .catch((error) => console.log(error));

@@ -25,6 +25,7 @@ function filterStatus(e, type) {
     statusAccount = null;
   }
   addActive(e);
+  document.getElementsByTagName("tbody")[0].innerHTML = "";
   getListAccount();
 }
 
@@ -48,6 +49,7 @@ function searchNameAccount() {
   }
 }
 
+var acts;
 // get data Account
 async function getListAccount(pageIndex) {
   if (!pageIndex) {
@@ -87,7 +89,8 @@ async function getListAccount(pageIndex) {
           $("#table-account").removeClass("d-none");
           $(".axbox-footer").removeClass("d-none");
           $(".zero-warning").addClass("d-none");
-          await renderListAccount(result.data.content);
+          acts = result.data.content;
+          await getFeedbackCount();
           var total = 0;
           total = result.data.totalElements;
           var pageNumber = Math.ceil(total / pageSize);
@@ -118,10 +121,9 @@ async function getListAccount(pageIndex) {
 
 getListAccount();
 
-async function renderListAccount(dataList) {
-  var count = 0;
-  for (var e of dataList) {
-    await fetch(
+async function getFeedbackCount() {
+  for (var e of acts) {
+    const feedbacksCount = await fetch(
       `https://hanoifoodbank.herokuapp.com/api/v1/hfb/feedbacks/search?userId=${e.id}&status=1&sortBy=id&order=desc`,
       {
         method: "GET",
@@ -130,85 +132,73 @@ async function renderListAccount(dataList) {
           Authorization: `Bearer ${token}`,
         },
       }
-    )
-      .then((data) => data.json())
-      .then((data) => {
-        var feedbacksList = data.data.content;
-
-        count++;
-        var htmld = "";
-        htmld += "<tr><td>" + count + "</td>";
-        if (e.avatar) {
-          htmld +=
-            '<td><img src="https://res.cloudinary.com/vernom/image/upload/' +
-            e.avatar +
-            '" style="width: 30px;height: 30px;"/></td>';
-        } else {
-          htmld +=
-            '<td><img src="https://via.placeholder.com/110x110" style="width: 30px;height: 30px;"/></td>';
-        }
-        htmld += "<td>" + (e.name || "") + "</td>";
-        htmld += "<td>" + feedbacksList.length + "</td>";
-        htmld += "<td>" + (e.username || "") + "</td>";
-        htmld += "<td>" + (e.phone || "") + "</td>";
-        htmld += "<td>" + (e.address || "") + "</td>";
-        htmld += "<td>";
-        htmld +=
-          '<div class="data-status d-flex align-items-center ' +
-          colorStatusAccount(e.status) +
-          '">';
-        htmld +=
-          '<i class="bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1"></i>';
-        htmld +=
-          "<span>" + convertStatusAccount(e.status) + "</span></div></td>";
-        htmld += "<td>" + e.createdAt + "</td>";
-        htmld += '<td><div class="d-flex order-actions">';
-        htmld +=
-          "<a onclick=\"formUpdateAccount(this, '" +
-          e.id +
-          "', '" +
-          e.username +
-          '\')"><i class="bx bx-edit"></i></a>';
-        htmld +=
-          '<a class="ms-4" onclick="changeRole(this, \'' +
-          e.id +
-          '\')"><i class="bx bx-user"></i></a>';
-        htmld +=
-          '<a class="ms-4 ' +
-          (e.status == 1 ? "" : "d-none") +
-          '" onclick="deactiveAccount(this, \'' +
-          e.id +
-          '\')"><i class="bx bx-trash"></i></a>';
-        htmld += "</td>";
-        document
-          .querySelectorAll("#table-account tbody")
-          .item(0).innerHTML += htmld;
-      });
+    );
+    e.feedbackCount = (await feedbacksCount.json()).data.totalElements;
   }
+  renderListAccount();
+}
+
+var singleAccountAva;
+function renderListAccount() {
+  var htmld = "";
+  for (var e of acts) {
+    singleAccountAva = e.avatar;
+    htmld += "<tr><td>" + e.id + "</td>";
+    if (e.avatar) {
+      htmld +=
+        '<td><img src="https://res.cloudinary.com/vernom/image/upload/' +
+        e.avatar +
+        '" style="width: 30px;height: 30px;"/></td>';
+    } else {
+      htmld +=
+        '<td><img src="https://via.placeholder.com/110x110" style="width: 30px;height: 30px;"/></td>';
+    }
+    htmld += "<td>" + (e.name || "") + "</td>";
+    htmld += "<td>" + e.feedbackCount + "</td>";
+    htmld += "<td>" + (e.username || "") + "</td>";
+    htmld += "<td>" + (e.phone || "") + "</td>";
+    htmld += "<td>" + (e.address || "") + "</td>";
+    htmld += "<td>";
+    htmld +=
+      '<div class="data-status d-flex align-items-center ' +
+      colorStatusAccount(e.status) +
+      '">';
+    htmld +=
+      '<i class="bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1"></i>';
+    htmld += "<span>" + convertStatusAccount(e.status) + "</span></div></td>";
+    htmld += "<td>" + e.createdAt + "</td>";
+    htmld += '<td><div class="d-flex order-actions">';
+    htmld +=
+      "<a onclick=\"formUpdateAccount(this, '" +
+      e.id +
+      "', '" +
+      e.username +
+      '\')"><i class="bx bx-edit"></i></a>';
+    htmld +=
+      '<a class="ms-4" onclick="changeRole(this, \'' +
+      e.id +
+      '\')"><i class="bx bx-user"></i></a>';
+    if (e.status == 1) {
+      htmld +=
+        `<a class="ms-4" onclick="deactiveAccount(this, \'` +
+        e.id +
+        '\')"><i class="bx bx-trash"></i></a>';
+    } else if (e.status == 0) {
+      htmld +=
+        `<a class="ms-4" onclick="activeAccount(this, \'` +
+        e.id +
+        '\')"><i class="bx bx-check"></i></a>';
+    }
+    htmld += "</td>";
+  }
+  document.querySelectorAll("#table-account tbody").item(0).innerHTML += htmld;
 }
 
 var objDeactiveAccount;
-function deactiveAccount(
-  e,
-  id,
-  name,
-  cateID,
-  avatar,
-  images,
-  description,
-  content,
-  expirationDate
-) {
+function deactiveAccount(e, id) {
   objDeactiveAccount = {
     ele: e.parentElement.parentElement.parentElement,
     id: id,
-    name: name,
-    cateID: cateID,
-    avatar: avatar,
-    images: images,
-    description: description,
-    content: content,
-    expirationDate: expirationDate,
   };
   $("#deactiveAccount").modal("show");
 }
@@ -216,15 +206,72 @@ function deactiveAccount(
 function onDeactiveAccount() {
   getConnectAPI(
     "POST",
-    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${objDeactiveAccount.id}/0`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/update-status/${objDeactiveAccount.id}/0`,
     null,
     function (result) {
       if (result && result.status == 200) {
         notification("success", result.message);
         $("#deactiveAccount").modal("hide");
+        document.getElementsByTagName("tbody")[0].innerHTML = "";
         getListAccount();
       } else {
-        notification("warning", result.message);
+        notification("warning", "Something wrong. Please try again!");
+      }
+      let notifyDeactivePromise = new Promise(function (myResolve) {
+        var today = new Date();
+        time =
+          ("0" + today.getDate()).slice(-2) +
+          "/" +
+          ("0" + (today.getMonth() + 1)).slice(-2) +
+          "/" +
+          today.getFullYear() +
+          " " +
+          ("0" + today.getHours()).slice(-2) +
+          ":" +
+          ("0" + today.getMinutes()).slice(-2) +
+          ":" +
+          ("0" + today.getSeconds()).slice(-2);
+        myResolve();
+      });
+      notifyDeactivePromise.then(function () {
+        Notification.send(objDeactiveAccount.id, {
+          senderID: 1,
+          senderEmail: "admin@gmail.com",
+          foodID: objDeactiveAccount.id,
+          foodAvatar: singleAccountAva,
+          title: "Your account has been disabled!",
+          requestTime: "Time: " + time,
+          notifyCategory: "Request",
+          status: 1,
+        });
+      });
+    },
+    function (errorThrown) {}
+  );
+}
+
+var objActiveAccount;
+function activeAccount(e, id) {
+  objActiveAccount = {
+    ele: e.parentElement.parentElement.parentElement,
+    id: id,
+  };
+  $("#activeAccount").modal("show");
+}
+
+function onActiveAccount() {
+  getConnectAPI(
+    "POST",
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/update-status/${objActiveAccount.id}/1`,
+    null,
+    function (result) {
+      if (result && result.status == 200) {
+        notification("success", result.message);
+        $("#activeAccount").modal("hide");
+        document.getElementsByTagName("tbody")[0].innerHTML = "";
+        getListAccount();
+      } else {
+        notification("warning", "Something wrong. Please try again!");
       }
     },
     function (errorThrown) {}
