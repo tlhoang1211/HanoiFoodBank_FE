@@ -1070,6 +1070,7 @@ function getListFinishRequest() {
             requestExists = false;
           }
         }
+        console.log(requestExists);
         if (requestExists) {
           document
             .getElementById("finish-request-data-table")
