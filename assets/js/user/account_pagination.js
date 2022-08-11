@@ -1535,7 +1535,7 @@ function feedbackRequest() {
                 Authorization: `Bearer ${isToken}`,
               },
               body: JSON.stringify({
-                status: 4,
+                status: 3,
                 updatedBy: objAccount.id,
               }),
             }
