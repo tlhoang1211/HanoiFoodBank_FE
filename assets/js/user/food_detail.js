@@ -23,7 +23,7 @@ function showSlides(n) {
 function getSupplierInfo(supplierEmail) {
   if (!isToken) {
     isToken =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaHVvbmdsdmQwMDYzMUBmcHQuZWR1LnZuIiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpc3MiOiJodHRwczovL2hmYi10MTA5OGUuaGVyb2t1YXBwLmNvbS9hcGkvdjEvaGZiL2xvZ2luIiwiZXhwIjoxNjM2NTU4MzQyfQ.GWSbBk2gvGqsvgq8s-3c7P-bmO0PeFKgjsLczox5L6M";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlzcyI6Imh0dHBzOi8vaGFub2lmb29kYmFuay5oZXJva3VhcHAuY29tL2FwaS92MS9oZmIvbG9naW4iLCJleHAiOjE2NjA0NjAzMzV9.CnHsJcadgsAZbMfQrH1ohzMoD4jMJADgnV74cJkdA2k";
   }
   fetch(
     `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${supplierEmail}`,
@@ -40,7 +40,7 @@ function getSupplierInfo(supplierEmail) {
         supplierAccount = account.data;
         if (
           isToken ==
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaHVvbmdsdmQwMDYzMUBmcHQuZWR1LnZuIiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpc3MiOiJodHRwczovL2hmYi10MTA5OGUuaGVyb2t1YXBwLmNvbS9hcGkvdjEvaGZiL2xvZ2luIiwiZXhwIjoxNjM2NTU4MzQyfQ.GWSbBk2gvGqsvgq8s-3c7P-bmO0PeFKgjsLczox5L6M"
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlzcyI6Imh0dHBzOi8vaGFub2lmb29kYmFuay5oZXJva3VhcHAuY29tL2FwaS92MS9oZmIvbG9naW4iLCJleHAiOjE2NjA0NjAzMzV9.CnHsJcadgsAZbMfQrH1ohzMoD4jMJADgnV74cJkdA2k"
         ) {
           token = "";
         }
@@ -111,6 +111,7 @@ async function getInfoFood() {
   })
     .then((response) => response.json())
     .then((listItems) => {
+      console.log(listItems.data.supplierEmail);
       getSupplierInfo(listItems.data.supplierEmail);
 
       let myPromiseInfoFood = new Promise(function (myResolve) {
