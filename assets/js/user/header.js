@@ -558,7 +558,6 @@ $(document).ready(function () {
       .siblings("option")
       .removeClass("selected");
     var selectedCategory = $(this).children("option:selected").text();
-    console.log(selectedCategory);
     myWidgetFoodModal.update({
       folder: "hanoi_food_bank_project/uploaded_food/" + selectedCategory,
     });
@@ -621,9 +620,6 @@ paypal.Button.render(
             swal("Error!", "Payment failure!", "error");
           }
           modal2.style.display = "none";
-          console.log(res.id);
-          console.log(data.paymentID);
-          console.log(data.payerID);
         })
         .catch((error) => {
           console.log(error);
