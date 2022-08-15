@@ -36,7 +36,6 @@ function getSupplierInfo(supplierEmail) {
   )
     .then((response) => response.json())
     .then((account) => {
-      console.log(account.data);
       if (account && account.data) {
         supplierAccount = account.data;
         if (
@@ -52,7 +51,6 @@ function getSupplierInfo(supplierEmail) {
 }
 
 function bindDataAccount(data) {
-  console.log(data);
   getAverageRating(data.id);
   var avatar_url = `https://res.cloudinary.com/vernom/image/upload/${data.avatar}`;
   if (!data.avatar & (data.avatar == null)) {
@@ -354,6 +352,7 @@ function requestForFood() {
         Authorization: `Bearer ${token}`,
       },
     })
+      .then((response) => response.json())
       .then((itemRequest) => {
         if (itemRequest.status == 200 && itemRequest.data.length != 0) {
           requestStatus = itemRequest.data.status;
@@ -388,7 +387,7 @@ window.onload = function () {
 
 function checkRequestTime() {
   fetch(
-    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${idAccount}`,
+    `https://hanoifoodbank.herokuapp.com/api/v1/hfb/requests?userId=${supplierId}`,
     {
       method: "GET",
       headers: {
