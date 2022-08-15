@@ -270,6 +270,26 @@ function onBrowseFood() {
           },
           function (errorThrown) {}
         );
+        var mailData = {
+          userId: 1,
+          dataMailModels: [
+            {
+              foodName: idApproval.name,
+              description: idApproval.description,
+              urlDetail: `https://www.hanoifoodbank.com/food_detail?id=${foodID}`,
+              urlImage:
+                "https://res.cloudinary.com/vernom/image/upload/" +
+                idApproval.avatar,
+            },
+          ],
+        };
+        getConnectAPI(
+          "POST",
+          "https://hanoifoodbank.herokuapp.com/api/v1/hfb/mail/send",
+          JSON.stringify(mailData),
+          null,
+          null
+        );
       }
     },
     function (errorThrown) {}
