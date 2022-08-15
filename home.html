@@ -517,7 +517,7 @@
       var foodData = document.querySelector(".list-near-food");
 
       function getNearFood() {
-        var searchUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/get-nearest-location?postionLongitude=${long}&postionLatitude=${lat}&distance=1&limit=8`;
+        var searchUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/get-nearest-location?positionLongitude=${long}&positionLatitude=${lat}&distance=1&limit=8`;
         console.log(searchUrl);
         fetch(searchUrl, {
           method: "GET",

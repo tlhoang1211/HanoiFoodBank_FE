@@ -460,8 +460,7 @@
         var positionLongitude = long;
         var positionLatitude = lat;
         var distance = document.querySelector('#distance').value;
-        var searchUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/get-nearest-location?postionLongitude=${positionLongitude}&postionLatitude=${positionLatitude}&distance=${distance}`
-        console.log(searchUrl)
+        var searchUrl = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/get-nearest-location?positionLongitude=${positionLongitude}&positionLatitude=${positionLatitude}&distance=${distance}`
 				fetch(searchUrl,{
           method: 'GET'
         })

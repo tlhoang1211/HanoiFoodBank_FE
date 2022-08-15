@@ -1,5 +1,5 @@
 var supplierId = null;
-
+var idAccount;
 // slides image
 function showSlides(n) {
   var slides = document.getElementsByClassName("slider-info-food");
@@ -23,7 +23,7 @@ function showSlides(n) {
 function getSupplierInfo(supplierEmail) {
   if (!isToken) {
     isToken =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlzcyI6Imh0dHBzOi8vaGFub2lmb29kYmFuay5oZXJva3VhcHAuY29tL2FwaS92MS9oZmIvbG9naW4iLCJleHAiOjE2NjA0NjAzMzV9.CnHsJcadgsAZbMfQrH1ohzMoD4jMJADgnV74cJkdA2k";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlzcyI6Imh0dHBzOi8vaGFub2lmb29kYmFuay5oZXJva3VhcHAuY29tL2FwaS92MS9oZmIvbG9naW4iLCJleHAiOjE2NjA3ODYwMTZ9.S-JkeonxryACEnrWQlBX1fUMtc-FeCAr2A9tiyy4fQA";
   }
   fetch(
     `https://hanoifoodbank.herokuapp.com/api/v1/hfb/users/${supplierEmail}`,
@@ -36,11 +36,12 @@ function getSupplierInfo(supplierEmail) {
   )
     .then((response) => response.json())
     .then((account) => {
+      console.log(account.data);
       if (account && account.data) {
         supplierAccount = account.data;
         if (
           isToken ==
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlzcyI6Imh0dHBzOi8vaGFub2lmb29kYmFuay5oZXJva3VhcHAuY29tL2FwaS92MS9oZmIvbG9naW4iLCJleHAiOjE2NjA0NjAzMzV9.CnHsJcadgsAZbMfQrH1ohzMoD4jMJADgnV74cJkdA2k"
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlzcyI6Imh0dHBzOi8vaGFub2lmb29kYmFuay5oZXJva3VhcHAuY29tL2FwaS92MS9oZmIvbG9naW4iLCJleHAiOjE2NjA3ODYwMTZ9.S-JkeonxryACEnrWQlBX1fUMtc-FeCAr2A9tiyy4fQA"
         ) {
           token = "";
         }
@@ -51,6 +52,7 @@ function getSupplierInfo(supplierEmail) {
 }
 
 function bindDataAccount(data) {
+  console.log(data);
   getAverageRating(data.id);
   var avatar_url = `https://res.cloudinary.com/vernom/image/upload/${data.avatar}`;
   if (!data.avatar & (data.avatar == null)) {
@@ -111,8 +113,8 @@ async function getInfoFood() {
   })
     .then((response) => response.json())
     .then((listItems) => {
+      supplierId = listItems.data.createdBy;
       getSupplierInfo(listItems.data.supplierEmail);
-
       let myPromiseInfoFood = new Promise(function (myResolve) {
         listFoodCategory = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?categoryId=${listItems.data.categoryId}&page=1&limit=4&status=2`;
         var listItemImages = listItems.data.images;
@@ -352,7 +354,6 @@ function requestForFood() {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((response) => response.json())
       .then((itemRequest) => {
         if (itemRequest.status == 200 && itemRequest.data.length != 0) {
           requestStatus = itemRequest.data.status;
@@ -429,7 +430,6 @@ function closeSendMail() {
 }
 
 var avatarFood;
-var idAccount;
 // Send Request
 function sendRequest() {
   // get Id User
