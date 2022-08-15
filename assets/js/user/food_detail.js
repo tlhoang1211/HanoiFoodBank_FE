@@ -111,7 +111,7 @@ async function getInfoFood() {
   })
     .then((response) => response.json())
     .then((listItems) => {
-      await getSupplierInfo(listItems.data.supplierEmail);
+      getSupplierInfo(listItems.data.supplierEmail);
 
       let myPromiseInfoFood = new Promise(function (myResolve) {
         listFoodCategory = `https://hanoifoodbank.herokuapp.com/api/v1/hfb/foods/search?categoryId=${listItems.data.categoryId}&page=1&limit=4&status=2`;
