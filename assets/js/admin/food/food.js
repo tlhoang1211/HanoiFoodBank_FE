@@ -208,6 +208,7 @@ function approvalFood(e, id, createdBy, avatar) {
   $("#approvalFood").modal("show");
 }
 
+var foodConfirmed;
 function onBrowseFood() {
   var foodID = idApproval.id;
   var dataPost = {
@@ -233,6 +234,7 @@ function onBrowseFood() {
     JSON.stringify(dataPost),
     function (result) {
       if (result && result.status == 200) {
+        foodConfirmed = result.data;
         notification("success", result.message);
         $("#approvalFood").modal("hide");
         getListFood();
@@ -270,12 +272,13 @@ function onBrowseFood() {
           },
           function (errorThrown) {}
         );
+        console.log(foodConfirmed);
         var mailData = {
           userId: 1,
           dataMailModels: [
             {
-              foodName: idApproval.name,
-              description: idApproval.description,
+              foodName: foodConfirmed.name,
+              description: foodConfirmed.description,
               urlDetail: `https://www.hanoifoodbank.com/food_detail?id=${foodID}`,
               urlImage:
                 "https://res.cloudinary.com/vernom/image/upload/" +
